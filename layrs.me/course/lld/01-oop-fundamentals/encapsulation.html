@@ -1,0 +1,1105 @@
+<!DOCTYPE html><html lang="en"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Encapsulation in OOP: Definition &amp; Examples | Layrs</title><meta name="description" content="Bundling data with methods, hiding internal state"><meta name="keywords" content="encapsulation in OOP, encapsulation vs abstraction, encapsulation java python example, data hiding in OOP, OOP encapsulation interview questions"><link rel="canonical" href="encapsulation/index.html"><meta name="robots" content="index, follow"><!-- Favicon --><link rel="icon" type="image/svg+xml" href="../../../favicon.svg.html"><!-- Fonts --><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@600;700&display=swap" rel="stylesheet"><!-- Open Graph --><meta property="og:type" content="article"><meta property="og:title" content="Encapsulation in OOP: Definition &#38; Examples | Layrs"><meta property="og:description" content="Bundling data with methods, hiding internal state"><meta property="og:url" content="https://layrs.me/course/lld/01-oop-fundamentals/encapsulation/"><meta property="og:image" content="https://layrs.me/og-course.png"><meta property="og:site_name" content="Layrs"><!-- Twitter Card --><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Encapsulation in OOP: Definition &#38; Examples | Layrs"><meta name="twitter:description" content="Bundling data with methods, hiding internal state"><meta name="twitter:image" content="https://layrs.me/og-course.png"><!-- JSON-LD LearningResource --><script type="application/ld+json">{"@context":"https://schema.org","@type":"LearningResource","name":"Encapsulation in OOP: Definition & Examples","description":"Bundling data with methods, hiding internal state","url":"https://layrs.me/course/lld/01-oop-fundamentals/encapsulation/","inLanguage":"en","provider":{"@type":"Organization","name":"Layrs","url":"https://layrs.me"}}</script><!-- JSON-LD BreadcrumbList --><script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Course","item":"https://layrs.me/course/"},{"@type":"ListItem","position":2,"name":"LLD","item":"https://layrs.me/course/lld/"},{"@type":"ListItem","position":3,"name":"OOP Fundamentals","item":"https://layrs.me/course/lld/01-oop-fundamentals/"},{"@type":"ListItem","position":4,"name":"Encapsulation in OOP: Definition & Examples","item":"https://layrs.me/course/lld/01-oop-fundamentals/encapsulation/"}]}</script><!-- Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-B4C8VH12BN"></script><script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-B4C8VH12BN');
+</script><link rel="stylesheet" href="../../_astro/_topic_.CHm0_rTz.css">
+<link rel="stylesheet" href="../../_astro/_topic_.HS6iB5yD.css">
+<style>.toc-link[data-astro-cid-xvrfupwn]:hover{color:var(--sidebar-accent)!important}.toc-link[data-astro-cid-xvrfupwn].active{color:var(--sidebar-accent)!important;font-weight:500;border-left:2px solid var(--sidebar-accent);margin-left:-2px;background:linear-gradient(to right,rgba(59,130,246,.06),transparent)}.prev-next-nav[data-astro-cid-fxft7bm5]{display:grid;grid-template-columns:1fr;gap:12px;margin-top:40px;padding-top:0}@media(min-width:640px){.prev-next-nav[data-astro-cid-fxft7bm5]{grid-template-columns:1fr 1fr}}.prev-next-card[data-astro-cid-fxft7bm5]{display:flex;align-items:center;gap:12px;padding:16px;border-radius:12px;border:1px solid hsl(var(--border));background:hsl(var(--card));text-decoration:none;transition:all .2s ease}.prev-next-card[data-astro-cid-fxft7bm5]:hover{border-color:#3b82f666;box-shadow:0 2px 8px #3b82f614}.prev-next-card-right[data-astro-cid-fxft7bm5]{justify-content:flex-end;text-align:right}.prev-next-arrow[data-astro-cid-fxft7bm5]{color:hsl(var(--muted-foreground))}.prev-next-label[data-astro-cid-fxft7bm5]{font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:hsl(var(--muted-foreground))}.prev-next-title[data-astro-cid-fxft7bm5]{font-size:.875rem;font-weight:500;color:hsl(var(--foreground));overflow:hidden;text-overflow:ellipsis;white-space:nowrap;width:100%}.course-prose>hr:last-child{display:none}
+</style></head> <body> <!-- Theme + sidebar init: apply before paint to avoid flash --> <script>
+      (function() {
+        var theme = localStorage.getItem('theme') || 'light';
+        if (theme === 'dark') {
+          document.documentElement.classList.add('dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+        }
+        // Pre-apply sidebar collapsed state
+        if (localStorage.getItem('sidebar-collapsed') === 'true') {
+          document.documentElement.classList.add('sidebar-is-collapsed');
+        }
+      })();
+    </script> <div class="flex h-screen overflow-hidden"> <!-- Desktop sidebar (hidden below lg) --> <div class="hidden lg:flex flex-shrink-0"> <aside id="course-sidebar" class="sidebar h-screen flex flex-col" role="navigation" aria-label="Course navigation" style="background-color: var(--sidebar-bg); border-right: 1px solid var(--sidebar-border);" data-astro-cid-6munbmg7> <!-- Logo + Collapse button (desktop) / Close button (mobile) --> <div class="sidebar-logo-section" style="border-bottom: 1px solid var(--sidebar-border);" data-astro-cid-6munbmg7> <a href="https://layrs.me/" class="sidebar-logo-link" title="Layrs" data-astro-cid-6munbmg7> <div class="sidebar-icon-box" data-astro-cid-6munbmg7> <img src="../../Layrs.jpeg" alt="Layrs Logo" class="w-full h-full object-cover" onerror="this.style.display='none'" data-astro-cid-6munbmg7> </div> <span class="sidebar-label text-lg font-semibold" style="color: var(--sidebar-text);" data-astro-cid-6munbmg7>Layrs</span> </a> <!-- Mobile close button --> <button id="sidebar-close-btn" class="sidebar-close-btn sidebar-mobile-only" title="Close menu" aria-label="Close menu" style="color: var(--sidebar-text-secondary);" data-astro-cid-6munbmg7> <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><path d="M18 6 6 18" data-astro-cid-6munbmg7></path><path d="m6 6 12 12" data-astro-cid-6munbmg7></path></svg> </button> </div> <!-- Navigation --> <nav class="flex-1 overflow-y-auto py-3" id="sidebar-nav-area" data-astro-cid-6munbmg7> <!-- Back to Dashboard - always visible, icon-only when collapsed --> <a href="https://layrs.me/dashboard" class="nav-item sidebar-nav-link" style="color: var(--sidebar-text);" title="Back to Dashboard" data-astro-cid-6munbmg7> <span class="sidebar-nav-icon" style="color: var(--sidebar-text-secondary);" data-astro-cid-6munbmg7> <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><path d="m12 19-7-7 7-7" data-astro-cid-6munbmg7></path><path d="M19 12H5" data-astro-cid-6munbmg7></path></svg> </span> <span class="sidebar-label" data-astro-cid-6munbmg7>Back to Dashboard</span> </a> <!-- Divider --> <div class="sidebar-divider" style="border-top: 1px solid var(--sidebar-border);" data-astro-cid-6munbmg7></div> <!-- Course switcher --> <a href="../../hld.html" class="nav-item sidebar-child-link" style="color: var(--sidebar-text); background-color: transparent;" title="HLD Course" data-astro-cid-6munbmg7> <span class="sidebar-nav-icon" style="color: var(--sidebar-text-secondary);" data-astro-cid-6munbmg7> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" data-astro-cid-6munbmg7></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" data-astro-cid-6munbmg7></path></svg> </span> <span class="sidebar-label flex-1" data-astro-cid-6munbmg7>HLD Course</span> </a> <a href="../../lld.html" class="nav-item sidebar-child-link nav-item-active" style="color: var(--sidebar-accent); background-color: var(--sidebar-accent-bg);" title="LLD Course" data-astro-cid-6munbmg7> <span class="sidebar-nav-icon" style="color: var(--sidebar-text-secondary);" data-astro-cid-6munbmg7> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><path d="m18 16 4-4-4-4" data-astro-cid-6munbmg7></path><path d="m6 8-4 4 4 4" data-astro-cid-6munbmg7></path><path d="m14.5 4-5 16" data-astro-cid-6munbmg7></path></svg> </span> <span class="sidebar-label flex-1" data-astro-cid-6munbmg7>LLD Course</span> <span class="sidebar-label text-[10px] font-semibold rounded-full px-2 py-0.5" style="background-color: var(--sidebar-accent-bg); color: var(--sidebar-accent);" data-astro-cid-6munbmg7>
+New
+</span> </a>   <div class="sidebar-divider sidebar-show-expanded" style="border-top: 1px solid var(--sidebar-border);" data-astro-cid-6munbmg7></div> <div class="sidebar-modules-section sidebar-show-expanded" data-astro-cid-6munbmg7> <div class="sidebar-modules-label" style="color: var(--sidebar-text-secondary);" data-astro-cid-6munbmg7>
+Modules
+</div> <div class="module-item" data-module-id="01-oop-fundamentals" data-astro-cid-6munbmg7> <button class="module-header active-module" role="button" tabindex="0" aria-expanded="true" aria-controls="module-topics-01-oop-fundamentals" data-module-id="01-oop-fundamentals" data-astro-cid-6munbmg7> <span class="module-chevron expanded" data-astro-cid-6munbmg7> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><path d="m9 18 6-6-6-6" data-astro-cid-6munbmg7></path></svg> </span> <span class="module-number module-number-active" data-astro-cid-6munbmg7> 1 </span> <span class="module-name" style="color: var(--sidebar-accent); font-weight: 600;" data-astro-cid-6munbmg7> OOP Fundamentals </span> <span class="module-count" style="color: var(--sidebar-text-secondary);" data-astro-cid-6munbmg7> 9 </span> </button> <div id="module-topics-01-oop-fundamentals" class="module-topics expanded" role="region" aria-label="OOP Fundamentals topics" data-astro-cid-6munbmg7> <a href="classes-and-objects.html" class="topic-link" title="Classes and Objects in OOP Explained" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Classes and Objects in OOP Explained</span> </a><a href="enums.html" class="topic-link" title="Enums in OOP: Use Cases &#38; Best Practices" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Enums in OOP: Use Cases &amp; Best Practices</span> </a><a href="interfaces.html" class="topic-link" title="Interfaces in OOP: When &#38; How to Use Them" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Interfaces in OOP: When &amp; How to Use Them</span> </a><a href="encapsulation.html" class="topic-link active" aria-current="page" title="Encapsulation in OOP: Definition &#38; Examples" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Encapsulation in OOP: Definition &amp; Examples</span> </a><a href="abstraction.html" class="topic-link" title="Abstraction in OOP: Concepts &#38; Interview Guide" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Abstraction in OOP: Concepts &amp; Interview Guide</span> </a><a href="inheritance.html" class="topic-link" title="Inheritance in OOP: Types &#38; Interview Guide" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Inheritance in OOP: Types &amp; Interview Guide</span> </a><a href="polymorphism.html" class="topic-link" title="Polymorphism in OOP: Runtime vs Compile-Time" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Polymorphism in OOP: Runtime vs Compile-Time</span> </a><a href="abstract-classes-vs-interfaces.html" class="topic-link" title="Abstract Classes vs Interfaces in OOP" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Abstract Classes vs Interfaces in OOP</span> </a><a href="method-overloading-vs-overriding.html" class="topic-link" title="Method Overloading vs Overriding in OOP" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Method Overloading vs Overriding in OOP</span> </a> </div> </div><div class="module-item" data-module-id="02-class-relationships" data-astro-cid-6munbmg7> <button class="module-header" role="button" tabindex="0" aria-expanded="false" aria-controls="module-topics-02-class-relationships" data-module-id="02-class-relationships" data-astro-cid-6munbmg7> <span class="module-chevron" data-astro-cid-6munbmg7> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><path d="m9 18 6-6-6-6" data-astro-cid-6munbmg7></path></svg> </span> <span class="module-number" data-astro-cid-6munbmg7> 2 </span> <span class="module-name" style="color: var(--sidebar-text);" data-astro-cid-6munbmg7> Class Relationships </span> <span class="module-count" style="color: var(--sidebar-text-secondary);" data-astro-cid-6munbmg7> 4 </span> </button> <div id="module-topics-02-class-relationships" class="module-topics" role="region" aria-label="Class Relationships topics" data-astro-cid-6munbmg7> <a href="../02-class-relationships/association.html" class="topic-link" title="Association in OOP: Object Relationships Guide" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Association in OOP: Object Relationships Guide</span> </a><a href="../02-class-relationships/aggregation.html" class="topic-link" title="Aggregation in OOP: Has-A Relationship Explained" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Aggregation in OOP: Has-A Relationship Explained</span> </a><a href="../02-class-relationships/composition.html" class="topic-link" title="Composition in OOP: Strong Has-A Relationship" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Composition in OOP: Strong Has-A Relationship</span> </a><a href="../02-class-relationships/dependency.html" class="topic-link" title="Dependency in OOP: Uses-A Relationship Guide" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Dependency in OOP: Uses-A Relationship Guide</span> </a> </div> </div><div class="module-item" data-module-id="03-design-principles" data-astro-cid-6munbmg7> <button class="module-header" role="button" tabindex="0" aria-expanded="false" aria-controls="module-topics-03-design-principles" data-module-id="03-design-principles" data-astro-cid-6munbmg7> <span class="module-chevron" data-astro-cid-6munbmg7> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><path d="m9 18 6-6-6-6" data-astro-cid-6munbmg7></path></svg> </span> <span class="module-number" data-astro-cid-6munbmg7> 3 </span> <span class="module-name" style="color: var(--sidebar-text);" data-astro-cid-6munbmg7> Design Principles </span> <span class="module-count" style="color: var(--sidebar-text-secondary);" data-astro-cid-6munbmg7> 12 </span> </button> <div id="module-topics-03-design-principles" class="module-topics" role="region" aria-label="Design Principles topics" data-astro-cid-6munbmg7> <a href="../03-design-principles/dry.html" class="topic-link" title="DRY Principle: Don't Repeat Yourself in Code" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>DRY Principle: Don&#39;t Repeat Yourself in Code</span> </a><a href="../03-design-principles/yagni.html" class="topic-link" title="YAGNI Principle: You Aren't Gonna Need It" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>YAGNI Principle: You Aren&#39;t Gonna Need It</span> </a><a href="../03-design-principles/kiss.html" class="topic-link" title="KISS Principle: Keep It Simple in Software Design" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>KISS Principle: Keep It Simple in Software Design</span> </a><a href="../03-design-principles/single-responsibility.html" class="topic-link" title="Single Responsibility Principle (SRP) Explained" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Single Responsibility Principle (SRP) Explained</span> </a><a href="../03-design-principles/open-closed.html" class="topic-link" title="Open-Closed Principle (OCP): Extend, Don't Modify" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Open-Closed Principle (OCP): Extend, Don&#39;t Modify</span> </a><a href="../03-design-principles/liskov-substitution.html" class="topic-link" title="Liskov Substitution Principle (LSP) Explained" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Liskov Substitution Principle (LSP) Explained</span> </a><a href="../03-design-principles/interface-segregation.html" class="topic-link" title="Interface Segregation Principle (ISP) Explained" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Interface Segregation Principle (ISP) Explained</span> </a><a href="../03-design-principles/dependency-inversion.html" class="topic-link" title="Dependency Inversion Principle (DIP) Explained" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Dependency Inversion Principle (DIP) Explained</span> </a><a href="../03-design-principles/composition-over-inheritance.html" class="topic-link" title="Composition over Inheritance: When and Why" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Composition over Inheritance: When and Why</span> </a><a href="../03-design-principles/law-of-demeter.html" class="topic-link" title="Law of Demeter: Principle of Least Knowledge" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Law of Demeter: Principle of Least Knowledge</span> </a><a href="../03-design-principles/cohesion-and-coupling.html" class="topic-link" title="Cohesion and Coupling in Software Design" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Cohesion and Coupling in Software Design</span> </a><a href="../03-design-principles/thread-safety-in-ood.html" class="topic-link" title="Thread Safety in OOP: Locks, Sync &#38; Patterns" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Thread Safety in OOP: Locks, Sync &amp; Patterns</span> </a> </div> </div><div class="module-item" data-module-id="04-design-patterns" data-astro-cid-6munbmg7> <button class="module-header" role="button" tabindex="0" aria-expanded="false" aria-controls="module-topics-04-design-patterns" data-module-id="04-design-patterns" data-astro-cid-6munbmg7> <span class="module-chevron" data-astro-cid-6munbmg7> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><path d="m9 18 6-6-6-6" data-astro-cid-6munbmg7></path></svg> </span> <span class="module-number" data-astro-cid-6munbmg7> 4 </span> <span class="module-name" style="color: var(--sidebar-text);" data-astro-cid-6munbmg7> Design Patterns </span> <span class="module-count" style="color: var(--sidebar-text-secondary);" data-astro-cid-6munbmg7> 23 </span> </button> <div id="module-topics-04-design-patterns" class="module-topics" role="region" aria-label="Design Patterns topics" data-astro-cid-6munbmg7> <a href="../04-design-patterns/singleton.html" class="topic-link" title="Singleton Pattern: Ensure One Instance" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Singleton Pattern: Ensure One Instance</span> </a><a href="../04-design-patterns/factory-method.html" class="topic-link" title="Factory Method Pattern: Creational Design Guide" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Factory Method Pattern: Creational Design Guide</span> </a><a href="../04-design-patterns/abstract-factory.html" class="topic-link" title="Abstract Factory Pattern: Guide &#38; Examples" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Abstract Factory Pattern: Guide &amp; Examples</span> </a><a href="../04-design-patterns/builder.html" class="topic-link" title="Builder Pattern: Creational Design Guide" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Builder Pattern: Creational Design Guide</span> </a><a href="../04-design-patterns/prototype.html" class="topic-link" title="Prototype Pattern: Clone Objects Efficiently" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Prototype Pattern: Clone Objects Efficiently</span> </a><a href="../04-design-patterns/adapter.html" class="topic-link" title="Adapter Pattern: Structural Design Guide" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Adapter Pattern: Structural Design Guide</span> </a><a href="../04-design-patterns/bridge.html" class="topic-link" title="Bridge Pattern: Decouple Abstraction from Implementation" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Bridge Pattern: Decouple Abstraction from Implementation</span> </a><a href="../04-design-patterns/composite.html" class="topic-link" title="Composite Pattern: Tree Structure Design Guide" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Composite Pattern: Tree Structure Design Guide</span> </a><a href="../04-design-patterns/decorator.html" class="topic-link" title="Decorator Pattern: Add Behavior Dynamically" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Decorator Pattern: Add Behavior Dynamically</span> </a><a href="../04-design-patterns/facade.html" class="topic-link" title="Facade Pattern: Simplify Complex Subsystems" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Facade Pattern: Simplify Complex Subsystems</span> </a><a href="../04-design-patterns/flyweight.html" class="topic-link" title="Flyweight Pattern: Memory Optimization Design" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Flyweight Pattern: Memory Optimization Design</span> </a><a href="../04-design-patterns/proxy.html" class="topic-link" title="Proxy Pattern: Control Object Access in OOP" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Proxy Pattern: Control Object Access in OOP</span> </a><a href="../04-design-patterns/iterator.html" class="topic-link" title="Iterator Pattern: Traverse Collections in OOP" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Iterator Pattern: Traverse Collections in OOP</span> </a><a href="../04-design-patterns/observer.html" class="topic-link" title="Observer Pattern: Event-Driven Design Guide" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Observer Pattern: Event-Driven Design Guide</span> </a><a href="../04-design-patterns/strategy.html" class="topic-link" title="Strategy Pattern: Swap Algorithms at Runtime" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Strategy Pattern: Swap Algorithms at Runtime</span> </a><a href="../04-design-patterns/command.html" class="topic-link" title="Command Pattern: Behavioral Design Guide" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Command Pattern: Behavioral Design Guide</span> </a><a href="../04-design-patterns/state.html" class="topic-link" title="State Pattern: Manage Object State Transitions" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>State Pattern: Manage Object State Transitions</span> </a><a href="../04-design-patterns/template-method.html" class="topic-link" title="Template Method Pattern: Define Algorithm Skeleton" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Template Method Pattern: Define Algorithm Skeleton</span> </a><a href="../04-design-patterns/visitor.html" class="topic-link" title="Visitor Pattern: Add Operations Without Changing Classes" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Visitor Pattern: Add Operations Without Changing Classes</span> </a><a href="../04-design-patterns/mediator.html" class="topic-link" title="Mediator Pattern: Reduce Object Coupling" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Mediator Pattern: Reduce Object Coupling</span> </a><a href="../04-design-patterns/memento.html" class="topic-link" title="Memento Pattern: Undo/Redo State Management" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Memento Pattern: Undo/Redo State Management</span> </a><a href="../04-design-patterns/chain-of-responsibility.html" class="topic-link" title="Chain of Responsibility Pattern Explained" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Chain of Responsibility Pattern Explained</span> </a><a href="../04-design-patterns/interpreter.html" class="topic-link" title="Interpreter Pattern: Parse Grammars in OOP" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Interpreter Pattern: Parse Grammars in OOP</span> </a> </div> </div><div class="module-item" data-module-id="05-uml-diagrams" data-astro-cid-6munbmg7> <button class="module-header" role="button" tabindex="0" aria-expanded="false" aria-controls="module-topics-05-uml-diagrams" data-module-id="05-uml-diagrams" data-astro-cid-6munbmg7> <span class="module-chevron" data-astro-cid-6munbmg7> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><path d="m9 18 6-6-6-6" data-astro-cid-6munbmg7></path></svg> </span> <span class="module-number" data-astro-cid-6munbmg7> 5 </span> <span class="module-name" style="color: var(--sidebar-text);" data-astro-cid-6munbmg7> UML Diagrams </span> <span class="module-count" style="color: var(--sidebar-text-secondary);" data-astro-cid-6munbmg7> 5 </span> </button> <div id="module-topics-05-uml-diagrams" class="module-topics" role="region" aria-label="UML Diagrams topics" data-astro-cid-6munbmg7> <a href="../05-uml-diagrams/class-diagram.html" class="topic-link" title="Class Diagrams in UML: Notation &#38; Examples" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Class Diagrams in UML: Notation &amp; Examples</span> </a><a href="../05-uml-diagrams/use-case-diagram.html" class="topic-link" title="Use Case Diagrams in UML: Guide &#38; Examples" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Use Case Diagrams in UML: Guide &amp; Examples</span> </a><a href="../05-uml-diagrams/sequence-diagram.html" class="topic-link" title="Sequence Diagrams in UML: Guide &#38; Examples" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Sequence Diagrams in UML: Guide &amp; Examples</span> </a><a href="../05-uml-diagrams/activity-diagram.html" class="topic-link" title="Activity Diagrams in UML: Guide &#38; Examples" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Activity Diagrams in UML: Guide &amp; Examples</span> </a><a href="../05-uml-diagrams/state-machine-diagram.html" class="topic-link" title="State Machine Diagrams in UML Explained" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>State Machine Diagrams in UML Explained</span> </a> </div> </div><div class="module-item" data-module-id="06-concurrency-and-threading" data-astro-cid-6munbmg7> <button class="module-header" role="button" tabindex="0" aria-expanded="false" aria-controls="module-topics-06-concurrency-and-threading" data-module-id="06-concurrency-and-threading" data-astro-cid-6munbmg7> <span class="module-chevron" data-astro-cid-6munbmg7> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><path d="m9 18 6-6-6-6" data-astro-cid-6munbmg7></path></svg> </span> <span class="module-number" data-astro-cid-6munbmg7> 6 </span> <span class="module-name" style="color: var(--sidebar-text);" data-astro-cid-6munbmg7> Concurrency &amp; Threading </span> <span class="module-count" style="color: var(--sidebar-text-secondary);" data-astro-cid-6munbmg7> 6 </span> </button> <div id="module-topics-06-concurrency-and-threading" class="module-topics" role="region" aria-label="Concurrency &#38; Threading topics" data-astro-cid-6munbmg7> <a href="../06-concurrency-and-threading/deadlock-livelock-starvation.html" class="topic-link" title="Deadlock, Livelock &#38; Starvation in Java" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Deadlock, Livelock &amp; Starvation in Java</span> </a><a href="../06-concurrency-and-threading/producer-consumer-problem.html" class="topic-link" title="Producer-Consumer Problem: Java Thread Solution" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Producer-Consumer Problem: Java Thread Solution</span> </a><a href="../06-concurrency-and-threading/synchronization.html" class="topic-link" title="Synchronization in Java: Locks &#38; Monitors Guide" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Synchronization in Java: Locks &amp; Monitors Guide</span> </a><a href="../06-concurrency-and-threading/threads-vs-processes.html" class="topic-link" title="Threads vs Processes: Key Differences Explained" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Threads vs Processes: Key Differences Explained</span> </a><a href="../06-concurrency-and-threading/thread-pools.html" class="topic-link" title="Thread Pools in Java: ExecutorService Guide" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Thread Pools in Java: ExecutorService Guide</span> </a><a href="../06-concurrency-and-threading/volatile-atomic-variables.html" class="topic-link" title="Volatile vs Atomic Variables: Java Concurrency Guide" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Volatile vs Atomic Variables: Java Concurrency Guide</span> </a> </div> </div><div class="module-item" data-module-id="07-interview-approach" data-astro-cid-6munbmg7> <button class="module-header" role="button" tabindex="0" aria-expanded="false" aria-controls="module-topics-07-interview-approach" data-module-id="07-interview-approach" data-astro-cid-6munbmg7> <span class="module-chevron" data-astro-cid-6munbmg7> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><path d="m9 18 6-6-6-6" data-astro-cid-6munbmg7></path></svg> </span> <span class="module-number" data-astro-cid-6munbmg7> 7 </span> <span class="module-name" style="color: var(--sidebar-text);" data-astro-cid-6munbmg7> Interview Approach </span> <span class="module-count" style="color: var(--sidebar-text-secondary);" data-astro-cid-6munbmg7> 0 </span> </button> <div id="module-topics-07-interview-approach" class="module-topics" role="region" aria-label="Interview Approach topics" data-astro-cid-6munbmg7>  </div> </div> </div>  </nav> <!-- Bottom section --> <div class="sidebar-bottom" style="border-top: 1px solid var(--sidebar-border);" data-astro-cid-6munbmg7> <!-- Expand/Collapse toggle - consistent position at bottom --> <button id="sidebar-expand-btn" class="sidebar-toggle-btn" title="Collapse sidebar" aria-label="Toggle sidebar" aria-expanded="true" aria-controls="course-sidebar" style="color: var(--sidebar-text-secondary); border: 1px solid var(--sidebar-border);" data-astro-cid-6munbmg7> <svg class="sidebar-toggle-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><rect width="18" height="18" x="3" y="3" rx="2" data-astro-cid-6munbmg7></rect><path d="M9 3v18" data-astro-cid-6munbmg7></path><path d="m14 9-3 3 3 3" data-astro-cid-6munbmg7></path></svg> <span class="sidebar-label" style="font-size: 0.8125rem; font-weight: 500;" data-astro-cid-6munbmg7>Collapse</span> </button> <!-- Sign In button (hidden when already authenticated) --> <a id="sidebar-signin-btn" href="https://layrs.me/dashboard?next=%2Fcourse%2Flld%2F01-oop-fundamentals%2Fencapsulation%2F" class="sidebar-signin-btn" style="color: white; background-color: var(--sidebar-accent);" title="Sign In" data-astro-cid-6munbmg7> <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" data-astro-cid-6munbmg7></path><circle cx="12" cy="7" r="4" data-astro-cid-6munbmg7></circle></svg> <span class="sidebar-label" data-astro-cid-6munbmg7>Sign In</span> </a> <!-- Dashboard button (shown when authenticated) --> <a id="sidebar-dashboard-btn" href="https://layrs.me/dashboard" class="sidebar-signin-btn" style="color: white; background-color: var(--sidebar-accent); display: none;" title="Dashboard" data-astro-cid-6munbmg7> <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><rect x="3" y="3" width="7" height="7" data-astro-cid-6munbmg7></rect><rect x="14" y="3" width="7" height="7" data-astro-cid-6munbmg7></rect><rect x="14" y="14" width="7" height="7" data-astro-cid-6munbmg7></rect><rect x="3" y="14" width="7" height="7" data-astro-cid-6munbmg7></rect></svg> <span class="sidebar-label" data-astro-cid-6munbmg7>Dashboard</span> </a> <!-- Theme toggle --> <div id="theme-toggle" class="sidebar-theme-toggle" style="background-color: rgba(0, 0, 0, 0.05);" data-astro-cid-6munbmg7> <button id="theme-light-btn" class="sidebar-theme-btn" title="Light mode" data-astro-cid-6munbmg7> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><circle cx="12" cy="12" r="4" data-astro-cid-6munbmg7></circle><path d="M12 2v2" data-astro-cid-6munbmg7></path><path d="M12 20v2" data-astro-cid-6munbmg7></path><path d="m4.93 4.93 1.41 1.41" data-astro-cid-6munbmg7></path><path d="m17.66 17.66 1.41 1.41" data-astro-cid-6munbmg7></path><path d="M2 12h2" data-astro-cid-6munbmg7></path><path d="M20 12h2" data-astro-cid-6munbmg7></path><path d="m6.34 17.66-1.41 1.41" data-astro-cid-6munbmg7></path><path d="m19.07 4.93-1.41 1.41" data-astro-cid-6munbmg7></path></svg> </button> <button id="theme-dark-btn" class="sidebar-theme-btn" title="Dark mode" data-astro-cid-6munbmg7> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" data-astro-cid-6munbmg7></path></svg> </button> </div> <!-- Social links (hidden when collapsed) --> <div class="sidebar-social-row sidebar-hide-collapsed" data-astro-cid-6munbmg7> <a href="https://lnkd.in/g9f98NBH" target="_blank" rel="noopener noreferrer" class="sidebar-social-link" style="border: 1px solid var(--sidebar-border); color: var(--sidebar-text-secondary);" aria-label="Discord" title="Discord" data-astro-cid-6munbmg7> <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z" data-astro-cid-6munbmg7></path></svg> </a> <a href="https://www.linkedin.com/company/layrs" target="_blank" rel="noopener noreferrer" class="sidebar-social-link" style="border: 1px solid var(--sidebar-border); color: var(--sidebar-text-secondary);" aria-label="LinkedIn" title="LinkedIn" data-astro-cid-6munbmg7> <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" data-astro-cid-6munbmg7></path><rect width="4" height="12" x="2" y="9" data-astro-cid-6munbmg7></rect><circle cx="4" cy="4" r="2" data-astro-cid-6munbmg7></circle></svg> </a> <a href="https://www.instagram.com/layrs.me" target="_blank" rel="noopener noreferrer" class="sidebar-social-link" style="border: 1px solid var(--sidebar-border); color: var(--sidebar-text-secondary);" aria-label="Instagram" title="Instagram" data-astro-cid-6munbmg7> <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><rect width="20" height="20" x="2" y="2" rx="5" ry="5" data-astro-cid-6munbmg7></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" data-astro-cid-6munbmg7></path><line x1="17.5" x2="17.51" y1="6.5" y2="6.5" data-astro-cid-6munbmg7></line></svg> </a> <a href="mailto:support@layrs.me" class="sidebar-social-link" style="border: 1px solid var(--sidebar-border); color: var(--sidebar-text-secondary);" aria-label="Email" title="Email" data-astro-cid-6munbmg7> <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><rect width="20" height="16" x="2" y="4" rx="2" data-astro-cid-6munbmg7></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" data-astro-cid-6munbmg7></path></svg> </a> </div> </div> </aside>  <script>
+  // Toggle Sign In vs Dashboard based on Supabase auth session in localStorage
+  (function initAuthButton() {
+    var signInBtn = document.getElementById('sidebar-signin-btn');
+    var dashboardBtn = document.getElementById('sidebar-dashboard-btn');
+    if (!signInBtn || !dashboardBtn) return;
+
+    var hasSession = false;
+    try {
+      var keys = Object.keys(localStorage);
+      for (var i = 0; i < keys.length; i++) {
+        if (keys[i].indexOf('sb-') === 0 && keys[i].indexOf('-auth-token') !== -1) {
+          var data = JSON.parse(localStorage.getItem(keys[i]) || '{}');
+          if (data && data.access_token) { hasSession = true; break; }
+        }
+      }
+    } catch (e) {}
+
+    if (hasSession) {
+      signInBtn.style.display = 'none';
+      dashboardBtn.style.display = '';
+    }
+  })();
+</script> <script>
+  // Sidebar collapse toggle + accordion modules + mobile drawer
+  (function initSidebar() {
+    if (window.__sidebarInit) return;
+    window.__sidebarInit = true;
+
+    var sidebar = document.getElementById('course-sidebar');
+    var toggleBtn = document.getElementById('sidebar-expand-btn');
+    var closeBtn = document.getElementById('sidebar-close-btn');
+    if (!sidebar) return;
+
+    // --- Collapse/Expand ---
+    var saved = localStorage.getItem('sidebar-collapsed');
+    if (saved === 'true') {
+      sidebar.classList.add('collapsed');
+      updateToggleState(true);
+    }
+
+    function updateToggleState(isCollapsed) {
+      if (!toggleBtn) return;
+      toggleBtn.setAttribute('aria-expanded', isCollapsed ? 'false' : 'true');
+      toggleBtn.title = isCollapsed ? 'Expand sidebar' : 'Collapse sidebar';
+      var label = toggleBtn.querySelector('.sidebar-label');
+      if (label) label.textContent = isCollapsed ? 'Expand' : 'Collapse';
+    }
+
+    function toggleSidebar() {
+      var isCollapsed = sidebar.classList.contains('collapsed');
+      if (isCollapsed) {
+        sidebar.classList.remove('collapsed');
+        localStorage.setItem('sidebar-collapsed', 'false');
+        updateToggleState(false);
+      } else {
+        sidebar.classList.add('collapsed');
+        localStorage.setItem('sidebar-collapsed', 'true');
+        updateToggleState(true);
+      }
+    }
+
+    if (toggleBtn) {
+      toggleBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        toggleSidebar();
+      });
+    }
+
+    // --- Mobile close button ---
+    if (closeBtn) {
+      closeBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        closeMobileDrawer();
+      });
+    }
+
+    // --- Mobile drawer helpers ---
+    function closeMobileDrawer() {
+      var overlay = document.getElementById('mobile-sidebar-overlay');
+      if (overlay) {
+        overlay.classList.add('closing');
+        setTimeout(function() {
+          overlay.classList.add('hidden');
+          overlay.classList.remove('closing');
+          document.body.style.overflow = '';
+        }, 250);
+      }
+    }
+
+    // Expose for backdrop click
+    window.__closeMobileDrawer = closeMobileDrawer;
+
+    // Escape key handler
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        var overlay = document.getElementById('mobile-sidebar-overlay');
+        if (overlay && !overlay.classList.contains('hidden')) {
+          closeMobileDrawer();
+        }
+      }
+    });
+
+    // --- Module accordion ---
+    var moduleHeaders = sidebar.querySelectorAll('.module-header');
+    moduleHeaders.forEach(function(header) {
+      header.addEventListener('click', function(e) {
+        e.preventDefault();
+        toggleModule(header);
+      });
+
+      // Keyboard support
+      header.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          toggleModule(header);
+        }
+      });
+    });
+
+    function toggleModule(header) {
+      var item = header.closest('.module-item');
+      var topics = item.querySelector('.module-topics');
+      var chevron = header.querySelector('.module-chevron');
+      var isExpanded = header.getAttribute('aria-expanded') === 'true';
+
+      // Close all other modules (accordion behavior)
+      sidebar.querySelectorAll('.module-item').forEach(function(otherItem) {
+        if (otherItem !== item) {
+          var oh = otherItem.querySelector('.module-header');
+          var ot = otherItem.querySelector('.module-topics');
+          var oc = otherItem.querySelector('.module-chevron');
+          if (oh) oh.setAttribute('aria-expanded', 'false');
+          if (ot) ot.classList.remove('expanded');
+          if (oc) oc.classList.remove('expanded');
+        }
+      });
+
+      // Toggle current
+      if (isExpanded) {
+        header.setAttribute('aria-expanded', 'false');
+        if (topics) topics.classList.remove('expanded');
+        if (chevron) chevron.classList.remove('expanded');
+      } else {
+        header.setAttribute('aria-expanded', 'true');
+        if (topics) topics.classList.add('expanded');
+        if (chevron) chevron.classList.add('expanded');
+
+        // Auto-scroll active topic into view
+        setTimeout(function() {
+          var activeLink = topics && topics.querySelector('.topic-link.active, .topic-link[aria-current="page"]');
+          if (activeLink) {
+            activeLink.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+          }
+        }, 280);
+      }
+    }
+
+    // Auto-scroll active topic on load
+    setTimeout(function() {
+      var activeLink = sidebar.querySelector('.topic-link.active, .topic-link[aria-current="page"]');
+      if (activeLink) {
+        activeLink.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+      }
+    }, 100);
+  })();
+
+  // Theme toggle (guard against duplicate listeners)
+  (function initThemeToggle() {
+    if (window.__themeToggleInit) return;
+    window.__themeToggleInit = true;
+    var lightBtn = document.getElementById('theme-light-btn');
+    var darkBtn = document.getElementById('theme-dark-btn');
+    var toggleWrap = document.getElementById('theme-toggle');
+    var root = document.documentElement;
+
+    function applyTheme(theme) {
+      if (theme === 'dark') {
+        root.classList.add('dark');
+        if (toggleWrap) toggleWrap.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
+        if (lightBtn) {
+          lightBtn.style.backgroundColor = 'transparent';
+          lightBtn.style.color = 'var(--sidebar-text-secondary)';
+          lightBtn.style.boxShadow = 'none';
+        }
+        if (darkBtn) {
+          darkBtn.style.backgroundColor = 'var(--sidebar-bg)';
+          darkBtn.style.color = 'var(--sidebar-accent)';
+          darkBtn.style.boxShadow = '0 1px 2px 0 rgba(0,0,0,0.05)';
+        }
+      } else {
+        root.classList.remove('dark');
+        if (toggleWrap) toggleWrap.style.backgroundColor = 'rgba(0, 0, 0, 0.05)';
+        if (lightBtn) {
+          lightBtn.style.backgroundColor = 'var(--sidebar-bg)';
+          lightBtn.style.color = 'var(--sidebar-accent)';
+          lightBtn.style.boxShadow = '0 1px 2px 0 rgba(0,0,0,0.05)';
+        }
+        if (darkBtn) {
+          darkBtn.style.backgroundColor = 'transparent';
+          darkBtn.style.color = 'var(--sidebar-text-secondary)';
+          darkBtn.style.boxShadow = 'none';
+        }
+      }
+    }
+
+    var saved = localStorage.getItem('theme') || 'light';
+    applyTheme(saved);
+
+    if (lightBtn) {
+      lightBtn.addEventListener('click', function() {
+        localStorage.setItem('theme', 'light');
+        applyTheme('light');
+      });
+    }
+    if (darkBtn) {
+      darkBtn.addEventListener('click', function() {
+        localStorage.setItem('theme', 'dark');
+        applyTheme('dark');
+      });
+    }
+  })();
+</script> </div> <!-- Mobile sidebar overlay (hidden by default) --> <div id="mobile-sidebar-overlay" class="mobile-overlay hidden lg:hidden"> <div class="mobile-backdrop" id="mobile-sidebar-backdrop"></div> <div class="mobile-drawer"> <aside id="course-sidebar" class="sidebar h-screen flex flex-col" role="navigation" aria-label="Course navigation" style="background-color: var(--sidebar-bg); border-right: 1px solid var(--sidebar-border);" data-astro-cid-6munbmg7> <!-- Logo + Collapse button (desktop) / Close button (mobile) --> <div class="sidebar-logo-section" style="border-bottom: 1px solid var(--sidebar-border);" data-astro-cid-6munbmg7> <a href="https://layrs.me/" class="sidebar-logo-link" title="Layrs" data-astro-cid-6munbmg7> <div class="sidebar-icon-box" data-astro-cid-6munbmg7> <img src="../../Layrs.jpeg" alt="Layrs Logo" class="w-full h-full object-cover" onerror="this.style.display='none'" data-astro-cid-6munbmg7> </div> <span class="sidebar-label text-lg font-semibold" style="color: var(--sidebar-text);" data-astro-cid-6munbmg7>Layrs</span> </a> <!-- Mobile close button --> <button id="sidebar-close-btn" class="sidebar-close-btn sidebar-mobile-only" title="Close menu" aria-label="Close menu" style="color: var(--sidebar-text-secondary);" data-astro-cid-6munbmg7> <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><path d="M18 6 6 18" data-astro-cid-6munbmg7></path><path d="m6 6 12 12" data-astro-cid-6munbmg7></path></svg> </button> </div> <!-- Navigation --> <nav class="flex-1 overflow-y-auto py-3" id="sidebar-nav-area" data-astro-cid-6munbmg7> <!-- Back to Dashboard - always visible, icon-only when collapsed --> <a href="https://layrs.me/dashboard" class="nav-item sidebar-nav-link" style="color: var(--sidebar-text);" title="Back to Dashboard" data-astro-cid-6munbmg7> <span class="sidebar-nav-icon" style="color: var(--sidebar-text-secondary);" data-astro-cid-6munbmg7> <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><path d="m12 19-7-7 7-7" data-astro-cid-6munbmg7></path><path d="M19 12H5" data-astro-cid-6munbmg7></path></svg> </span> <span class="sidebar-label" data-astro-cid-6munbmg7>Back to Dashboard</span> </a> <!-- Divider --> <div class="sidebar-divider" style="border-top: 1px solid var(--sidebar-border);" data-astro-cid-6munbmg7></div> <!-- Course switcher --> <a href="../../hld.html" class="nav-item sidebar-child-link" style="color: var(--sidebar-text); background-color: transparent;" title="HLD Course" data-astro-cid-6munbmg7> <span class="sidebar-nav-icon" style="color: var(--sidebar-text-secondary);" data-astro-cid-6munbmg7> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" data-astro-cid-6munbmg7></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" data-astro-cid-6munbmg7></path></svg> </span> <span class="sidebar-label flex-1" data-astro-cid-6munbmg7>HLD Course</span> </a> <a href="../../lld.html" class="nav-item sidebar-child-link nav-item-active" style="color: var(--sidebar-accent); background-color: var(--sidebar-accent-bg);" title="LLD Course" data-astro-cid-6munbmg7> <span class="sidebar-nav-icon" style="color: var(--sidebar-text-secondary);" data-astro-cid-6munbmg7> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><path d="m18 16 4-4-4-4" data-astro-cid-6munbmg7></path><path d="m6 8-4 4 4 4" data-astro-cid-6munbmg7></path><path d="m14.5 4-5 16" data-astro-cid-6munbmg7></path></svg> </span> <span class="sidebar-label flex-1" data-astro-cid-6munbmg7>LLD Course</span> <span class="sidebar-label text-[10px] font-semibold rounded-full px-2 py-0.5" style="background-color: var(--sidebar-accent-bg); color: var(--sidebar-accent);" data-astro-cid-6munbmg7>
+New
+</span> </a>   <div class="sidebar-divider sidebar-show-expanded" style="border-top: 1px solid var(--sidebar-border);" data-astro-cid-6munbmg7></div> <div class="sidebar-modules-section sidebar-show-expanded" data-astro-cid-6munbmg7> <div class="sidebar-modules-label" style="color: var(--sidebar-text-secondary);" data-astro-cid-6munbmg7>
+Modules
+</div> <div class="module-item" data-module-id="01-oop-fundamentals" data-astro-cid-6munbmg7> <button class="module-header active-module" role="button" tabindex="0" aria-expanded="true" aria-controls="module-topics-01-oop-fundamentals" data-module-id="01-oop-fundamentals" data-astro-cid-6munbmg7> <span class="module-chevron expanded" data-astro-cid-6munbmg7> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><path d="m9 18 6-6-6-6" data-astro-cid-6munbmg7></path></svg> </span> <span class="module-number module-number-active" data-astro-cid-6munbmg7> 1 </span> <span class="module-name" style="color: var(--sidebar-accent); font-weight: 600;" data-astro-cid-6munbmg7> OOP Fundamentals </span> <span class="module-count" style="color: var(--sidebar-text-secondary);" data-astro-cid-6munbmg7> 9 </span> </button> <div id="module-topics-01-oop-fundamentals" class="module-topics expanded" role="region" aria-label="OOP Fundamentals topics" data-astro-cid-6munbmg7> <a href="classes-and-objects.html" class="topic-link" title="Classes and Objects in OOP Explained" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Classes and Objects in OOP Explained</span> </a><a href="enums.html" class="topic-link" title="Enums in OOP: Use Cases &#38; Best Practices" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Enums in OOP: Use Cases &amp; Best Practices</span> </a><a href="interfaces.html" class="topic-link" title="Interfaces in OOP: When &#38; How to Use Them" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Interfaces in OOP: When &amp; How to Use Them</span> </a><a href="encapsulation.html" class="topic-link active" aria-current="page" title="Encapsulation in OOP: Definition &#38; Examples" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Encapsulation in OOP: Definition &amp; Examples</span> </a><a href="abstraction.html" class="topic-link" title="Abstraction in OOP: Concepts &#38; Interview Guide" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Abstraction in OOP: Concepts &amp; Interview Guide</span> </a><a href="inheritance.html" class="topic-link" title="Inheritance in OOP: Types &#38; Interview Guide" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Inheritance in OOP: Types &amp; Interview Guide</span> </a><a href="polymorphism.html" class="topic-link" title="Polymorphism in OOP: Runtime vs Compile-Time" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Polymorphism in OOP: Runtime vs Compile-Time</span> </a><a href="abstract-classes-vs-interfaces.html" class="topic-link" title="Abstract Classes vs Interfaces in OOP" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Abstract Classes vs Interfaces in OOP</span> </a><a href="method-overloading-vs-overriding.html" class="topic-link" title="Method Overloading vs Overriding in OOP" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Method Overloading vs Overriding in OOP</span> </a> </div> </div><div class="module-item" data-module-id="02-class-relationships" data-astro-cid-6munbmg7> <button class="module-header" role="button" tabindex="0" aria-expanded="false" aria-controls="module-topics-02-class-relationships" data-module-id="02-class-relationships" data-astro-cid-6munbmg7> <span class="module-chevron" data-astro-cid-6munbmg7> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><path d="m9 18 6-6-6-6" data-astro-cid-6munbmg7></path></svg> </span> <span class="module-number" data-astro-cid-6munbmg7> 2 </span> <span class="module-name" style="color: var(--sidebar-text);" data-astro-cid-6munbmg7> Class Relationships </span> <span class="module-count" style="color: var(--sidebar-text-secondary);" data-astro-cid-6munbmg7> 4 </span> </button> <div id="module-topics-02-class-relationships" class="module-topics" role="region" aria-label="Class Relationships topics" data-astro-cid-6munbmg7> <a href="../02-class-relationships/association.html" class="topic-link" title="Association in OOP: Object Relationships Guide" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Association in OOP: Object Relationships Guide</span> </a><a href="../02-class-relationships/aggregation.html" class="topic-link" title="Aggregation in OOP: Has-A Relationship Explained" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Aggregation in OOP: Has-A Relationship Explained</span> </a><a href="../02-class-relationships/composition.html" class="topic-link" title="Composition in OOP: Strong Has-A Relationship" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Composition in OOP: Strong Has-A Relationship</span> </a><a href="../02-class-relationships/dependency.html" class="topic-link" title="Dependency in OOP: Uses-A Relationship Guide" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Dependency in OOP: Uses-A Relationship Guide</span> </a> </div> </div><div class="module-item" data-module-id="03-design-principles" data-astro-cid-6munbmg7> <button class="module-header" role="button" tabindex="0" aria-expanded="false" aria-controls="module-topics-03-design-principles" data-module-id="03-design-principles" data-astro-cid-6munbmg7> <span class="module-chevron" data-astro-cid-6munbmg7> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><path d="m9 18 6-6-6-6" data-astro-cid-6munbmg7></path></svg> </span> <span class="module-number" data-astro-cid-6munbmg7> 3 </span> <span class="module-name" style="color: var(--sidebar-text);" data-astro-cid-6munbmg7> Design Principles </span> <span class="module-count" style="color: var(--sidebar-text-secondary);" data-astro-cid-6munbmg7> 12 </span> </button> <div id="module-topics-03-design-principles" class="module-topics" role="region" aria-label="Design Principles topics" data-astro-cid-6munbmg7> <a href="../03-design-principles/dry.html" class="topic-link" title="DRY Principle: Don't Repeat Yourself in Code" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>DRY Principle: Don&#39;t Repeat Yourself in Code</span> </a><a href="../03-design-principles/yagni.html" class="topic-link" title="YAGNI Principle: You Aren't Gonna Need It" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>YAGNI Principle: You Aren&#39;t Gonna Need It</span> </a><a href="../03-design-principles/kiss.html" class="topic-link" title="KISS Principle: Keep It Simple in Software Design" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>KISS Principle: Keep It Simple in Software Design</span> </a><a href="../03-design-principles/single-responsibility.html" class="topic-link" title="Single Responsibility Principle (SRP) Explained" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Single Responsibility Principle (SRP) Explained</span> </a><a href="../03-design-principles/open-closed.html" class="topic-link" title="Open-Closed Principle (OCP): Extend, Don't Modify" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Open-Closed Principle (OCP): Extend, Don&#39;t Modify</span> </a><a href="../03-design-principles/liskov-substitution.html" class="topic-link" title="Liskov Substitution Principle (LSP) Explained" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Liskov Substitution Principle (LSP) Explained</span> </a><a href="../03-design-principles/interface-segregation.html" class="topic-link" title="Interface Segregation Principle (ISP) Explained" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Interface Segregation Principle (ISP) Explained</span> </a><a href="../03-design-principles/dependency-inversion.html" class="topic-link" title="Dependency Inversion Principle (DIP) Explained" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Dependency Inversion Principle (DIP) Explained</span> </a><a href="../03-design-principles/composition-over-inheritance.html" class="topic-link" title="Composition over Inheritance: When and Why" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Composition over Inheritance: When and Why</span> </a><a href="../03-design-principles/law-of-demeter.html" class="topic-link" title="Law of Demeter: Principle of Least Knowledge" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Law of Demeter: Principle of Least Knowledge</span> </a><a href="../03-design-principles/cohesion-and-coupling.html" class="topic-link" title="Cohesion and Coupling in Software Design" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Cohesion and Coupling in Software Design</span> </a><a href="../03-design-principles/thread-safety-in-ood.html" class="topic-link" title="Thread Safety in OOP: Locks, Sync &#38; Patterns" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Thread Safety in OOP: Locks, Sync &amp; Patterns</span> </a> </div> </div><div class="module-item" data-module-id="04-design-patterns" data-astro-cid-6munbmg7> <button class="module-header" role="button" tabindex="0" aria-expanded="false" aria-controls="module-topics-04-design-patterns" data-module-id="04-design-patterns" data-astro-cid-6munbmg7> <span class="module-chevron" data-astro-cid-6munbmg7> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><path d="m9 18 6-6-6-6" data-astro-cid-6munbmg7></path></svg> </span> <span class="module-number" data-astro-cid-6munbmg7> 4 </span> <span class="module-name" style="color: var(--sidebar-text);" data-astro-cid-6munbmg7> Design Patterns </span> <span class="module-count" style="color: var(--sidebar-text-secondary);" data-astro-cid-6munbmg7> 23 </span> </button> <div id="module-topics-04-design-patterns" class="module-topics" role="region" aria-label="Design Patterns topics" data-astro-cid-6munbmg7> <a href="../04-design-patterns/singleton.html" class="topic-link" title="Singleton Pattern: Ensure One Instance" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Singleton Pattern: Ensure One Instance</span> </a><a href="../04-design-patterns/factory-method.html" class="topic-link" title="Factory Method Pattern: Creational Design Guide" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Factory Method Pattern: Creational Design Guide</span> </a><a href="../04-design-patterns/abstract-factory.html" class="topic-link" title="Abstract Factory Pattern: Guide &#38; Examples" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Abstract Factory Pattern: Guide &amp; Examples</span> </a><a href="../04-design-patterns/builder.html" class="topic-link" title="Builder Pattern: Creational Design Guide" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Builder Pattern: Creational Design Guide</span> </a><a href="../04-design-patterns/prototype.html" class="topic-link" title="Prototype Pattern: Clone Objects Efficiently" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Prototype Pattern: Clone Objects Efficiently</span> </a><a href="../04-design-patterns/adapter.html" class="topic-link" title="Adapter Pattern: Structural Design Guide" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Adapter Pattern: Structural Design Guide</span> </a><a href="../04-design-patterns/bridge.html" class="topic-link" title="Bridge Pattern: Decouple Abstraction from Implementation" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Bridge Pattern: Decouple Abstraction from Implementation</span> </a><a href="../04-design-patterns/composite.html" class="topic-link" title="Composite Pattern: Tree Structure Design Guide" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Composite Pattern: Tree Structure Design Guide</span> </a><a href="../04-design-patterns/decorator.html" class="topic-link" title="Decorator Pattern: Add Behavior Dynamically" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Decorator Pattern: Add Behavior Dynamically</span> </a><a href="../04-design-patterns/facade.html" class="topic-link" title="Facade Pattern: Simplify Complex Subsystems" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Facade Pattern: Simplify Complex Subsystems</span> </a><a href="../04-design-patterns/flyweight.html" class="topic-link" title="Flyweight Pattern: Memory Optimization Design" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Flyweight Pattern: Memory Optimization Design</span> </a><a href="../04-design-patterns/proxy.html" class="topic-link" title="Proxy Pattern: Control Object Access in OOP" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Proxy Pattern: Control Object Access in OOP</span> </a><a href="../04-design-patterns/iterator.html" class="topic-link" title="Iterator Pattern: Traverse Collections in OOP" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Iterator Pattern: Traverse Collections in OOP</span> </a><a href="../04-design-patterns/observer.html" class="topic-link" title="Observer Pattern: Event-Driven Design Guide" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Observer Pattern: Event-Driven Design Guide</span> </a><a href="../04-design-patterns/strategy.html" class="topic-link" title="Strategy Pattern: Swap Algorithms at Runtime" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Strategy Pattern: Swap Algorithms at Runtime</span> </a><a href="../04-design-patterns/command.html" class="topic-link" title="Command Pattern: Behavioral Design Guide" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Command Pattern: Behavioral Design Guide</span> </a><a href="../04-design-patterns/state.html" class="topic-link" title="State Pattern: Manage Object State Transitions" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>State Pattern: Manage Object State Transitions</span> </a><a href="../04-design-patterns/template-method.html" class="topic-link" title="Template Method Pattern: Define Algorithm Skeleton" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Template Method Pattern: Define Algorithm Skeleton</span> </a><a href="../04-design-patterns/visitor.html" class="topic-link" title="Visitor Pattern: Add Operations Without Changing Classes" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Visitor Pattern: Add Operations Without Changing Classes</span> </a><a href="../04-design-patterns/mediator.html" class="topic-link" title="Mediator Pattern: Reduce Object Coupling" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Mediator Pattern: Reduce Object Coupling</span> </a><a href="../04-design-patterns/memento.html" class="topic-link" title="Memento Pattern: Undo/Redo State Management" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Memento Pattern: Undo/Redo State Management</span> </a><a href="../04-design-patterns/chain-of-responsibility.html" class="topic-link" title="Chain of Responsibility Pattern Explained" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Chain of Responsibility Pattern Explained</span> </a><a href="../04-design-patterns/interpreter.html" class="topic-link" title="Interpreter Pattern: Parse Grammars in OOP" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Interpreter Pattern: Parse Grammars in OOP</span> </a> </div> </div><div class="module-item" data-module-id="05-uml-diagrams" data-astro-cid-6munbmg7> <button class="module-header" role="button" tabindex="0" aria-expanded="false" aria-controls="module-topics-05-uml-diagrams" data-module-id="05-uml-diagrams" data-astro-cid-6munbmg7> <span class="module-chevron" data-astro-cid-6munbmg7> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><path d="m9 18 6-6-6-6" data-astro-cid-6munbmg7></path></svg> </span> <span class="module-number" data-astro-cid-6munbmg7> 5 </span> <span class="module-name" style="color: var(--sidebar-text);" data-astro-cid-6munbmg7> UML Diagrams </span> <span class="module-count" style="color: var(--sidebar-text-secondary);" data-astro-cid-6munbmg7> 5 </span> </button> <div id="module-topics-05-uml-diagrams" class="module-topics" role="region" aria-label="UML Diagrams topics" data-astro-cid-6munbmg7> <a href="../05-uml-diagrams/class-diagram.html" class="topic-link" title="Class Diagrams in UML: Notation &#38; Examples" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Class Diagrams in UML: Notation &amp; Examples</span> </a><a href="../05-uml-diagrams/use-case-diagram.html" class="topic-link" title="Use Case Diagrams in UML: Guide &#38; Examples" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Use Case Diagrams in UML: Guide &amp; Examples</span> </a><a href="../05-uml-diagrams/sequence-diagram.html" class="topic-link" title="Sequence Diagrams in UML: Guide &#38; Examples" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Sequence Diagrams in UML: Guide &amp; Examples</span> </a><a href="../05-uml-diagrams/activity-diagram.html" class="topic-link" title="Activity Diagrams in UML: Guide &#38; Examples" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Activity Diagrams in UML: Guide &amp; Examples</span> </a><a href="../05-uml-diagrams/state-machine-diagram.html" class="topic-link" title="State Machine Diagrams in UML Explained" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>State Machine Diagrams in UML Explained</span> </a> </div> </div><div class="module-item" data-module-id="06-concurrency-and-threading" data-astro-cid-6munbmg7> <button class="module-header" role="button" tabindex="0" aria-expanded="false" aria-controls="module-topics-06-concurrency-and-threading" data-module-id="06-concurrency-and-threading" data-astro-cid-6munbmg7> <span class="module-chevron" data-astro-cid-6munbmg7> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><path d="m9 18 6-6-6-6" data-astro-cid-6munbmg7></path></svg> </span> <span class="module-number" data-astro-cid-6munbmg7> 6 </span> <span class="module-name" style="color: var(--sidebar-text);" data-astro-cid-6munbmg7> Concurrency &amp; Threading </span> <span class="module-count" style="color: var(--sidebar-text-secondary);" data-astro-cid-6munbmg7> 6 </span> </button> <div id="module-topics-06-concurrency-and-threading" class="module-topics" role="region" aria-label="Concurrency &#38; Threading topics" data-astro-cid-6munbmg7> <a href="../06-concurrency-and-threading/deadlock-livelock-starvation.html" class="topic-link" title="Deadlock, Livelock &#38; Starvation in Java" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Deadlock, Livelock &amp; Starvation in Java</span> </a><a href="../06-concurrency-and-threading/producer-consumer-problem.html" class="topic-link" title="Producer-Consumer Problem: Java Thread Solution" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Producer-Consumer Problem: Java Thread Solution</span> </a><a href="../06-concurrency-and-threading/synchronization.html" class="topic-link" title="Synchronization in Java: Locks &#38; Monitors Guide" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Synchronization in Java: Locks &amp; Monitors Guide</span> </a><a href="../06-concurrency-and-threading/threads-vs-processes.html" class="topic-link" title="Threads vs Processes: Key Differences Explained" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Threads vs Processes: Key Differences Explained</span> </a><a href="../06-concurrency-and-threading/thread-pools.html" class="topic-link" title="Thread Pools in Java: ExecutorService Guide" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Thread Pools in Java: ExecutorService Guide</span> </a><a href="../06-concurrency-and-threading/volatile-atomic-variables.html" class="topic-link" title="Volatile vs Atomic Variables: Java Concurrency Guide" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Volatile vs Atomic Variables: Java Concurrency Guide</span> </a> </div> </div><div class="module-item" data-module-id="07-interview-approach" data-astro-cid-6munbmg7> <button class="module-header" role="button" tabindex="0" aria-expanded="false" aria-controls="module-topics-07-interview-approach" data-module-id="07-interview-approach" data-astro-cid-6munbmg7> <span class="module-chevron" data-astro-cid-6munbmg7> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><path d="m9 18 6-6-6-6" data-astro-cid-6munbmg7></path></svg> </span> <span class="module-number" data-astro-cid-6munbmg7> 7 </span> <span class="module-name" style="color: var(--sidebar-text);" data-astro-cid-6munbmg7> Interview Approach </span> <span class="module-count" style="color: var(--sidebar-text-secondary);" data-astro-cid-6munbmg7> 0 </span> </button> <div id="module-topics-07-interview-approach" class="module-topics" role="region" aria-label="Interview Approach topics" data-astro-cid-6munbmg7>  </div> </div> </div>  </nav> <!-- Bottom section --> <div class="sidebar-bottom" style="border-top: 1px solid var(--sidebar-border);" data-astro-cid-6munbmg7> <!-- Expand/Collapse toggle - consistent position at bottom --> <button id="sidebar-expand-btn" class="sidebar-toggle-btn" title="Collapse sidebar" aria-label="Toggle sidebar" aria-expanded="true" aria-controls="course-sidebar" style="color: var(--sidebar-text-secondary); border: 1px solid var(--sidebar-border);" data-astro-cid-6munbmg7> <svg class="sidebar-toggle-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><rect width="18" height="18" x="3" y="3" rx="2" data-astro-cid-6munbmg7></rect><path d="M9 3v18" data-astro-cid-6munbmg7></path><path d="m14 9-3 3 3 3" data-astro-cid-6munbmg7></path></svg> <span class="sidebar-label" style="font-size: 0.8125rem; font-weight: 500;" data-astro-cid-6munbmg7>Collapse</span> </button> <!-- Sign In button (hidden when already authenticated) --> <a id="sidebar-signin-btn" href="https://layrs.me/dashboard?next=%2Fcourse%2Flld%2F01-oop-fundamentals%2Fencapsulation%2F" class="sidebar-signin-btn" style="color: white; background-color: var(--sidebar-accent);" title="Sign In" data-astro-cid-6munbmg7> <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" data-astro-cid-6munbmg7></path><circle cx="12" cy="7" r="4" data-astro-cid-6munbmg7></circle></svg> <span class="sidebar-label" data-astro-cid-6munbmg7>Sign In</span> </a> <!-- Dashboard button (shown when authenticated) --> <a id="sidebar-dashboard-btn" href="https://layrs.me/dashboard" class="sidebar-signin-btn" style="color: white; background-color: var(--sidebar-accent); display: none;" title="Dashboard" data-astro-cid-6munbmg7> <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><rect x="3" y="3" width="7" height="7" data-astro-cid-6munbmg7></rect><rect x="14" y="3" width="7" height="7" data-astro-cid-6munbmg7></rect><rect x="14" y="14" width="7" height="7" data-astro-cid-6munbmg7></rect><rect x="3" y="14" width="7" height="7" data-astro-cid-6munbmg7></rect></svg> <span class="sidebar-label" data-astro-cid-6munbmg7>Dashboard</span> </a> <!-- Theme toggle --> <div id="theme-toggle" class="sidebar-theme-toggle" style="background-color: rgba(0, 0, 0, 0.05);" data-astro-cid-6munbmg7> <button id="theme-light-btn" class="sidebar-theme-btn" title="Light mode" data-astro-cid-6munbmg7> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><circle cx="12" cy="12" r="4" data-astro-cid-6munbmg7></circle><path d="M12 2v2" data-astro-cid-6munbmg7></path><path d="M12 20v2" data-astro-cid-6munbmg7></path><path d="m4.93 4.93 1.41 1.41" data-astro-cid-6munbmg7></path><path d="m17.66 17.66 1.41 1.41" data-astro-cid-6munbmg7></path><path d="M2 12h2" data-astro-cid-6munbmg7></path><path d="M20 12h2" data-astro-cid-6munbmg7></path><path d="m6.34 17.66-1.41 1.41" data-astro-cid-6munbmg7></path><path d="m19.07 4.93-1.41 1.41" data-astro-cid-6munbmg7></path></svg> </button> <button id="theme-dark-btn" class="sidebar-theme-btn" title="Dark mode" data-astro-cid-6munbmg7> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" data-astro-cid-6munbmg7></path></svg> </button> </div> <!-- Social links (hidden when collapsed) --> <div class="sidebar-social-row sidebar-hide-collapsed" data-astro-cid-6munbmg7> <a href="https://lnkd.in/g9f98NBH" target="_blank" rel="noopener noreferrer" class="sidebar-social-link" style="border: 1px solid var(--sidebar-border); color: var(--sidebar-text-secondary);" aria-label="Discord" title="Discord" data-astro-cid-6munbmg7> <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z" data-astro-cid-6munbmg7></path></svg> </a> <a href="https://www.linkedin.com/company/layrs" target="_blank" rel="noopener noreferrer" class="sidebar-social-link" style="border: 1px solid var(--sidebar-border); color: var(--sidebar-text-secondary);" aria-label="LinkedIn" title="LinkedIn" data-astro-cid-6munbmg7> <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" data-astro-cid-6munbmg7></path><rect width="4" height="12" x="2" y="9" data-astro-cid-6munbmg7></rect><circle cx="4" cy="4" r="2" data-astro-cid-6munbmg7></circle></svg> </a> <a href="https://www.instagram.com/layrs.me" target="_blank" rel="noopener noreferrer" class="sidebar-social-link" style="border: 1px solid var(--sidebar-border); color: var(--sidebar-text-secondary);" aria-label="Instagram" title="Instagram" data-astro-cid-6munbmg7> <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><rect width="20" height="20" x="2" y="2" rx="5" ry="5" data-astro-cid-6munbmg7></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" data-astro-cid-6munbmg7></path><line x1="17.5" x2="17.51" y1="6.5" y2="6.5" data-astro-cid-6munbmg7></line></svg> </a> <a href="mailto:support@layrs.me" class="sidebar-social-link" style="border: 1px solid var(--sidebar-border); color: var(--sidebar-text-secondary);" aria-label="Email" title="Email" data-astro-cid-6munbmg7> <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><rect width="20" height="16" x="2" y="4" rx="2" data-astro-cid-6munbmg7></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" data-astro-cid-6munbmg7></path></svg> </a> </div> </div> </aside>  <script>
+  // Toggle Sign In vs Dashboard based on Supabase auth session in localStorage
+  (function initAuthButton() {
+    var signInBtn = document.getElementById('sidebar-signin-btn');
+    var dashboardBtn = document.getElementById('sidebar-dashboard-btn');
+    if (!signInBtn || !dashboardBtn) return;
+
+    var hasSession = false;
+    try {
+      var keys = Object.keys(localStorage);
+      for (var i = 0; i < keys.length; i++) {
+        if (keys[i].indexOf('sb-') === 0 && keys[i].indexOf('-auth-token') !== -1) {
+          var data = JSON.parse(localStorage.getItem(keys[i]) || '{}');
+          if (data && data.access_token) { hasSession = true; break; }
+        }
+      }
+    } catch (e) {}
+
+    if (hasSession) {
+      signInBtn.style.display = 'none';
+      dashboardBtn.style.display = '';
+    }
+  })();
+</script> <script>
+  // Sidebar collapse toggle + accordion modules + mobile drawer
+  (function initSidebar() {
+    if (window.__sidebarInit) return;
+    window.__sidebarInit = true;
+
+    var sidebar = document.getElementById('course-sidebar');
+    var toggleBtn = document.getElementById('sidebar-expand-btn');
+    var closeBtn = document.getElementById('sidebar-close-btn');
+    if (!sidebar) return;
+
+    // --- Collapse/Expand ---
+    var saved = localStorage.getItem('sidebar-collapsed');
+    if (saved === 'true') {
+      sidebar.classList.add('collapsed');
+      updateToggleState(true);
+    }
+
+    function updateToggleState(isCollapsed) {
+      if (!toggleBtn) return;
+      toggleBtn.setAttribute('aria-expanded', isCollapsed ? 'false' : 'true');
+      toggleBtn.title = isCollapsed ? 'Expand sidebar' : 'Collapse sidebar';
+      var label = toggleBtn.querySelector('.sidebar-label');
+      if (label) label.textContent = isCollapsed ? 'Expand' : 'Collapse';
+    }
+
+    function toggleSidebar() {
+      var isCollapsed = sidebar.classList.contains('collapsed');
+      if (isCollapsed) {
+        sidebar.classList.remove('collapsed');
+        localStorage.setItem('sidebar-collapsed', 'false');
+        updateToggleState(false);
+      } else {
+        sidebar.classList.add('collapsed');
+        localStorage.setItem('sidebar-collapsed', 'true');
+        updateToggleState(true);
+      }
+    }
+
+    if (toggleBtn) {
+      toggleBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        toggleSidebar();
+      });
+    }
+
+    // --- Mobile close button ---
+    if (closeBtn) {
+      closeBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        closeMobileDrawer();
+      });
+    }
+
+    // --- Mobile drawer helpers ---
+    function closeMobileDrawer() {
+      var overlay = document.getElementById('mobile-sidebar-overlay');
+      if (overlay) {
+        overlay.classList.add('closing');
+        setTimeout(function() {
+          overlay.classList.add('hidden');
+          overlay.classList.remove('closing');
+          document.body.style.overflow = '';
+        }, 250);
+      }
+    }
+
+    // Expose for backdrop click
+    window.__closeMobileDrawer = closeMobileDrawer;
+
+    // Escape key handler
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        var overlay = document.getElementById('mobile-sidebar-overlay');
+        if (overlay && !overlay.classList.contains('hidden')) {
+          closeMobileDrawer();
+        }
+      }
+    });
+
+    // --- Module accordion ---
+    var moduleHeaders = sidebar.querySelectorAll('.module-header');
+    moduleHeaders.forEach(function(header) {
+      header.addEventListener('click', function(e) {
+        e.preventDefault();
+        toggleModule(header);
+      });
+
+      // Keyboard support
+      header.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          toggleModule(header);
+        }
+      });
+    });
+
+    function toggleModule(header) {
+      var item = header.closest('.module-item');
+      var topics = item.querySelector('.module-topics');
+      var chevron = header.querySelector('.module-chevron');
+      var isExpanded = header.getAttribute('aria-expanded') === 'true';
+
+      // Close all other modules (accordion behavior)
+      sidebar.querySelectorAll('.module-item').forEach(function(otherItem) {
+        if (otherItem !== item) {
+          var oh = otherItem.querySelector('.module-header');
+          var ot = otherItem.querySelector('.module-topics');
+          var oc = otherItem.querySelector('.module-chevron');
+          if (oh) oh.setAttribute('aria-expanded', 'false');
+          if (ot) ot.classList.remove('expanded');
+          if (oc) oc.classList.remove('expanded');
+        }
+      });
+
+      // Toggle current
+      if (isExpanded) {
+        header.setAttribute('aria-expanded', 'false');
+        if (topics) topics.classList.remove('expanded');
+        if (chevron) chevron.classList.remove('expanded');
+      } else {
+        header.setAttribute('aria-expanded', 'true');
+        if (topics) topics.classList.add('expanded');
+        if (chevron) chevron.classList.add('expanded');
+
+        // Auto-scroll active topic into view
+        setTimeout(function() {
+          var activeLink = topics && topics.querySelector('.topic-link.active, .topic-link[aria-current="page"]');
+          if (activeLink) {
+            activeLink.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+          }
+        }, 280);
+      }
+    }
+
+    // Auto-scroll active topic on load
+    setTimeout(function() {
+      var activeLink = sidebar.querySelector('.topic-link.active, .topic-link[aria-current="page"]');
+      if (activeLink) {
+        activeLink.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+      }
+    }, 100);
+  })();
+
+  // Theme toggle (guard against duplicate listeners)
+  (function initThemeToggle() {
+    if (window.__themeToggleInit) return;
+    window.__themeToggleInit = true;
+    var lightBtn = document.getElementById('theme-light-btn');
+    var darkBtn = document.getElementById('theme-dark-btn');
+    var toggleWrap = document.getElementById('theme-toggle');
+    var root = document.documentElement;
+
+    function applyTheme(theme) {
+      if (theme === 'dark') {
+        root.classList.add('dark');
+        if (toggleWrap) toggleWrap.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
+        if (lightBtn) {
+          lightBtn.style.backgroundColor = 'transparent';
+          lightBtn.style.color = 'var(--sidebar-text-secondary)';
+          lightBtn.style.boxShadow = 'none';
+        }
+        if (darkBtn) {
+          darkBtn.style.backgroundColor = 'var(--sidebar-bg)';
+          darkBtn.style.color = 'var(--sidebar-accent)';
+          darkBtn.style.boxShadow = '0 1px 2px 0 rgba(0,0,0,0.05)';
+        }
+      } else {
+        root.classList.remove('dark');
+        if (toggleWrap) toggleWrap.style.backgroundColor = 'rgba(0, 0, 0, 0.05)';
+        if (lightBtn) {
+          lightBtn.style.backgroundColor = 'var(--sidebar-bg)';
+          lightBtn.style.color = 'var(--sidebar-accent)';
+          lightBtn.style.boxShadow = '0 1px 2px 0 rgba(0,0,0,0.05)';
+        }
+        if (darkBtn) {
+          darkBtn.style.backgroundColor = 'transparent';
+          darkBtn.style.color = 'var(--sidebar-text-secondary)';
+          darkBtn.style.boxShadow = 'none';
+        }
+      }
+    }
+
+    var saved = localStorage.getItem('theme') || 'light';
+    applyTheme(saved);
+
+    if (lightBtn) {
+      lightBtn.addEventListener('click', function() {
+        localStorage.setItem('theme', 'light');
+        applyTheme('light');
+      });
+    }
+    if (darkBtn) {
+      darkBtn.addEventListener('click', function() {
+        localStorage.setItem('theme', 'dark');
+        applyTheme('dark');
+      });
+    }
+  })();
+</script> </div> </div> <!-- Main content area --> <div class="flex-1 flex flex-col overflow-hidden"> <!-- Mobile header with hamburger (lg:hidden) --> <div class="lg:hidden px-4 py-3 flex items-center" style="border-bottom: 1px solid var(--sidebar-border); background-color: var(--sidebar-bg);"> <button id="menu-toggle" class="p-1 rounded-md transition-colors" style="color: var(--sidebar-text);" aria-label="Open menu"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"></line><line x1="4" x2="20" y1="6" y2="6"></line><line x1="4" x2="20" y1="18" y2="18"></line></svg> </button> <a href="https://layrs.me/" class="ml-3 flex items-center gap-2 no-underline"> <span class="font-semibold" style="color: var(--sidebar-text);">Layrs</span> </a> </div> <!-- Scrollable content --> <div class="flex-1 overflow-y-auto">  <div class="px-4 sm:px-6 lg:px-8 py-8 max-w-6xl mx-auto"> <nav aria-label="Breadcrumb" class="mb-6"> <ol class="flex flex-wrap items-center gap-1.5 text-sm text-[hsl(var(--muted-foreground))]"> <li> <a href="https://layrs.me/course" class="hover:text-layrs-primary transition-colors">Course</a> </li> <li class="flex items-center gap-1.5"> <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="opacity-50"> <polyline points="9 18 15 12 9 6"></polyline> </svg> <a href="../../lld.html" class="hover:text-layrs-primary transition-colors">LLD</a> </li><li class="flex items-center gap-1.5"> <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="opacity-50"> <polyline points="9 18 15 12 9 6"></polyline> </svg> <a href="../01-oop-fundamentals.html" class="hover:text-layrs-primary transition-colors">OOP Fundamentals</a> </li><li class="flex items-center gap-1.5"> <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="opacity-50"> <polyline points="9 18 15 12 9 6"></polyline> </svg> <span class="text-[hsl(var(--foreground))]">Encapsulation in OOP: Definition &amp; Examples</span> </li> </ol> </nav> <div class="flex gap-10"> <!-- Main content --> <article class="min-w-0 flex-1 max-w-3xl"> <!-- Article header --> <header class="mb-8 pb-6 border-b border-[hsl(var(--border))]"> <h1 class="font-display text-3xl sm:text-4xl font-bold text-[hsl(var(--foreground))] mb-4 leading-tight"> Encapsulation in OOP: Definition &amp; Examples </h1> <div class="flex flex-wrap items-center gap-3 text-sm text-[hsl(var(--muted-foreground))]">     <span class="flex items-center gap-1.5"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="opacity-60"> <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path> <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path> </svg>
+Updated 2026-03-11 </span> </div> </header> <!-- MDX content --> <div class="prose max-w-none course-prose">  <h2 id="tldr">TL;DR</h2>
+<p>Encapsulation is the practice of bundling data (attributes) and methods that operate on that data within a single unit (class), while restricting direct access to some components. This protects object integrity, reduces coupling, and makes code more maintainable by controlling how data is accessed and modified.</p>
+<div class="tutorial-meta"><p><strong>Prerequisites:</strong> Basic Python syntax including functions, variables, and basic class definition. Understanding of what attributes and methods are in a class context.</p><p><strong>After this topic:</strong> Implement encapsulation using access modifiers (public, protected, private), create getter and setter methods with validation logic, identify when and why to hide internal state, and explain the benefits of encapsulation in system design.</p></div>
+<h2 id="core-concept">Core Concept</h2>
+<h2 id="what-is-encapsulation">What is Encapsulation?</h2>
+<p><strong>Encapsulation</strong> is one of the four fundamental pillars of Object-Oriented Programming. It combines two key ideas: (1) bundling related data and behavior together in a class, and (2) hiding internal implementation details from the outside world.</p>
+<p>Think of encapsulation like a car’s dashboard. You interact with simple controls (steering wheel, pedals, buttons) without needing to understand the complex engine mechanics underneath. The car’s internal state (fuel mixture, timing belts, transmission gears) is hidden and protected from direct manipulation.</p>
+<h2 id="why-encapsulation-matters">Why Encapsulation Matters</h2>
+<p><strong>Data Protection</strong>: By making attributes private, you prevent external code from putting your object into an invalid state. For example, a <code>BankAccount</code> class shouldn’t allow direct modification of its balance — withdrawals must go through a method that checks for sufficient funds.</p>
+<p><strong>Flexibility</strong>: When internal implementation is hidden, you can change how data is stored or calculated without breaking code that uses your class. You might switch from storing age to storing birthdate, but external code still calls <code>get_age()</code> and never knows the difference.</p>
+<p><strong>Reduced Coupling</strong>: When classes don’t directly access each other’s internal data, they become less dependent on each other’s implementation details. This makes your codebase easier to modify and test.</p>
+<h2 id="access-levels">Access Levels</h2>
+<p>Most OOP languages provide three access levels:</p>
+<ul>
+<li><strong>Public</strong>: Accessible from anywhere (Python: no prefix, Java/C++: <code>public</code>)</li>
+<li><strong>Protected</strong>: Accessible within the class and subclasses (Python: single underscore <code>_</code>, Java/C++: <code>protected</code>)</li>
+<li><strong>Private</strong>: Accessible only within the class itself (Python: double underscore <code>__</code>, Java/C++: <code>private</code>)</li>
+</ul>
+<p>Python uses naming conventions rather than strict enforcement, relying on developer discipline. Java and C++ enforce these restrictions at compile time.</p>
+<h2 id="visual-guide">Visual Guide</h2>
+<h3 id="encapsulation-concept">Encapsulation Concept</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="mermaid"><code><span class="line"><span style="color:#E1E4E8">graph TB</span></span>
+<span class="line"><span style="color:#E1E4E8">    subgraph &quot;BankAccount Class (Encapsulated)&quot;</span></span>
+<span class="line"><span style="color:#E1E4E8">        A[Public Interface]</span></span>
+<span class="line"><span style="color:#E1E4E8">        A --&gt; B[deposit method]</span></span>
+<span class="line"><span style="color:#E1E4E8">        A --&gt; C[withdraw method]</span></span>
+<span class="line"><span style="color:#E1E4E8">        A --&gt; D[get_balance method]</span></span>
+<span class="line"><span style="color:#E1E4E8">        B -.-&gt; E[Private: __balance]</span></span>
+<span class="line"><span style="color:#E1E4E8">        C -.-&gt; E</span></span>
+<span class="line"><span style="color:#E1E4E8">        D -.-&gt; E</span></span>
+<span class="line"><span style="color:#E1E4E8">        B -.-&gt; F[Private: __validate_amount]</span></span>
+<span class="line"><span style="color:#E1E4E8">        C -.-&gt; F</span></span>
+<span class="line"><span style="color:#E1E4E8">    end</span></span>
+<span class="line"><span style="color:#E1E4E8">    G[External Code] --&gt; A</span></span>
+<span class="line"><span style="color:#E1E4E8">    G -.X.- E</span></span>
+<span class="line"><span style="color:#E1E4E8">    </span></span>
+<span class="line"><span style="color:#E1E4E8">    style E fill:#f9f,stroke:#333,stroke-width:2px</span></span>
+<span class="line"><span style="color:#E1E4E8">    style F fill:#f9f,stroke:#333,stroke-width:2px</span></span>
+<span class="line"><span style="color:#E1E4E8">    style A fill:#9f9,stroke:#333,stroke-width:2px</span></span></code></pre>
+<p><em>External code can only access public methods, not private data directly. Private methods and attributes are hidden behind the public interface.</em></p>
+<h3 id="without-vs-with-encapsulation">Without vs With Encapsulation</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="mermaid"><code><span class="line"><span style="color:#E1E4E8">graph LR</span></span>
+<span class="line"><span style="color:#E1E4E8">    subgraph &quot;Without Encapsulation&quot;</span></span>
+<span class="line"><span style="color:#E1E4E8">        A1[External Code] --&gt;|Direct Access| B1[account.balance = -500]</span></span>
+<span class="line"><span style="color:#E1E4E8">        B1 --&gt; C1[Invalid State!]</span></span>
+<span class="line"><span style="color:#E1E4E8">    end</span></span>
+<span class="line"><span style="color:#E1E4E8">    </span></span>
+<span class="line"><span style="color:#E1E4E8">    subgraph &quot;With Encapsulation&quot;</span></span>
+<span class="line"><span style="color:#E1E4E8">        A2[External Code] --&gt;|Method Call| B2[account.withdraw 500]</span></span>
+<span class="line"><span style="color:#E1E4E8">        B2 --&gt; C2{Sufficient Funds?}</span></span>
+<span class="line"><span style="color:#E1E4E8">        C2 --&gt;|Yes| D2[Update Balance]</span></span>
+<span class="line"><span style="color:#E1E4E8">        C2 --&gt;|No| E2[Raise Error]</span></span>
+<span class="line"><span style="color:#E1E4E8">    end</span></span>
+<span class="line"><span style="color:#E1E4E8">    </span></span>
+<span class="line"><span style="color:#E1E4E8">    style C1 fill:#f66</span></span>
+<span class="line"><span style="color:#E1E4E8">    style E2 fill:#6f6</span></span></code></pre>
+<p><em>Encapsulation enforces business rules by controlling access through methods with validation logic.</em></p>
+<h2 id="examples">Examples</h2>
+<h2 id="example-1-basic-encapsulation-with-private-attributes">Example 1: Basic Encapsulation with Private Attributes</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="python"><code><span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> BankAccount</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#79B8FF"> __init__</span><span style="color:#E1E4E8">(self, account_holder, initial_balance):</span></span>
+<span class="line"><span style="color:#79B8FF">        self</span><span style="color:#E1E4E8">.account_holder </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> account_holder  </span><span style="color:#6A737D"># Public</span></span>
+<span class="line"><span style="color:#79B8FF">        self</span><span style="color:#E1E4E8">.__balance </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> initial_balance      </span><span style="color:#6A737D"># Private (name mangling)</span></span>
+<span class="line"><span style="color:#E1E4E8">    </span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> deposit</span><span style="color:#E1E4E8">(self, amount):</span></span>
+<span class="line"><span style="color:#F97583">        if</span><span style="color:#E1E4E8"> amount </span><span style="color:#F97583">&lt;=</span><span style="color:#79B8FF"> 0</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#F97583">            raise</span><span style="color:#79B8FF"> ValueError</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">&quot;Deposit amount must be positive&quot;</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#79B8FF">        self</span><span style="color:#E1E4E8">.__balance </span><span style="color:#F97583">+=</span><span style="color:#E1E4E8"> amount</span></span>
+<span class="line"><span style="color:#F97583">        return</span><span style="color:#79B8FF"> self</span><span style="color:#E1E4E8">.__balance</span></span>
+<span class="line"><span style="color:#E1E4E8">    </span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> withdraw</span><span style="color:#E1E4E8">(self, amount):</span></span>
+<span class="line"><span style="color:#F97583">        if</span><span style="color:#E1E4E8"> amount </span><span style="color:#F97583">&lt;=</span><span style="color:#79B8FF"> 0</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#F97583">            raise</span><span style="color:#79B8FF"> ValueError</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">&quot;Withdrawal amount must be positive&quot;</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">        if</span><span style="color:#E1E4E8"> amount </span><span style="color:#F97583">&gt;</span><span style="color:#79B8FF"> self</span><span style="color:#E1E4E8">.__balance:</span></span>
+<span class="line"><span style="color:#F97583">            raise</span><span style="color:#79B8FF"> ValueError</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">&quot;Insufficient funds&quot;</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#79B8FF">        self</span><span style="color:#E1E4E8">.__balance </span><span style="color:#F97583">-=</span><span style="color:#E1E4E8"> amount</span></span>
+<span class="line"><span style="color:#F97583">        return</span><span style="color:#79B8FF"> self</span><span style="color:#E1E4E8">.__balance</span></span>
+<span class="line"><span style="color:#E1E4E8">    </span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> get_balance</span><span style="color:#E1E4E8">(self):</span></span>
+<span class="line"><span style="color:#F97583">        return</span><span style="color:#79B8FF"> self</span><span style="color:#E1E4E8">.__balance</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># Usage</span></span>
+<span class="line"><span style="color:#E1E4E8">account </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> BankAccount(</span><span style="color:#9ECBFF">&quot;Alice&quot;</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">1000</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#79B8FF">print</span><span style="color:#E1E4E8">(account.get_balance())  </span><span style="color:#6A737D"># Output: 1000</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">account.deposit(</span><span style="color:#79B8FF">500</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#79B8FF">print</span><span style="color:#E1E4E8">(account.get_balance())  </span><span style="color:#6A737D"># Output: 1500</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">account.withdraw(</span><span style="color:#79B8FF">200</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#79B8FF">print</span><span style="color:#E1E4E8">(account.get_balance())  </span><span style="color:#6A737D"># Output: 1300</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># This would raise an error:</span></span>
+<span class="line"><span style="color:#6A737D"># account.withdraw(2000)  # ValueError: Insufficient funds</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># Direct access is prevented (but not impossible in Python):</span></span>
+<span class="line"><span style="color:#6A737D"># print(account.__balance)  # AttributeError</span></span>
+<span class="line"><span style="color:#6A737D"># However, Python allows: account._BankAccount__balance (name mangling)</span></span></code></pre>
+<p><strong>Key Points</strong>: The <code>__balance</code> attribute is private. All modifications go through methods that validate input. This prevents invalid states like negative balances.</p>
+<p><strong>Try it yourself</strong>: Add a <code>transfer</code> method that moves money from one account to another, ensuring both accounts remain valid.</p>
+<h2 id="example-2-property-decorators-pythonic-encapsulation">Example 2: Property Decorators (Pythonic Encapsulation)</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="python"><code><span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> Employee</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#79B8FF"> __init__</span><span style="color:#E1E4E8">(self, name, salary):</span></span>
+<span class="line"><span style="color:#79B8FF">        self</span><span style="color:#E1E4E8">._name </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> name</span></span>
+<span class="line"><span style="color:#79B8FF">        self</span><span style="color:#E1E4E8">._salary </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> salary  </span><span style="color:#6A737D"># Protected (convention)</span></span>
+<span class="line"><span style="color:#E1E4E8">    </span></span>
+<span class="line"><span style="color:#B392F0">    @</span><span style="color:#79B8FF">property</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> salary</span><span style="color:#E1E4E8">(self):</span></span>
+<span class="line"><span style="color:#9ECBFF">        &quot;&quot;&quot;Getter for salary&quot;&quot;&quot;</span></span>
+<span class="line"><span style="color:#F97583">        return</span><span style="color:#79B8FF"> self</span><span style="color:#E1E4E8">._salary</span></span>
+<span class="line"><span style="color:#E1E4E8">    </span></span>
+<span class="line"><span style="color:#B392F0">    @salary.setter</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> salary</span><span style="color:#E1E4E8">(self, value):</span></span>
+<span class="line"><span style="color:#9ECBFF">        &quot;&quot;&quot;Setter with validation&quot;&quot;&quot;</span></span>
+<span class="line"><span style="color:#F97583">        if</span><span style="color:#E1E4E8"> value </span><span style="color:#F97583">&lt;</span><span style="color:#79B8FF"> 0</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#F97583">            raise</span><span style="color:#79B8FF"> ValueError</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">&quot;Salary cannot be negative&quot;</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">        if</span><span style="color:#E1E4E8"> value </span><span style="color:#F97583">&gt;</span><span style="color:#79B8FF"> 1000000</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#F97583">            raise</span><span style="color:#79B8FF"> ValueError</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">&quot;Salary exceeds maximum allowed&quot;</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#79B8FF">        self</span><span style="color:#E1E4E8">._salary </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> value</span></span>
+<span class="line"><span style="color:#E1E4E8">    </span></span>
+<span class="line"><span style="color:#B392F0">    @</span><span style="color:#79B8FF">property</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> annual_salary</span><span style="color:#E1E4E8">(self):</span></span>
+<span class="line"><span style="color:#9ECBFF">        &quot;&quot;&quot;Computed property (no setter)&quot;&quot;&quot;</span></span>
+<span class="line"><span style="color:#F97583">        return</span><span style="color:#79B8FF"> self</span><span style="color:#E1E4E8">._salary </span><span style="color:#F97583">*</span><span style="color:#79B8FF"> 12</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># Usage</span></span>
+<span class="line"><span style="color:#E1E4E8">emp </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> Employee(</span><span style="color:#9ECBFF">&quot;Bob&quot;</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">5000</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#79B8FF">print</span><span style="color:#E1E4E8">(emp.salary)         </span><span style="color:#6A737D"># Output: 5000 (calls getter)</span></span>
+<span class="line"><span style="color:#79B8FF">print</span><span style="color:#E1E4E8">(emp.annual_salary)  </span><span style="color:#6A737D"># Output: 60000 (computed)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">emp.salary </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 6000</span><span style="color:#6A737D">         # Calls setter with validation</span></span>
+<span class="line"><span style="color:#79B8FF">print</span><span style="color:#E1E4E8">(emp.salary)         </span><span style="color:#6A737D"># Output: 6000</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># This would raise an error:</span></span>
+<span class="line"><span style="color:#6A737D"># emp.salary = -100  # ValueError: Salary cannot be negative</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># This would also raise an error:</span></span>
+<span class="line"><span style="color:#6A737D"># emp.annual_salary = 80000  # AttributeError: can&#39;t set attribute</span></span></code></pre>
+<p><strong>Key Points</strong>: The <code>@property</code> decorator provides a clean syntax for getters and setters. You can access <code>emp.salary</code> like a public attribute, but validation logic runs behind the scenes. Computed properties like <code>annual_salary</code> can be read-only.</p>
+<p><strong>Java/C++ Note</strong>: Java uses explicit <code>getSalary()</code> and <code>setSalary()</code> methods. C++ can use getter/setter methods or overload operators. Python’s property decorator is more elegant but less explicit.</p>
+<p><strong>Try it yourself</strong>: Add a <code>name</code> property with a setter that ensures the name is at least 2 characters long and contains only letters and spaces.</p>
+<h2 id="example-3-encapsulation-with-validation-logic">Example 3: Encapsulation with Validation Logic</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="python"><code><span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> Rectangle</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#79B8FF"> __init__</span><span style="color:#E1E4E8">(self, width, height):</span></span>
+<span class="line"><span style="color:#79B8FF">        self</span><span style="color:#E1E4E8">.__width </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 0</span></span>
+<span class="line"><span style="color:#79B8FF">        self</span><span style="color:#E1E4E8">.__height </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 0</span></span>
+<span class="line"><span style="color:#6A737D">        # Use setters to ensure validation on initialization</span></span>
+<span class="line"><span style="color:#79B8FF">        self</span><span style="color:#E1E4E8">.set_width(width)</span></span>
+<span class="line"><span style="color:#79B8FF">        self</span><span style="color:#E1E4E8">.set_height(height)</span></span>
+<span class="line"><span style="color:#E1E4E8">    </span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> set_width</span><span style="color:#E1E4E8">(self, width):</span></span>
+<span class="line"><span style="color:#F97583">        if</span><span style="color:#E1E4E8"> width </span><span style="color:#F97583">&lt;=</span><span style="color:#79B8FF"> 0</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#F97583">            raise</span><span style="color:#79B8FF"> ValueError</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">&quot;Width must be positive&quot;</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#79B8FF">        self</span><span style="color:#E1E4E8">.__width </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> width</span></span>
+<span class="line"><span style="color:#E1E4E8">    </span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> set_height</span><span style="color:#E1E4E8">(self, height):</span></span>
+<span class="line"><span style="color:#F97583">        if</span><span style="color:#E1E4E8"> height </span><span style="color:#F97583">&lt;=</span><span style="color:#79B8FF"> 0</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#F97583">            raise</span><span style="color:#79B8FF"> ValueError</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">&quot;Height must be positive&quot;</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#79B8FF">        self</span><span style="color:#E1E4E8">.__height </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> height</span></span>
+<span class="line"><span style="color:#E1E4E8">    </span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> get_width</span><span style="color:#E1E4E8">(self):</span></span>
+<span class="line"><span style="color:#F97583">        return</span><span style="color:#79B8FF"> self</span><span style="color:#E1E4E8">.__width</span></span>
+<span class="line"><span style="color:#E1E4E8">    </span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> get_height</span><span style="color:#E1E4E8">(self):</span></span>
+<span class="line"><span style="color:#F97583">        return</span><span style="color:#79B8FF"> self</span><span style="color:#E1E4E8">.__height</span></span>
+<span class="line"><span style="color:#E1E4E8">    </span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> area</span><span style="color:#E1E4E8">(self):</span></span>
+<span class="line"><span style="color:#F97583">        return</span><span style="color:#79B8FF"> self</span><span style="color:#E1E4E8">.__width </span><span style="color:#F97583">*</span><span style="color:#79B8FF"> self</span><span style="color:#E1E4E8">.__height</span></span>
+<span class="line"><span style="color:#E1E4E8">    </span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> perimeter</span><span style="color:#E1E4E8">(self):</span></span>
+<span class="line"><span style="color:#F97583">        return</span><span style="color:#79B8FF"> 2</span><span style="color:#F97583"> *</span><span style="color:#E1E4E8"> (</span><span style="color:#79B8FF">self</span><span style="color:#E1E4E8">.__width </span><span style="color:#F97583">+</span><span style="color:#79B8FF"> self</span><span style="color:#E1E4E8">.__height)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># Usage</span></span>
+<span class="line"><span style="color:#E1E4E8">rect </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> Rectangle(</span><span style="color:#79B8FF">5</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">10</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#79B8FF">print</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">f</span><span style="color:#9ECBFF">&quot;Area: </span><span style="color:#79B8FF">{</span><span style="color:#E1E4E8">rect.area()</span><span style="color:#79B8FF">}</span><span style="color:#9ECBFF">&quot;</span><span style="color:#E1E4E8">)          </span><span style="color:#6A737D"># Output: Area: 50</span></span>
+<span class="line"><span style="color:#79B8FF">print</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">f</span><span style="color:#9ECBFF">&quot;Perimeter: </span><span style="color:#79B8FF">{</span><span style="color:#E1E4E8">rect.perimeter()</span><span style="color:#79B8FF">}</span><span style="color:#9ECBFF">&quot;</span><span style="color:#E1E4E8">) </span><span style="color:#6A737D"># Output: Perimeter: 30</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">rect.set_width(</span><span style="color:#79B8FF">8</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#79B8FF">print</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">f</span><span style="color:#9ECBFF">&quot;New area: </span><span style="color:#79B8FF">{</span><span style="color:#E1E4E8">rect.area()</span><span style="color:#79B8FF">}</span><span style="color:#9ECBFF">&quot;</span><span style="color:#E1E4E8">)       </span><span style="color:#6A737D"># Output: New area: 80</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># This would raise an error:</span></span>
+<span class="line"><span style="color:#6A737D"># rect.set_width(-5)  # ValueError: Width must be positive</span></span></code></pre>
+<p><strong>Key Points</strong>: Validation in setters ensures the object never enters an invalid state. Methods like <code>area()</code> and <code>perimeter()</code> rely on valid internal state, so they don’t need additional checks.</p>
+<p><strong>Try it yourself</strong>: Create a <code>Square</code> class that inherits from <code>Rectangle</code> but ensures width and height are always equal.</p>
+<h2 id="common-mistakes">Common Mistakes</h2>
+<h2 id="1-making-everything-private">1. Making Everything Private</h2>
+<p><strong>Mistake</strong>: Marking all attributes as private “just to be safe.”</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="python"><code><span class="line"><span style="color:#6A737D"># Overly restrictive</span></span>
+<span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> Person</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#79B8FF"> __init__</span><span style="color:#E1E4E8">(self, name, age):</span></span>
+<span class="line"><span style="color:#79B8FF">        self</span><span style="color:#E1E4E8">.__name </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> name  </span><span style="color:#6A737D"># Why private if there&#39;s no validation?</span></span>
+<span class="line"><span style="color:#79B8FF">        self</span><span style="color:#E1E4E8">.__age </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> age</span></span>
+<span class="line"><span style="color:#E1E4E8">    </span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> get_name</span><span style="color:#E1E4E8">(self):</span></span>
+<span class="line"><span style="color:#F97583">        return</span><span style="color:#79B8FF"> self</span><span style="color:#E1E4E8">.__name</span></span>
+<span class="line"><span style="color:#E1E4E8">    </span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> get_age</span><span style="color:#E1E4E8">(self):</span></span>
+<span class="line"><span style="color:#F97583">        return</span><span style="color:#79B8FF"> self</span><span style="color:#E1E4E8">.__age</span></span></code></pre>
+<p><strong>Why it’s wrong</strong>: If an attribute doesn’t need validation or protection, making it public is fine. Excessive getters/setters add boilerplate without benefit. In Python, use public attributes or properties when appropriate.</p>
+<p><strong>Better approach</strong>: Make <code>name</code> public if it doesn’t need validation. Use properties or private attributes only when you need to control access or validate data.</p>
+<h2 id="2-providing-setters-that-bypass-validation">2. Providing Setters That Bypass Validation</h2>
+<p><strong>Mistake</strong>: Creating setters that don’t validate input, defeating the purpose of encapsulation.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="python"><code><span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> BankAccount</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#79B8FF"> __init__</span><span style="color:#E1E4E8">(self, balance):</span></span>
+<span class="line"><span style="color:#79B8FF">        self</span><span style="color:#E1E4E8">.__balance </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> balance</span></span>
+<span class="line"><span style="color:#E1E4E8">    </span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> set_balance</span><span style="color:#E1E4E8">(self, balance):</span></span>
+<span class="line"><span style="color:#79B8FF">        self</span><span style="color:#E1E4E8">.__balance </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> balance  </span><span style="color:#6A737D"># No validation!</span></span></code></pre>
+<p><strong>Why it’s wrong</strong>: This setter allows external code to set a negative balance, creating an invalid state. The private attribute provides no real protection.</p>
+<p><strong>Better approach</strong>: Either remove the setter entirely (if balance should only change through deposits/withdrawals) or add validation logic.</p>
+<h2 id="3-returning-mutable-objects-directly">3. Returning Mutable Objects Directly</h2>
+<p><strong>Mistake</strong>: Returning references to mutable internal data structures.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="python"><code><span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> Team</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#79B8FF"> __init__</span><span style="color:#E1E4E8">(self):</span></span>
+<span class="line"><span style="color:#79B8FF">        self</span><span style="color:#E1E4E8">.__members </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> []</span></span>
+<span class="line"><span style="color:#E1E4E8">    </span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> get_members</span><span style="color:#E1E4E8">(self):</span></span>
+<span class="line"><span style="color:#F97583">        return</span><span style="color:#79B8FF"> self</span><span style="color:#E1E4E8">.__members  </span><span style="color:#6A737D"># Returns reference to internal list!</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># Usage</span></span>
+<span class="line"><span style="color:#E1E4E8">team </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> Team()</span></span>
+<span class="line"><span style="color:#E1E4E8">members </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> team.get_members()</span></span>
+<span class="line"><span style="color:#E1E4E8">members.append(</span><span style="color:#9ECBFF">&quot;Hacker&quot;</span><span style="color:#E1E4E8">)  </span><span style="color:#6A737D"># Modifies internal state directly!</span></span></code></pre>
+<p><strong>Why it’s wrong</strong>: External code can modify the internal list, bypassing any validation or business logic in the class.</p>
+<p><strong>Better approach</strong>: Return a copy (<code>return self.__members.copy()</code>) or an immutable view (<code>return tuple(self.__members)</code>), or provide specific methods like <code>add_member()</code> and <code>remove_member()</code>.</p>
+<h2 id="4-confusing-protected-and-private-in-python">4. Confusing Protected and Private in Python</h2>
+<p><strong>Mistake</strong>: Thinking single underscore <code>_</code> provides the same protection as double underscore <code>__</code>.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="python"><code><span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> Example</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#79B8FF"> __init__</span><span style="color:#E1E4E8">(self):</span></span>
+<span class="line"><span style="color:#79B8FF">        self</span><span style="color:#E1E4E8">._protected </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 1</span><span style="color:#6A737D">   # Convention only</span></span>
+<span class="line"><span style="color:#79B8FF">        self</span><span style="color:#E1E4E8">.__private </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 2</span><span style="color:#6A737D">    # Name mangling</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#E1E4E8">obj </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> Example()</span></span>
+<span class="line"><span style="color:#79B8FF">print</span><span style="color:#E1E4E8">(obj._protected)         </span><span style="color:#6A737D"># Works (convention says &quot;don&#39;t do this&quot;)</span></span>
+<span class="line"><span style="color:#79B8FF">print</span><span style="color:#E1E4E8">(obj.__private)          </span><span style="color:#6A737D"># AttributeError</span></span>
+<span class="line"><span style="color:#79B8FF">print</span><span style="color:#E1E4E8">(obj._Example__private)  </span><span style="color:#6A737D"># Works (name mangling is not security)</span></span></code></pre>
+<p><strong>Why it matters</strong>: Python’s encapsulation is based on convention, not enforcement. Single underscore means “internal use,” but doesn’t prevent access. Double underscore uses name mangling to avoid accidental access in subclasses, but isn’t true privacy.</p>
+<p><strong>Better approach</strong>: Understand that Python trusts developers. Use single underscore for “internal” attributes and double underscore only when you need to avoid name collisions in inheritance.</p>
+<h2 id="5-not-using-properties-when-appropriate">5. Not Using Properties When Appropriate</h2>
+<p><strong>Mistake</strong>: Writing Java-style getters/setters in Python instead of using properties.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="python"><code><span class="line"><span style="color:#6A737D"># Java-style (verbose in Python)</span></span>
+<span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> Person</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#79B8FF"> __init__</span><span style="color:#E1E4E8">(self, age):</span></span>
+<span class="line"><span style="color:#79B8FF">        self</span><span style="color:#E1E4E8">._age </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> age</span></span>
+<span class="line"><span style="color:#E1E4E8">    </span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> get_age</span><span style="color:#E1E4E8">(self):</span></span>
+<span class="line"><span style="color:#F97583">        return</span><span style="color:#79B8FF"> self</span><span style="color:#E1E4E8">._age</span></span>
+<span class="line"><span style="color:#E1E4E8">    </span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> set_age</span><span style="color:#E1E4E8">(self, age):</span></span>
+<span class="line"><span style="color:#F97583">        if</span><span style="color:#E1E4E8"> age </span><span style="color:#F97583">&lt;</span><span style="color:#79B8FF"> 0</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#F97583">            raise</span><span style="color:#79B8FF"> ValueError</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">&quot;Age cannot be negative&quot;</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#79B8FF">        self</span><span style="color:#E1E4E8">._age </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> age</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># Usage is clunky</span></span>
+<span class="line"><span style="color:#E1E4E8">person </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> Person(</span><span style="color:#79B8FF">25</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#79B8FF">print</span><span style="color:#E1E4E8">(person.get_age())</span></span>
+<span class="line"><span style="color:#E1E4E8">person.set_age(</span><span style="color:#79B8FF">26</span><span style="color:#E1E4E8">)</span></span></code></pre>
+<p><strong>Why it’s wrong</strong>: Python provides the <code>@property</code> decorator for cleaner syntax. The above code works but isn’t Pythonic.</p>
+<p><strong>Better approach</strong>: Use properties for a cleaner interface that looks like attribute access but includes validation logic.</p>
+<h2 id="interview-tips">Interview Tips</h2>
+<h2 id="be-ready-to-explain-why-encapsulation">Be Ready to Explain “Why Encapsulation?”</h2>
+<p>Interviewers often ask: “Why not just make all attributes public?” Have a concrete answer ready:</p>
+<ul>
+<li><strong>Data integrity</strong>: “Encapsulation prevents invalid states. For example, a <code>BankAccount</code> with a negative balance shouldn’t be possible.”</li>
+<li><strong>Flexibility</strong>: “If I store age directly, I can’t later switch to storing birthdate without breaking all code that accesses age. With a getter, I can change the internal implementation.”</li>
+<li><strong>Reduced coupling</strong>: “When classes don’t depend on each other’s internal structure, I can modify one without breaking others.”</li>
+</ul>
+<h2 id="demonstrate-with-code-not-just-theory">Demonstrate with Code, Not Just Theory</h2>
+<p>When asked about encapsulation, immediately offer to write code. Say: “Let me show you a BankAccount example…” and write a class with private balance and public deposit/withdraw methods. This shows you understand the practical application.</p>
+<h2 id="know-language-specific-differences">Know Language-Specific Differences</h2>
+<p>If interviewing for a Python role, mention that Python uses conventions (<code>_</code> and <code>__</code>) rather than strict enforcement. If interviewing for Java/C++, know that <code>private</code>, <code>protected</code>, and <code>public</code> are enforced at compile time. Being aware of these differences shows depth of knowledge.</p>
+<h2 id="connect-to-design-principles">Connect to Design Principles</h2>
+<p>Mention that encapsulation supports the <strong>Open/Closed Principle</strong> (open for extension, closed for modification) and <strong>Information Hiding</strong>. For example: “By hiding implementation details, I can extend functionality through subclasses without modifying the base class.”</p>
+<h2 id="discuss-trade-offs">Discuss Trade-offs</h2>
+<p>Show nuanced thinking: “Over-encapsulation can lead to excessive boilerplate. I use private attributes when I need validation or want to reserve the right to change implementation. For simple data containers, public attributes are fine.”</p>
+<h2 id="common-interview-questions">Common Interview Questions</h2>
+<ol>
+<li>
+<p><strong>“What’s the difference between encapsulation and abstraction?”</strong> Answer: “Encapsulation is about hiding implementation details and bundling data with methods. Abstraction is about hiding complexity by exposing only essential features. Encapsulation is a technique; abstraction is a concept.”</p>
+</li>
+<li>
+<p><strong>“How would you implement a read-only attribute?”</strong> Answer: In Python, use <code>@property</code> without a setter. In Java, provide only a getter method.</p>
+</li>
+<li>
+<p><strong>“When would you use protected vs private?”</strong> Answer: “Protected when I want subclasses to access the attribute but not external code. Private when even subclasses shouldn’t access it directly. In practice, I use protected for attributes that subclasses might need to override behavior around.”</p>
+</li>
+</ol>
+<h2 id="red-flags-to-avoid">Red Flags to Avoid</h2>
+<ul>
+<li>Don’t say “encapsulation is just about making things private.” It’s about controlling access and bundling related functionality.</li>
+<li>Don’t claim Python’s <code>__</code> provides security. It’s name mangling for convenience, not a security feature.</li>
+<li>Don’t suggest making everything private by default without justification.</li>
+</ul>
+<h2 id="key-takeaways">Key Takeaways</h2>
+<ul>
+<li><strong>Encapsulation bundles data and methods together while hiding internal implementation details</strong>, protecting object integrity and reducing coupling between classes.</li>
+<li><strong>Use private attributes (Python: <code>__</code>, Java/C++: <code>private</code>) when you need validation or want flexibility to change implementation</strong> without breaking external code.</li>
+<li><strong>Properties in Python (<code>@property</code>) provide clean syntax for getters/setters</strong>, allowing attribute-like access with validation logic behind the scenes.</li>
+<li><strong>Encapsulation prevents invalid states</strong> by forcing all data modifications through methods that enforce business rules and constraints.</li>
+<li><strong>Don’t over-encapsulate</strong>: Make attributes public when they don’t need protection. Use encapsulation purposefully, not reflexively.</li>
+</ul>  </div> <nav class="prev-next-nav" aria-label="Previous and next topics" data-astro-cid-fxft7bm5><a href="interfaces.html" class="prev-next-card group" data-astro-cid-fxft7bm5><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="prev-next-arrow group-hover:text-layrs-primary transition-colors shrink-0" data-astro-cid-fxft7bm5><path d="m15 18-6-6 6-6" data-astro-cid-fxft7bm5></path></svg><div class="flex flex-col items-start gap-0.5 min-w-0" data-astro-cid-fxft7bm5><span class="prev-next-label" data-astro-cid-fxft7bm5>Previous</span><span class="prev-next-title group-hover:text-layrs-primary transition-colors" data-astro-cid-fxft7bm5>Interfaces in OOP: When &amp; How to Use Them</span></div></a><a href="abstraction.html" class="prev-next-card prev-next-card-right group" data-astro-cid-fxft7bm5><div class="flex flex-col items-end gap-0.5 min-w-0" data-astro-cid-fxft7bm5><span class="prev-next-label" data-astro-cid-fxft7bm5>Next</span><span class="prev-next-title text-right group-hover:text-layrs-primary transition-colors" data-astro-cid-fxft7bm5>Abstraction in OOP: Concepts &amp; Interview Guide</span></div><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="prev-next-arrow group-hover:text-layrs-primary transition-colors shrink-0" data-astro-cid-fxft7bm5><path d="m9 18 6-6-6-6" data-astro-cid-fxft7bm5></path></svg></a></nav>  </article> <!-- Right sidebar: CTA + TOC (sticky, always visible) --> <aside class="hidden xl:block w-64 shrink-0" data-astro-cid-xvrfupwn><div class="sticky top-8 max-h-[calc(100vh-4rem)] flex flex-col gap-5" data-astro-cid-xvrfupwn><!-- CTA actions --><div class="rounded-xl border border-layrs-primary/20 bg-gradient-to-b from-layrs-primary/[0.06] to-transparent p-4" data-astro-cid-xvrfupwn><p class="text-[11px] font-semibold uppercase tracking-wider text-[hsl(var(--muted-foreground))] mb-3" data-astro-cid-xvrfupwn>
+Practice
+</p><div class="flex flex-col gap-2" data-astro-cid-xvrfupwn><!-- AI Tutor toggle button --><button type="button" id="ai-tutor-toggle" class="inline-flex items-center gap-2 rounded-lg bg-layrs-primary px-3 py-2.5 text-xs font-medium text-white hover:bg-layrs-secondary transition-all duration-200 shadow-sm shadow-layrs-primary/20 hover:shadow-md hover:shadow-layrs-primary/30 w-full" data-astro-cid-xvrfupwn><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-xvrfupwn><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" data-astro-cid-xvrfupwn></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" data-astro-cid-xvrfupwn></path></svg>
+AI Tutor
+</button><!-- Hidden panel: start/resume (revealed on AI Tutor click) --><div id="ai-tutor-panel" class="hidden flex flex-col gap-2" data-astro-cid-xvrfupwn><!-- Start New Session --><a id="ai-tutor-link" href="https://layrs.me/tutor-lld-concepts?autoStart=1&amp;concept=encapsulation&amp;conceptTitle=Encapsulation%20in%20OOP%3A%20Definition%20%26%20Examples&amp;language=en" class="inline-flex items-center justify-center gap-1.5 rounded-lg bg-layrs-primary/90 px-3 py-2 text-[11px] font-medium text-white hover:bg-layrs-primary transition-all duration-200 no-underline" data-astro-cid-xvrfupwn><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-xvrfupwn><polygon points="5 3 19 12 5 21 5 3" data-astro-cid-xvrfupwn></polygon></svg>
+Start New Session
+</a><!-- Resume Session (hidden by default, shown via JS if paused session exists) --><a id="ai-tutor-resume-link" href="https://layrs.me/tutor-lld-concepts?autoStart=1&amp;concept=encapsulation&amp;conceptTitle=Encapsulation%20in%20OOP%3A%20Definition%20%26%20Examples&amp;language=en" class="hidden inline-flex items-center justify-center gap-1.5 rounded-lg border border-layrs-primary/30 px-3 py-2 text-[11px] font-medium text-layrs-primary hover:bg-layrs-primary/10 transition-all duration-200 no-underline" data-astro-cid-xvrfupwn><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-xvrfupwn><path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8" data-astro-cid-xvrfupwn></path><path d="M21 3v5h-5" data-astro-cid-xvrfupwn></path></svg>
+Resume Session
+</a></div><a href="https://layrs.me/interviews" class="inline-flex items-center gap-2 rounded-lg border border-layrs-primary/30 px-3 py-2.5 text-xs font-medium text-layrs-primary hover:bg-layrs-primary/10 transition-all duration-200 no-underline" data-astro-cid-xvrfupwn><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-xvrfupwn><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" data-astro-cid-xvrfupwn></path></svg>
+Mock Interview
+</a></div></div><!-- On this page --><nav id="toc-nav" aria-label="Table of contents" class="overflow-y-auto" data-astro-cid-xvrfupwn><h2 class="text-[11px] font-semibold uppercase tracking-wider text-[hsl(var(--muted-foreground))] mb-3" data-astro-cid-xvrfupwn>
+On this page
+</h2><ul class="space-y-0.5 text-[13px] border-l-2 border-[hsl(var(--border))]" data-astro-cid-xvrfupwn><li class data-astro-cid-xvrfupwn><a href="encapsulation.html#tldr" class="toc-link block py-1.5 leading-snug transition-all duration-150 no-underline pl-3" style="color: hsl(var(--muted-foreground));" data-toc-slug="tldr" data-astro-cid-xvrfupwn>TL;DR</a></li><li class data-astro-cid-xvrfupwn><a href="encapsulation.html#core-concept" class="toc-link block py-1.5 leading-snug transition-all duration-150 no-underline pl-3" style="color: hsl(var(--muted-foreground));" data-toc-slug="core-concept" data-astro-cid-xvrfupwn>Core Concept</a></li><li class data-astro-cid-xvrfupwn><a href="encapsulation.html#what-is-encapsulation" class="toc-link block py-1.5 leading-snug transition-all duration-150 no-underline pl-3" style="color: hsl(var(--muted-foreground));" data-toc-slug="what-is-encapsulation" data-astro-cid-xvrfupwn>What is Encapsulation?</a></li><li class data-astro-cid-xvrfupwn><a href="encapsulation.html#why-encapsulation-matters" class="toc-link block py-1.5 leading-snug transition-all duration-150 no-underline pl-3" style="color: hsl(var(--muted-foreground));" data-toc-slug="why-encapsulation-matters" data-astro-cid-xvrfupwn>Why Encapsulation Matters</a></li><li class data-astro-cid-xvrfupwn><a href="encapsulation.html#access-levels" class="toc-link block py-1.5 leading-snug transition-all duration-150 no-underline pl-3" style="color: hsl(var(--muted-foreground));" data-toc-slug="access-levels" data-astro-cid-xvrfupwn>Access Levels</a></li><li class data-astro-cid-xvrfupwn><a href="encapsulation.html#visual-guide" class="toc-link block py-1.5 leading-snug transition-all duration-150 no-underline pl-3" style="color: hsl(var(--muted-foreground));" data-toc-slug="visual-guide" data-astro-cid-xvrfupwn>Visual Guide</a></li><li class="ml-0" data-astro-cid-xvrfupwn><a href="encapsulation.html#encapsulation-concept" class="toc-link block py-1.5 leading-snug transition-all duration-150 no-underline pl-5 text-[12px]" style="color: hsl(var(--muted-foreground));" data-toc-slug="encapsulation-concept" data-astro-cid-xvrfupwn>Encapsulation Concept</a></li><li class="ml-0" data-astro-cid-xvrfupwn><a href="encapsulation.html#without-vs-with-encapsulation" class="toc-link block py-1.5 leading-snug transition-all duration-150 no-underline pl-5 text-[12px]" style="color: hsl(var(--muted-foreground));" data-toc-slug="without-vs-with-encapsulation" data-astro-cid-xvrfupwn>Without vs With Encapsulation</a></li><li class data-astro-cid-xvrfupwn><a href="encapsulation.html#examples" class="toc-link block py-1.5 leading-snug transition-all duration-150 no-underline pl-3" style="color: hsl(var(--muted-foreground));" data-toc-slug="examples" data-astro-cid-xvrfupwn>Examples</a></li><li class data-astro-cid-xvrfupwn><a href="encapsulation.html#example-1-basic-encapsulation-with-private-attributes" class="toc-link block py-1.5 leading-snug transition-all duration-150 no-underline pl-3" style="color: hsl(var(--muted-foreground));" data-toc-slug="example-1-basic-encapsulation-with-private-attributes" data-astro-cid-xvrfupwn>Example 1: Basic Encapsulation with Private Attributes</a></li><li class data-astro-cid-xvrfupwn><a href="encapsulation.html#example-2-property-decorators-pythonic-encapsulation" class="toc-link block py-1.5 leading-snug transition-all duration-150 no-underline pl-3" style="color: hsl(var(--muted-foreground));" data-toc-slug="example-2-property-decorators-pythonic-encapsulation" data-astro-cid-xvrfupwn>Example 2: Property Decorators (Pythonic Encapsulation)</a></li><li class data-astro-cid-xvrfupwn><a href="encapsulation.html#example-3-encapsulation-with-validation-logic" class="toc-link block py-1.5 leading-snug transition-all duration-150 no-underline pl-3" style="color: hsl(var(--muted-foreground));" data-toc-slug="example-3-encapsulation-with-validation-logic" data-astro-cid-xvrfupwn>Example 3: Encapsulation with Validation Logic</a></li><li class data-astro-cid-xvrfupwn><a href="encapsulation.html#common-mistakes" class="toc-link block py-1.5 leading-snug transition-all duration-150 no-underline pl-3" style="color: hsl(var(--muted-foreground));" data-toc-slug="common-mistakes" data-astro-cid-xvrfupwn>Common Mistakes</a></li><li class data-astro-cid-xvrfupwn><a href="encapsulation.html#1-making-everything-private" class="toc-link block py-1.5 leading-snug transition-all duration-150 no-underline pl-3" style="color: hsl(var(--muted-foreground));" data-toc-slug="1-making-everything-private" data-astro-cid-xvrfupwn>1. Making Everything Private</a></li><li class data-astro-cid-xvrfupwn><a href="encapsulation.html#2-providing-setters-that-bypass-validation" class="toc-link block py-1.5 leading-snug transition-all duration-150 no-underline pl-3" style="color: hsl(var(--muted-foreground));" data-toc-slug="2-providing-setters-that-bypass-validation" data-astro-cid-xvrfupwn>2. Providing Setters That Bypass Validation</a></li><li class data-astro-cid-xvrfupwn><a href="encapsulation.html#3-returning-mutable-objects-directly" class="toc-link block py-1.5 leading-snug transition-all duration-150 no-underline pl-3" style="color: hsl(var(--muted-foreground));" data-toc-slug="3-returning-mutable-objects-directly" data-astro-cid-xvrfupwn>3. Returning Mutable Objects Directly</a></li><li class data-astro-cid-xvrfupwn><a href="encapsulation.html#4-confusing-protected-and-private-in-python" class="toc-link block py-1.5 leading-snug transition-all duration-150 no-underline pl-3" style="color: hsl(var(--muted-foreground));" data-toc-slug="4-confusing-protected-and-private-in-python" data-astro-cid-xvrfupwn>4. Confusing Protected and Private in Python</a></li><li class data-astro-cid-xvrfupwn><a href="encapsulation.html#5-not-using-properties-when-appropriate" class="toc-link block py-1.5 leading-snug transition-all duration-150 no-underline pl-3" style="color: hsl(var(--muted-foreground));" data-toc-slug="5-not-using-properties-when-appropriate" data-astro-cid-xvrfupwn>5. Not Using Properties When Appropriate</a></li><li class data-astro-cid-xvrfupwn><a href="encapsulation.html#interview-tips" class="toc-link block py-1.5 leading-snug transition-all duration-150 no-underline pl-3" style="color: hsl(var(--muted-foreground));" data-toc-slug="interview-tips" data-astro-cid-xvrfupwn>Interview Tips</a></li><li class data-astro-cid-xvrfupwn><a href="encapsulation.html#be-ready-to-explain-why-encapsulation" class="toc-link block py-1.5 leading-snug transition-all duration-150 no-underline pl-3" style="color: hsl(var(--muted-foreground));" data-toc-slug="be-ready-to-explain-why-encapsulation" data-astro-cid-xvrfupwn>Be Ready to Explain “Why Encapsulation?”</a></li><li class data-astro-cid-xvrfupwn><a href="encapsulation.html#demonstrate-with-code-not-just-theory" class="toc-link block py-1.5 leading-snug transition-all duration-150 no-underline pl-3" style="color: hsl(var(--muted-foreground));" data-toc-slug="demonstrate-with-code-not-just-theory" data-astro-cid-xvrfupwn>Demonstrate with Code, Not Just Theory</a></li><li class data-astro-cid-xvrfupwn><a href="encapsulation.html#know-language-specific-differences" class="toc-link block py-1.5 leading-snug transition-all duration-150 no-underline pl-3" style="color: hsl(var(--muted-foreground));" data-toc-slug="know-language-specific-differences" data-astro-cid-xvrfupwn>Know Language-Specific Differences</a></li><li class data-astro-cid-xvrfupwn><a href="encapsulation.html#connect-to-design-principles" class="toc-link block py-1.5 leading-snug transition-all duration-150 no-underline pl-3" style="color: hsl(var(--muted-foreground));" data-toc-slug="connect-to-design-principles" data-astro-cid-xvrfupwn>Connect to Design Principles</a></li><li class data-astro-cid-xvrfupwn><a href="encapsulation.html#discuss-trade-offs" class="toc-link block py-1.5 leading-snug transition-all duration-150 no-underline pl-3" style="color: hsl(var(--muted-foreground));" data-toc-slug="discuss-trade-offs" data-astro-cid-xvrfupwn>Discuss Trade-offs</a></li><li class data-astro-cid-xvrfupwn><a href="encapsulation.html#common-interview-questions" class="toc-link block py-1.5 leading-snug transition-all duration-150 no-underline pl-3" style="color: hsl(var(--muted-foreground));" data-toc-slug="common-interview-questions" data-astro-cid-xvrfupwn>Common Interview Questions</a></li><li class data-astro-cid-xvrfupwn><a href="encapsulation.html#red-flags-to-avoid" class="toc-link block py-1.5 leading-snug transition-all duration-150 no-underline pl-3" style="color: hsl(var(--muted-foreground));" data-toc-slug="red-flags-to-avoid" data-astro-cid-xvrfupwn>Red Flags to Avoid</a></li><li class data-astro-cid-xvrfupwn><a href="encapsulation.html#key-takeaways" class="toc-link block py-1.5 leading-snug transition-all duration-150 no-underline pl-3" style="color: hsl(var(--muted-foreground));" data-toc-slug="key-takeaways" data-astro-cid-xvrfupwn>Key Takeaways</a></li></ul></nav></div></aside><script>
+  // AI Tutor panel toggle
+  (function initAiTutorPanel() {
+    var tutorToggle = document.getElementById('ai-tutor-toggle');
+    var panel = document.getElementById('ai-tutor-panel');
+    var link = document.getElementById('ai-tutor-link');
+    var resumeLink = document.getElementById('ai-tutor-resume-link');
+    if (!tutorToggle || !panel || !link) return;
+
+    // Toggle panel visibility on AI Tutor button click
+    tutorToggle.addEventListener('click', function() {
+      var isHidden = panel.classList.contains('hidden');
+      panel.classList.toggle('hidden');
+      // Update button style when panel is open
+      if (isHidden) {
+        tutorToggle.classList.add('ring-2', 'ring-layrs-primary/30');
+      } else {
+        tutorToggle.classList.remove('ring-2', 'ring-layrs-primary/30');
+      }
+    });
+
+    // Check for paused session via Supabase (if user is logged in on the main app)
+    (function checkPausedSession() {
+      if (!resumeLink) return;
+
+      var supabaseUrl = 'https://tcdieywqoophloivzszp.supabase.co';
+      var anonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRjZGlleXdxb29waGxvaXZ6c3pwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDY3NDMzMzksImV4cCI6MjA2MjMxOTMzOX0.Ypel9zPDOVJVBiEZFT-__cTZqgQL2-prOxiUXjieihM';
+
+      try {
+        var keys = Object.keys(localStorage);
+        var sbKey = keys.find(function(k) { return k.startsWith('sb-') && k.endsWith('-auth-token'); });
+        if (!sbKey) return;
+
+        var raw = localStorage.getItem(sbKey);
+        if (!raw) return;
+        var stored = JSON.parse(raw);
+
+        var refreshToken = stored.refresh_token || (stored.current_session && stored.current_session.refresh_token);
+        var user = stored.user || (stored.current_session && stored.current_session.user);
+        var userId = user && user.id;
+        if (!refreshToken || !userId) return;
+
+        var conceptMatch = link.getAttribute('href').match(/[?&]concept=([^&]+)/);
+        var conceptSlug = conceptMatch ? decodeURIComponent(conceptMatch[1]) : '';
+        if (!conceptSlug) return;
+
+        // Refresh the token first, then query
+        fetch(supabaseUrl + '/auth/v1/token?grant_type=refresh_token', {
+          method: 'POST',
+          headers: {
+            'apikey': anonKey,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ refresh_token: refreshToken })
+        })
+        .then(function(res) { return res.json(); })
+        .then(function(authData) {
+          if (!authData || !authData.access_token) return;
+
+          // Update localStorage with fresh tokens so future loads are faster
+          stored.access_token = authData.access_token;
+          stored.refresh_token = authData.refresh_token;
+          if (stored.current_session) {
+            stored.current_session.access_token = authData.access_token;
+            stored.current_session.refresh_token = authData.refresh_token;
+          }
+          localStorage.setItem(sbKey, JSON.stringify(stored));
+
+          // Now query for paused sessions with the fresh token
+          return fetch(supabaseUrl + '/rest/v1/interview_sessions?select=id,metadata,paused_at&user_id=eq.' + userId + '&skill_type=eq.concepts_tutor&status=eq.paused&pause_checkpoint=not.is.null&order=paused_at.desc&limit=10', {
+            headers: {
+              'apikey': anonKey,
+              'Authorization': 'Bearer ' + authData.access_token,
+            }
+          });
+        })
+        .then(function(res) { return res && res.json(); })
+        .then(function(data) {
+          if (!Array.isArray(data)) return;
+          console.log('[AI Tutor] Looking for conceptId:', conceptSlug, 'in', data.length, 'paused sessions');
+          console.log('[AI Tutor] Available conceptIds:', data.map(function(s) { return s.metadata && s.metadata.conceptId; }));
+          var match = data.find(function(s) {
+            return s.metadata && s.metadata.conceptId === conceptSlug;
+          });
+          if (match) {
+            var currentHref = resumeLink.getAttribute('href').replace(/&resumeSessionId=[^&]+/, '');
+            resumeLink.setAttribute('href', currentHref + '&resumeSessionId=' + match.id);
+            resumeLink.classList.remove('hidden');
+            console.log('[AI Tutor] Resume link set to:', resumeLink.getAttribute('href'));
+          } else {
+            console.log('[AI Tutor] No match for concept:', conceptSlug);
+          }
+        })
+        .catch(function() { /* silently fail */ });
+      } catch(e) { /* silently fail */ }
+    })();
+  })();
+</script><script>
+  // Active section highlighting via IntersectionObserver
+  (function initTocHighlight() {
+    var tocLinks = document.querySelectorAll('.toc-link[data-toc-slug]');
+    if (tocLinks.length === 0) return;
+
+    var headingElements = [];
+    tocLinks.forEach(function(link) {
+      var slug = link.getAttribute('data-toc-slug');
+      var el = document.getElementById(slug);
+      if (el) headingElements.push({ el: el, link: link });
+    });
+
+    if (headingElements.length === 0) return;
+
+    var currentActive = null;
+
+    function setActive(link) {
+      if (currentActive === link) return;
+      if (currentActive) currentActive.classList.remove('active');
+      link.classList.add('active');
+      currentActive = link;
+    }
+
+    var observer = new IntersectionObserver(function(entries) {
+      // Find the topmost visible heading
+      var visible = [];
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          visible.push(entry);
+        }
+      });
+
+      if (visible.length > 0) {
+        // Sort by position in document
+        visible.sort(function(a, b) {
+          return a.target.getBoundingClientRect().top - b.target.getBoundingClientRect().top;
+        });
+        var slug = visible[0].target.id;
+        tocLinks.forEach(function(link) {
+          if (link.getAttribute('data-toc-slug') === slug) {
+            setActive(link);
+          }
+        });
+      }
+    }, {
+      rootMargin: '-80px 0px -70% 0px',
+      threshold: 0
+    });
+
+    headingElements.forEach(function(item) {
+      observer.observe(item.el);
+    });
+
+    // Also handle scroll to set active on the closest heading above viewport
+    var rafId = null;
+    window.addEventListener('scroll', function() {
+      if (rafId) return;
+      rafId = requestAnimationFrame(function() {
+        rafId = null;
+        var scrollY = window.scrollY || document.documentElement.scrollTop;
+        var best = null;
+        headingElements.forEach(function(item) {
+          var top = item.el.getBoundingClientRect().top + scrollY - 100;
+          if (top <= scrollY + 100) {
+            best = item;
+          }
+        });
+        if (best) setActive(best.link);
+      });
+    });
+  })();
+</script> </div> </div>  </div> </div> </div> <!-- Mobile menu toggle script --> <script>
+      (function() {
+        var toggle = document.getElementById('menu-toggle');
+        var overlay = document.getElementById('mobile-sidebar-overlay');
+        var backdrop = document.getElementById('mobile-sidebar-backdrop');
+
+        if (toggle && overlay) {
+          toggle.addEventListener('click', function() {
+            overlay.classList.remove('hidden');
+            overlay.classList.remove('closing');
+            document.body.style.overflow = 'hidden';
+            // Show close button, hide collapse button on mobile sidebar
+            var mobileSidebar = overlay.querySelector('#course-sidebar');
+            if (mobileSidebar) {
+              var mobileOnlyBtns = mobileSidebar.querySelectorAll('.sidebar-mobile-only');
+              var desktopOnlyBtns = mobileSidebar.querySelectorAll('.sidebar-desktop-only');
+              mobileOnlyBtns.forEach(function(b) { b.style.display = 'flex'; });
+              desktopOnlyBtns.forEach(function(b) { b.style.display = 'none'; });
+            }
+          });
+        }
+        if (backdrop && overlay) {
+          backdrop.addEventListener('click', function() {
+            if (window.__closeMobileDrawer) {
+              window.__closeMobileDrawer();
+            } else {
+              overlay.classList.add('hidden');
+              document.body.style.overflow = '';
+            }
+          });
+        }
+      })();
+    </script> <!-- Mermaid client-side rendering (always light theme for consistent contrast) --> <script>
+      (async function() {
+        const pres = document.querySelectorAll('pre[data-language="mermaid"]');
+        if (pres.length === 0) return;
+
+        var themeVars = {
+          primaryColor: '#DBEAFE',
+          primaryTextColor: '#1e3a5f',
+          primaryBorderColor: '#3B82F6',
+          lineColor: '#6B7280',
+          secondaryColor: '#F3F4F6',
+          tertiaryColor: '#EFF6FF',
+          background: '#FFFFFF',
+          mainBkg: '#DBEAFE',
+          nodeBorder: '#3B82F6',
+          clusterBkg: '#F9FAFB',
+          clusterBorder: '#D1D5DB',
+          titleColor: '#111827',
+          edgeLabelBackground: '#FFFFFF',
+          textColor: '#111827',
+          noteTextColor: '#374151',
+          noteBkgColor: '#FEF3C7',
+          noteBorderColor: '#F59E0B',
+        };
+
+        const { default: mermaid } = await import('https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs');
+        mermaid.initialize({
+          startOnLoad: false,
+          theme: 'default',
+          themeVariables: themeVars,
+          fontFamily: 'Inter, system-ui, sans-serif',
+          fontSize: 14,
+        });
+
+        let id = 0;
+        for (const pre of pres) {
+          const code = pre.textContent || '';
+          const wrapper = document.createElement('div');
+          wrapper.className = 'mermaid-wrapper';
+          try {
+            const { svg } = await mermaid.render('mermaid-' + (id++), code);
+            wrapper.innerHTML = svg;
+            // Add expand hint badge
+            var hint = document.createElement('span');
+            hint.className = 'mermaid-expand-hint';
+            hint.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M9 21H3v-6"/><path d="M21 3l-7 7"/><path d="M3 21l7-7"/></svg>Expand';
+            wrapper.appendChild(hint);
+          } catch (e) {
+            wrapper.innerHTML = '<pre style="color:#EF4444;font-size:0.875rem;">Diagram rendering failed</pre>';
+          }
+          pre.replaceWith(wrapper);
+        }
+
+        // Click-to-expand handler
+        document.addEventListener('click', function(e) {
+          var wrapper = e.target.closest('.mermaid-wrapper');
+          if (!wrapper || wrapper.querySelector('pre')) return; // skip failed renders
+          var svgEl = wrapper.querySelector('svg');
+          if (!svgEl) return;
+
+          var overlay = document.createElement('div');
+          overlay.className = 'mermaid-overlay';
+
+          var content = document.createElement('div');
+          content.className = 'mermaid-overlay-content';
+
+          var closeBtn = document.createElement('button');
+          closeBtn.className = 'mermaid-overlay-close';
+          closeBtn.innerHTML = '&times;';
+          closeBtn.setAttribute('aria-label', 'Close diagram');
+
+          // Clone the SVG at full natural size using viewBox dimensions
+          var svgClone = svgEl.cloneNode(true);
+          var vb = svgEl.getAttribute('viewBox');
+          if (vb) {
+            var vbParts = vb.split(' ');
+            var vbW = parseFloat(vbParts[2]);
+            var vbH = parseFloat(vbParts[3]);
+            svgClone.removeAttribute('width');
+            svgClone.removeAttribute('height');
+            svgClone.style.width = vbW + 'px';
+            svgClone.style.height = vbH + 'px';
+            svgClone.style.maxWidth = 'none';
+          }
+
+          content.appendChild(svgClone);
+          overlay.appendChild(content);
+          overlay.appendChild(closeBtn);
+          document.body.appendChild(overlay);
+          document.body.style.overflow = 'hidden';
+
+          function closeOverlay() {
+            overlay.classList.add('closing');
+            setTimeout(function() {
+              overlay.remove();
+              document.body.style.overflow = '';
+            }, 200);
+          }
+
+          closeBtn.addEventListener('click', function(ev) {
+            ev.stopPropagation();
+            closeOverlay();
+          });
+          overlay.addEventListener('click', function(ev) {
+            if (ev.target === overlay) closeOverlay();
+          });
+          document.addEventListener('keydown', function handler(ev) {
+            if (ev.key === 'Escape') {
+              closeOverlay();
+              document.removeEventListener('keydown', handler);
+            }
+          });
+        });
+      })();
+    </script> </body> </html>

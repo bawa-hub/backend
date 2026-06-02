@@ -1,0 +1,259 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	    <title>System Design Interview Preparation & Mock Interviews | Layrs</title>
+	    <meta name="description" content="Master system design interviews with AI-powered mocks, 120+ FAANG problems, and interactive canvas. Practice HLD, LLD & DSA for Google, Amazon, Meta interviews." />
+    <meta name="author" content="Layrs" />
+
+	    <link rel="canonical" href="https://layrs.me/" />
+
+	    <!-- Open Graph / Facebook -->
+	    <meta property="og:type" content="website" />
+	    <meta property="og:title" content="System Design Interview Preparation & Mock Interviews | Layrs" />
+	    <meta property="og:description" content="Master system design interviews with AI-powered mocks, 120+ FAANG problems, and interactive canvas. Practice HLD, LLD & DSA for Google, Amazon, Meta interviews." />
+    <meta property="og:image" content="https://layrs.me/Layrs.png" />
+    <meta property="og:url" content="https://layrs.me" />
+
+	    <!-- Twitter -->
+	    <meta name="twitter:card" content="summary_large_image" />
+	    <meta name="twitter:site" content="@layrs" />
+	    <meta name="twitter:title" content="System Design Interview Preparation & Mock Interviews | Layrs" />
+	    <meta name="twitter:description" content="Master system design interviews with AI-powered mocks, 120+ FAANG problems, and interactive canvas. Practice HLD, LLD & DSA for Google, Amazon, Meta interviews." />
+	    <meta name="twitter:image" content="https://layrs.me/Layrs.png" />
+
+    <!-- Favicon Configuration -->
+    <link rel="icon" type="image/x-icon" href="../../../favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="../../../favicon.ico" />
+    <link rel="icon" type="image/png" sizes="16x16" href="../../../favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="https://layrs.me/Layrs.png" />
+    <link rel="manifest" href="../../../site.webmanifest" />
+    <meta name="theme-color" content="#3b82f6" />
+
+    <!-- LLM Context Files -->
+    <link rel="alternate" type="text/plain" href="https://layrs.me/llms.txt" title="LLM Context" />
+    <link rel="alternate" type="text/plain" href="https://layrs.me/llms-full.txt" title="LLM Full Context" />
+
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Organization",
+          "@id": "https://layrs.me/#organization",
+          "name": "Layrs",
+          "url": "https://layrs.me",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://layrs.me/Layrs.png",
+            "width": 512,
+            "height": 512
+          },
+          "description": "Master the unseen architecture of great systems. One layer at a time.",
+          "email": "support@layrs.me",
+          "sameAs": [
+            "https://twitter.com/layrs",
+            "https://www.linkedin.com/company/layrs"
+          ],
+          "contactPoint": {
+            "@type": "ContactPoint",
+            "email": "support@layrs.me",
+            "contactType": "Customer Support"
+          }
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://layrs.me/#website",
+          "url": "https://layrs.me",
+          "name": "System Design Interview Preparation & Mock Interviews | Layrs",
+          "description": "Master system design interviews with AI-powered mocks, 120+ FAANG problems, and interactive canvas. Practice HLD, LLD & DSA for Google, Amazon, Meta interviews.",
+          "publisher": {
+            "@id": "https://layrs.me/#organization"
+          },
+          "inLanguage": "en"
+        },
+        {
+          "@type": "WebPage",
+          "@id": "https://layrs.me/#webpage",
+          "url": "https://layrs.me",
+          "name": "System Design Interview Preparation & Mock Interviews | Layrs",
+          "description": "Master system design interviews with AI-powered mocks, 120+ FAANG problems, and interactive canvas. Practice HLD, LLD & DSA for Google, Amazon, Meta interviews.",
+          "isPartOf": {
+            "@id": "https://layrs.me/#website"
+          },
+          "about": {
+            "@id": "https://layrs.me/#organization"
+          },
+          "inLanguage": "en"
+        },
+        {
+          "@type": "EducationalOrganization",
+          "@id": "https://layrs.me/#educational",
+          "name": "Layrs",
+          "url": "https://layrs.me",
+          "description": "Practice system design interviews with visual diagrams. AI-powered mock interviews and structured learning modules for software engineers.",
+          "educationalCredentialAwarded": "System Design Interview Skills",
+          "audience": {
+            "@type": "EducationalAudience",
+            "educationalRole": "Software Engineer"
+          }
+	        },
+	        {
+	          "@type": "BreadcrumbList",
+	          "@id": "https://layrs.me/#breadcrumb",
+	          "itemListElement": [
+	            {
+	              "@type": "ListItem",
+	              "position": 1,
+	              "name": "Home",
+	              "item": "https://layrs.me/"
+	            },
+	            {
+	              "@type": "ListItem",
+	              "position": 2,
+	              "name": "System Design Interview Preparation",
+	              "item": "https://layrs.me/#webpage"
+	            }
+	          ]
+        }
+      ]
+    }
+    </script>
+
+    <!-- Optimized font loading with font-display swap -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&display=swap" rel="stylesheet">
+
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-B4C8VH12BN"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-B4C8VH12BN', {
+        'send_page_view': true
+      });
+    </script>
+    <script type="module" crossorigin src="../../../assets/index-CKKkFcce.js"></script>
+    <link rel="preload" as="style" href="../../../assets/index-BRyvyyt7.css">
+    <link rel="stylesheet" crossorigin href="../../../assets/index-BRyvyyt7.css">
+  
+    <!-- Preconnect to external domains for faster resource loading -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://upload.wikimedia.org">
+
+    <!-- Preload critical above-the-fold images -->
+    <link rel="preload" as="image" href="https://layrs.me/assets/svgviewer-output.svg" fetchpriority="high">
+    <link rel="preload" as="image" href="https://layrs.me/Layrs.jpeg">
+  </head>
+
+	  <body>
+	    <!-- Static landing content used for initial HTML (removed when JS loads) -->
+	    <div id="static-landing">
+	      <div style="max-width: 1200px; margin: 0 auto; padding: 20px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; line-height: 1.6; color: #1e293b;">
+        <nav style="margin-bottom: 40px; padding-bottom: 20px; border-bottom: 1px solid #e2e8f0;">
+          <a href="https://layrs.me/" style="margin-right: 20px; color: #2563eb; text-decoration: none; font-weight: 600;">Layrs</a>
+          <a href="https://layrs.me/practice" style="margin-right: 20px; color: #475569; text-decoration: none;">Practice</a>
+          <a href="https://layrs.me/learn/system-design/module-0" style="margin-right: 20px; color: #475569; text-decoration: none;">Learn</a>
+          <a href="https://layrs.me/interviews" style="margin-right: 20px; color: #475569; text-decoration: none;">Mock Interview</a>
+          <a href="https://layrs.me/byop" style="margin-right: 20px; color: #475569; text-decoration: none;">BYOP</a>
+          <a href="service-discovery.html#pricing" style="margin-right: 20px; color: #475569; text-decoration: none;">Pricing</a>
+          <a href="https://layrs.me/login" style="margin-right: 20px; color: #475569; text-decoration: none;">Login</a>
+          <a href="https://layrs.me/register" style="color: #2563eb; text-decoration: none; font-weight: 500;">Start free</a>
+        </nav>
+
+        <h1 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 20px; color: #0f172a;">Ace technical interviews with AI-powered mocks, practice problems, and interactive IDE's.</h1>
+
+        <p style="font-size: 1.125rem; margin-bottom: 16px; color: #475569;">Layrs combines AI mock interviews, a visual design canvas, and role-specific feedback to help SDE-1 to Staff engineers prepare for FAANG and high-bar startup interviews.</p>
+
+        <p style="font-size: 1.125rem; margin-bottom: 24px; color: #475569;">Whether you're preparing for system design rounds at Google, Amazon, Meta, or high-growth startups, Layrs provides the comprehensive practice environment you need. Our platform simulates real interview conditions with timed sessions, AI-driven questioning, and detailed feedback tailored to your experience level and target role.</p>
+
+        <div style="margin-bottom: 40px;">
+          <a href="https://layrs.me/interviews" style="display: inline-block; margin-right: 12px; padding: 12px 24px; background-color: #2563eb; color: white; text-decoration: none; border-radius: 6px; font-weight: 500;">Start a free Mock Interview</a>
+          <a href="https://layrs.me/practice" style="display: inline-block; padding: 12px 24px; background-color: #f1f5f9; color: #1e293b; text-decoration: none; border-radius: 6px; font-weight: 500;">Start Practicing Problems</a>
+        </div>
+
+        <h2 style="font-size: 1.875rem; font-weight: 700; margin-top: 48px; margin-bottom: 16px; color: #0f172a;">Why Layrs exists</h2>
+
+        <p style="margin-bottom: 16px; color: #475569;">Technical interviews at top technology companies have evolved significantly over the past decade. System design interviews, in particular, have become a critical differentiator for mid-level to senior engineering roles. Yet most engineers struggle to find effective ways to practice these skills beyond reading blog posts or watching YouTube videos. Layrs was built to fill this gap by providing an interactive, AI-powered environment where you can actually practice designing systems, receive feedback, and iterate on your approach.</p>
+
+        <p style="margin-bottom: 16px; color: #475569;">Traditional interview preparation resources focus heavily on data structures and algorithms, with limited support for system design practice. While coding problems have platforms like LeetCode and HackerRank, system design preparation has largely relied on passive learning through books like "Designing Data-Intensive Applications" or courses that explain concepts without hands-on practice. Layrs changes this by offering an active learning environment where you draw architectures, make trade-off decisions, and defend your choices to an AI interviewer—mirroring the actual interview experience.</p>
+
+        <p style="margin-bottom: 16px; color: #475569;">Our platform serves engineers at companies ranging from early-stage startups to Fortune 500 enterprises who are preparing for their next career move. Whether you're targeting a senior engineer role at Google, a staff engineer position at a high-growth startup, or simply want to strengthen your system design skills for your current job, Layrs provides structured practice that adapts to your experience level. The AI interviewer understands the difference between expectations for an SDE-2 versus an SDE-4, adjusting question depth and evaluation criteria accordingly.</p>
+
+        <p style="margin-bottom: 16px; color: #475569;">Beyond system design, Layrs supports comprehensive technical interview preparation including low-level design (LLD) with UML diagrams and class structures, as well as data structures and algorithms (DSA) practice with an integrated code editor. This holistic approach ensures you're prepared for every stage of the technical interview process, from initial phone screens to final onsite rounds. Our curated problem set of 120+ questions covers real scenarios asked at FAANG companies and top-tier startups, giving you exposure to the types of challenges you'll face in actual interviews.</p>
+
+        <h2 style="font-size: 1.875rem; font-weight: 700; margin-top: 48px; margin-bottom: 16px; color: #0f172a;">What you can do today with Layrs</h2>
+
+        <p style="margin-bottom: 16px; color: #475569;">Layrs helps you prepare for technical interviews with AI-powered practice across System Design, LLD, and DSA. Our platform is built specifically for software engineers who want more than just reading solutions or watching videos. With Layrs, you actively practice designing systems, writing code, and articulating your thought process—just like you would in a real interview. The AI interviewer adapts to your responses, asks follow-up questions, and provides constructive feedback that helps you improve with each session.</p>
+
+        <h2 style="font-size: 1.875rem; font-weight: 700; margin-top: 48px; margin-bottom: 16px; color: #0f172a;">Design Studio: practice HLD and LLD problems on an interactive canvas</h2>
+
+        <p style="margin-bottom: 16px; color: #475569;">Layrs gives you a dedicated studio to sketch and refine both high-level and low-level designs the way interviewers expect – from services and databases to UML class diagrams and code implementations. The Design Studio provides an intuitive drag-and-drop interface where you can build complete system architectures. Start with high-level design by adding load balancers, application servers, databases, caches, and message queues. Then dive deeper into low-level design with UML class diagrams, interface definitions, and detailed component relationships. Every element you add can be annotated with notes, capacity estimates, and design rationale—helping you practice the complete thought process that interviewers look for.</p>
+
+        <h2 style="font-size: 1.875rem; font-weight: 700; margin-top: 48px; margin-bottom: 16px; color: #0f172a;">Simulate real system design/data structures interviews</h2>
+
+        <p style="margin-bottom: 16px; color: #475569;">Run practice interviews with an AI interviewer in a room layout that mirrors real remote interviews. Experience the pressure and flow of actual technical interviews in a safe practice environment. Our AI interviewer conducts structured sessions that progress through requirement gathering, solution design, implementation, and optimization—just like interviews at top tech companies. You'll work with a split-screen interface showing the problem statement, your design canvas or code editor, and the interviewer's questions and feedback in real-time. This realistic setup helps you build confidence and develop the communication skills essential for interview success.</p>
+
+        <div style="margin-bottom: 40px;">
+          <a href="https://layrs.me/interviews" style="display: inline-block; padding: 12px 24px; background-color: #2563eb; color: white; text-decoration: none; border-radius: 6px; font-weight: 500;">Try a design/dsa mock interview</a>
+        </div>
+
+        <h2 style="font-size: 1.875rem; font-weight: 700; margin-top: 48px; margin-bottom: 16px; color: #0f172a;">Who is Layrs for?</h2>
+
+        <p style="margin-bottom: 16px; color: #475569;">Layrs is designed for software engineers at all levels who are serious about mastering technical interviews. Whether you're an early-career developer aiming for your first FAANG role, a mid-level engineer preparing for senior positions, or a staff engineer looking to stay sharp, our platform adapts to your experience level and career goals. We serve engineers targeting roles at companies like Google, Amazon, Meta, Microsoft, Apple, Netflix, and high-bar startups that maintain similar interview standards.</p>
+
+        <h2 style="font-size: 1.875rem; font-weight: 700; margin-top: 48px; margin-bottom: 16px; color: #0f172a;">Future directions we're exploring</h2>
+
+        <p style="margin-bottom: 16px; color: #475569;">We're actively collecting feedback on what to build next. These are enhancements and new features we're exploring beyond our current offerings. Our roadmap is driven by the needs of engineers preparing for technical interviews and advancing their careers. The features below represent our current exploration areas, and we prioritize development based on community feedback and demand. If any of these resonate with your preparation needs, we'd love to hear from you.</p>
+
+        <h2 style="font-size: 1.875rem; font-weight: 700; margin-top: 48px; margin-bottom: 16px; color: #0f172a;">Simple, one-time pricing</h2>
+
+        <h2 style="font-size: 1.875rem; font-weight: 700; margin-top: 48px; margin-bottom: 16px; color: #0f172a;">Questions you might have</h2>
+	
+	        <h2 style="font-size: 1.5rem; font-weight: 700; margin-top: 40px; margin-bottom: 16px; color: #0f172a;">System design resources we trust</h2>
+	        <ul style="margin-bottom: 32px; padding-left: 20px; color: #475569;">
+	          <li style="margin-bottom: 8px;">
+	            <a href="https://aws.amazon.com/architecture/" target="_blank" rel="noopener noreferrer" style="color: #475569; text-decoration: none;">
+	              AWS Architecture Center
+	            </a>
+	          </li>
+	          <li style="margin-bottom: 8px;">
+	            <a href="https://cloud.google.com/architecture/framework" target="_blank" rel="noopener noreferrer" style="color: #475569; text-decoration: none;">
+	              Google Cloud Architecture
+	            </a>
+	          </li>
+	          <li style="margin-bottom: 8px;">
+	            <a href="https://martinfowler.com/" target="_blank" rel="noopener noreferrer" style="color: #475569; text-decoration: none;">
+	              Martin Fowler's Blog
+	            </a>
+	          </li>
+	        </ul>
+	
+        <footer style="margin-top: 60px; padding-top: 40px; border-top: 1px solid #e2e8f0; color: #64748b; font-size: 0.875rem;">
+          <div style="margin-bottom: 20px;">
+            <a href="https://layrs.me/" style="margin-right: 20px; color: #475569; text-decoration: none;">Layrs</a>
+            <a href="https://layrs.me/practice" style="margin-right: 20px; color: #475569; text-decoration: none;">Practice</a>
+            <a href="https://layrs.me/learn/system-design/module-0" style="margin-right: 20px; color: #475569; text-decoration: none;">Learn</a>
+            <a href="https://layrs.me/interviews" style="margin-right: 20px; color: #475569; text-decoration: none;">Mock Interview</a>
+            <a href="service-discovery.html#pricing" style="margin-right: 20px; color: #475569; text-decoration: none;">Pricing</a>
+            <a href="https://layrs.me/contact" style="margin-right: 20px; color: #475569; text-decoration: none;">Contact</a>
+            <a href="https://layrs.me/terms" style="margin-right: 20px; color: #475569; text-decoration: none;">Terms & Conditions</a>
+            <a href="https://layrs.me/privacy" style="margin-right: 20px; color: #475569; text-decoration: none;">Privacy Policy</a>
+            <a href="https://layrs.me/refund" style="color: #475569; text-decoration: none;">Cancellation & Refund</a>
+          </div>
+          <p style="margin: 0;">© 2025 Layrs. All rights reserved.</p>
+	        </footer>
+	      </div>
+	    </div>
+
+    <!-- React app root -->
+    <div id="root"></div>
+
+  </body>
+</html>

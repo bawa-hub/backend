@@ -1,0 +1,1193 @@
+<!DOCTYPE html><html lang="en"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Law of Demeter: Principle of Least Knowledge | Layrs</title><meta name="description" content="Only talk to immediate friends - avoid deep coupling chains, principle of least knowledge"><meta name="keywords" content="law of demeter, principle of least knowledge, law of demeter java example, train wreck antipattern, OOP design principles interview"><link rel="canonical" href="law-of-demeter/index.html"><meta name="robots" content="index, follow"><!-- Favicon --><link rel="icon" type="image/svg+xml" href="../../../favicon.svg.html"><!-- Fonts --><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@600;700&display=swap" rel="stylesheet"><!-- Open Graph --><meta property="og:type" content="article"><meta property="og:title" content="Law of Demeter: Principle of Least Knowledge | Layrs"><meta property="og:description" content="Only talk to immediate friends - avoid deep coupling chains, principle of least knowledge"><meta property="og:url" content="https://layrs.me/course/lld/03-design-principles/law-of-demeter/"><meta property="og:image" content="https://layrs.me/og-course.png"><meta property="og:site_name" content="Layrs"><!-- Twitter Card --><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Law of Demeter: Principle of Least Knowledge | Layrs"><meta name="twitter:description" content="Only talk to immediate friends - avoid deep coupling chains, principle of least knowledge"><meta name="twitter:image" content="https://layrs.me/og-course.png"><!-- JSON-LD LearningResource --><script type="application/ld+json">{"@context":"https://schema.org","@type":"LearningResource","name":"Law of Demeter: Principle of Least Knowledge","description":"Only talk to immediate friends - avoid deep coupling chains, principle of least knowledge","url":"https://layrs.me/course/lld/03-design-principles/law-of-demeter/","inLanguage":"en","provider":{"@type":"Organization","name":"Layrs","url":"https://layrs.me"}}</script><!-- JSON-LD BreadcrumbList --><script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Course","item":"https://layrs.me/course/"},{"@type":"ListItem","position":2,"name":"LLD","item":"https://layrs.me/course/lld/"},{"@type":"ListItem","position":3,"name":"Design Principles","item":"https://layrs.me/course/lld/03-design-principles/"},{"@type":"ListItem","position":4,"name":"Law of Demeter: Principle of Least Knowledge","item":"https://layrs.me/course/lld/03-design-principles/law-of-demeter/"}]}</script><!-- Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-B4C8VH12BN"></script><script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-B4C8VH12BN');
+</script><link rel="stylesheet" href="../../_astro/_topic_.CHm0_rTz.css">
+<link rel="stylesheet" href="../../_astro/_topic_.HS6iB5yD.css">
+<style>.toc-link[data-astro-cid-xvrfupwn]:hover{color:var(--sidebar-accent)!important}.toc-link[data-astro-cid-xvrfupwn].active{color:var(--sidebar-accent)!important;font-weight:500;border-left:2px solid var(--sidebar-accent);margin-left:-2px;background:linear-gradient(to right,rgba(59,130,246,.06),transparent)}.prev-next-nav[data-astro-cid-fxft7bm5]{display:grid;grid-template-columns:1fr;gap:12px;margin-top:40px;padding-top:0}@media(min-width:640px){.prev-next-nav[data-astro-cid-fxft7bm5]{grid-template-columns:1fr 1fr}}.prev-next-card[data-astro-cid-fxft7bm5]{display:flex;align-items:center;gap:12px;padding:16px;border-radius:12px;border:1px solid hsl(var(--border));background:hsl(var(--card));text-decoration:none;transition:all .2s ease}.prev-next-card[data-astro-cid-fxft7bm5]:hover{border-color:#3b82f666;box-shadow:0 2px 8px #3b82f614}.prev-next-card-right[data-astro-cid-fxft7bm5]{justify-content:flex-end;text-align:right}.prev-next-arrow[data-astro-cid-fxft7bm5]{color:hsl(var(--muted-foreground))}.prev-next-label[data-astro-cid-fxft7bm5]{font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:hsl(var(--muted-foreground))}.prev-next-title[data-astro-cid-fxft7bm5]{font-size:.875rem;font-weight:500;color:hsl(var(--foreground));overflow:hidden;text-overflow:ellipsis;white-space:nowrap;width:100%}.course-prose>hr:last-child{display:none}
+</style></head> <body> <!-- Theme + sidebar init: apply before paint to avoid flash --> <script>
+      (function() {
+        var theme = localStorage.getItem('theme') || 'light';
+        if (theme === 'dark') {
+          document.documentElement.classList.add('dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+        }
+        // Pre-apply sidebar collapsed state
+        if (localStorage.getItem('sidebar-collapsed') === 'true') {
+          document.documentElement.classList.add('sidebar-is-collapsed');
+        }
+      })();
+    </script> <div class="flex h-screen overflow-hidden"> <!-- Desktop sidebar (hidden below lg) --> <div class="hidden lg:flex flex-shrink-0"> <aside id="course-sidebar" class="sidebar h-screen flex flex-col" role="navigation" aria-label="Course navigation" style="background-color: var(--sidebar-bg); border-right: 1px solid var(--sidebar-border);" data-astro-cid-6munbmg7> <!-- Logo + Collapse button (desktop) / Close button (mobile) --> <div class="sidebar-logo-section" style="border-bottom: 1px solid var(--sidebar-border);" data-astro-cid-6munbmg7> <a href="https://layrs.me/" class="sidebar-logo-link" title="Layrs" data-astro-cid-6munbmg7> <div class="sidebar-icon-box" data-astro-cid-6munbmg7> <img src="../../Layrs.jpeg" alt="Layrs Logo" class="w-full h-full object-cover" onerror="this.style.display='none'" data-astro-cid-6munbmg7> </div> <span class="sidebar-label text-lg font-semibold" style="color: var(--sidebar-text);" data-astro-cid-6munbmg7>Layrs</span> </a> <!-- Mobile close button --> <button id="sidebar-close-btn" class="sidebar-close-btn sidebar-mobile-only" title="Close menu" aria-label="Close menu" style="color: var(--sidebar-text-secondary);" data-astro-cid-6munbmg7> <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><path d="M18 6 6 18" data-astro-cid-6munbmg7></path><path d="m6 6 12 12" data-astro-cid-6munbmg7></path></svg> </button> </div> <!-- Navigation --> <nav class="flex-1 overflow-y-auto py-3" id="sidebar-nav-area" data-astro-cid-6munbmg7> <!-- Back to Dashboard - always visible, icon-only when collapsed --> <a href="https://layrs.me/dashboard" class="nav-item sidebar-nav-link" style="color: var(--sidebar-text);" title="Back to Dashboard" data-astro-cid-6munbmg7> <span class="sidebar-nav-icon" style="color: var(--sidebar-text-secondary);" data-astro-cid-6munbmg7> <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><path d="m12 19-7-7 7-7" data-astro-cid-6munbmg7></path><path d="M19 12H5" data-astro-cid-6munbmg7></path></svg> </span> <span class="sidebar-label" data-astro-cid-6munbmg7>Back to Dashboard</span> </a> <!-- Divider --> <div class="sidebar-divider" style="border-top: 1px solid var(--sidebar-border);" data-astro-cid-6munbmg7></div> <!-- Course switcher --> <a href="../../hld.html" class="nav-item sidebar-child-link" style="color: var(--sidebar-text); background-color: transparent;" title="HLD Course" data-astro-cid-6munbmg7> <span class="sidebar-nav-icon" style="color: var(--sidebar-text-secondary);" data-astro-cid-6munbmg7> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" data-astro-cid-6munbmg7></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" data-astro-cid-6munbmg7></path></svg> </span> <span class="sidebar-label flex-1" data-astro-cid-6munbmg7>HLD Course</span> </a> <a href="../../lld.html" class="nav-item sidebar-child-link nav-item-active" style="color: var(--sidebar-accent); background-color: var(--sidebar-accent-bg);" title="LLD Course" data-astro-cid-6munbmg7> <span class="sidebar-nav-icon" style="color: var(--sidebar-text-secondary);" data-astro-cid-6munbmg7> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><path d="m18 16 4-4-4-4" data-astro-cid-6munbmg7></path><path d="m6 8-4 4 4 4" data-astro-cid-6munbmg7></path><path d="m14.5 4-5 16" data-astro-cid-6munbmg7></path></svg> </span> <span class="sidebar-label flex-1" data-astro-cid-6munbmg7>LLD Course</span> <span class="sidebar-label text-[10px] font-semibold rounded-full px-2 py-0.5" style="background-color: var(--sidebar-accent-bg); color: var(--sidebar-accent);" data-astro-cid-6munbmg7>
+New
+</span> </a>   <div class="sidebar-divider sidebar-show-expanded" style="border-top: 1px solid var(--sidebar-border);" data-astro-cid-6munbmg7></div> <div class="sidebar-modules-section sidebar-show-expanded" data-astro-cid-6munbmg7> <div class="sidebar-modules-label" style="color: var(--sidebar-text-secondary);" data-astro-cid-6munbmg7>
+Modules
+</div> <div class="module-item" data-module-id="01-oop-fundamentals" data-astro-cid-6munbmg7> <button class="module-header" role="button" tabindex="0" aria-expanded="false" aria-controls="module-topics-01-oop-fundamentals" data-module-id="01-oop-fundamentals" data-astro-cid-6munbmg7> <span class="module-chevron" data-astro-cid-6munbmg7> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><path d="m9 18 6-6-6-6" data-astro-cid-6munbmg7></path></svg> </span> <span class="module-number" data-astro-cid-6munbmg7> 1 </span> <span class="module-name" style="color: var(--sidebar-text);" data-astro-cid-6munbmg7> OOP Fundamentals </span> <span class="module-count" style="color: var(--sidebar-text-secondary);" data-astro-cid-6munbmg7> 9 </span> </button> <div id="module-topics-01-oop-fundamentals" class="module-topics" role="region" aria-label="OOP Fundamentals topics" data-astro-cid-6munbmg7> <a href="../01-oop-fundamentals/classes-and-objects.html" class="topic-link" title="Classes and Objects in OOP Explained" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Classes and Objects in OOP Explained</span> </a><a href="../01-oop-fundamentals/enums.html" class="topic-link" title="Enums in OOP: Use Cases &#38; Best Practices" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Enums in OOP: Use Cases &amp; Best Practices</span> </a><a href="../01-oop-fundamentals/interfaces.html" class="topic-link" title="Interfaces in OOP: When &#38; How to Use Them" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Interfaces in OOP: When &amp; How to Use Them</span> </a><a href="../01-oop-fundamentals/encapsulation.html" class="topic-link" title="Encapsulation in OOP: Definition &#38; Examples" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Encapsulation in OOP: Definition &amp; Examples</span> </a><a href="../01-oop-fundamentals/abstraction.html" class="topic-link" title="Abstraction in OOP: Concepts &#38; Interview Guide" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Abstraction in OOP: Concepts &amp; Interview Guide</span> </a><a href="../01-oop-fundamentals/inheritance.html" class="topic-link" title="Inheritance in OOP: Types &#38; Interview Guide" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Inheritance in OOP: Types &amp; Interview Guide</span> </a><a href="../01-oop-fundamentals/polymorphism.html" class="topic-link" title="Polymorphism in OOP: Runtime vs Compile-Time" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Polymorphism in OOP: Runtime vs Compile-Time</span> </a><a href="../01-oop-fundamentals/abstract-classes-vs-interfaces.html" class="topic-link" title="Abstract Classes vs Interfaces in OOP" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Abstract Classes vs Interfaces in OOP</span> </a><a href="../01-oop-fundamentals/method-overloading-vs-overriding.html" class="topic-link" title="Method Overloading vs Overriding in OOP" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Method Overloading vs Overriding in OOP</span> </a> </div> </div><div class="module-item" data-module-id="02-class-relationships" data-astro-cid-6munbmg7> <button class="module-header" role="button" tabindex="0" aria-expanded="false" aria-controls="module-topics-02-class-relationships" data-module-id="02-class-relationships" data-astro-cid-6munbmg7> <span class="module-chevron" data-astro-cid-6munbmg7> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><path d="m9 18 6-6-6-6" data-astro-cid-6munbmg7></path></svg> </span> <span class="module-number" data-astro-cid-6munbmg7> 2 </span> <span class="module-name" style="color: var(--sidebar-text);" data-astro-cid-6munbmg7> Class Relationships </span> <span class="module-count" style="color: var(--sidebar-text-secondary);" data-astro-cid-6munbmg7> 4 </span> </button> <div id="module-topics-02-class-relationships" class="module-topics" role="region" aria-label="Class Relationships topics" data-astro-cid-6munbmg7> <a href="../02-class-relationships/association.html" class="topic-link" title="Association in OOP: Object Relationships Guide" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Association in OOP: Object Relationships Guide</span> </a><a href="../02-class-relationships/aggregation.html" class="topic-link" title="Aggregation in OOP: Has-A Relationship Explained" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Aggregation in OOP: Has-A Relationship Explained</span> </a><a href="../02-class-relationships/composition.html" class="topic-link" title="Composition in OOP: Strong Has-A Relationship" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Composition in OOP: Strong Has-A Relationship</span> </a><a href="../02-class-relationships/dependency.html" class="topic-link" title="Dependency in OOP: Uses-A Relationship Guide" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Dependency in OOP: Uses-A Relationship Guide</span> </a> </div> </div><div class="module-item" data-module-id="03-design-principles" data-astro-cid-6munbmg7> <button class="module-header active-module" role="button" tabindex="0" aria-expanded="true" aria-controls="module-topics-03-design-principles" data-module-id="03-design-principles" data-astro-cid-6munbmg7> <span class="module-chevron expanded" data-astro-cid-6munbmg7> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><path d="m9 18 6-6-6-6" data-astro-cid-6munbmg7></path></svg> </span> <span class="module-number module-number-active" data-astro-cid-6munbmg7> 3 </span> <span class="module-name" style="color: var(--sidebar-accent); font-weight: 600;" data-astro-cid-6munbmg7> Design Principles </span> <span class="module-count" style="color: var(--sidebar-text-secondary);" data-astro-cid-6munbmg7> 12 </span> </button> <div id="module-topics-03-design-principles" class="module-topics expanded" role="region" aria-label="Design Principles topics" data-astro-cid-6munbmg7> <a href="dry.html" class="topic-link" title="DRY Principle: Don't Repeat Yourself in Code" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>DRY Principle: Don&#39;t Repeat Yourself in Code</span> </a><a href="yagni.html" class="topic-link" title="YAGNI Principle: You Aren't Gonna Need It" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>YAGNI Principle: You Aren&#39;t Gonna Need It</span> </a><a href="kiss.html" class="topic-link" title="KISS Principle: Keep It Simple in Software Design" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>KISS Principle: Keep It Simple in Software Design</span> </a><a href="single-responsibility.html" class="topic-link" title="Single Responsibility Principle (SRP) Explained" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Single Responsibility Principle (SRP) Explained</span> </a><a href="open-closed.html" class="topic-link" title="Open-Closed Principle (OCP): Extend, Don't Modify" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Open-Closed Principle (OCP): Extend, Don&#39;t Modify</span> </a><a href="liskov-substitution.html" class="topic-link" title="Liskov Substitution Principle (LSP) Explained" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Liskov Substitution Principle (LSP) Explained</span> </a><a href="interface-segregation.html" class="topic-link" title="Interface Segregation Principle (ISP) Explained" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Interface Segregation Principle (ISP) Explained</span> </a><a href="dependency-inversion.html" class="topic-link" title="Dependency Inversion Principle (DIP) Explained" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Dependency Inversion Principle (DIP) Explained</span> </a><a href="composition-over-inheritance.html" class="topic-link" title="Composition over Inheritance: When and Why" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Composition over Inheritance: When and Why</span> </a><a href="law-of-demeter.html" class="topic-link active" aria-current="page" title="Law of Demeter: Principle of Least Knowledge" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Law of Demeter: Principle of Least Knowledge</span> </a><a href="cohesion-and-coupling.html" class="topic-link" title="Cohesion and Coupling in Software Design" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Cohesion and Coupling in Software Design</span> </a><a href="thread-safety-in-ood.html" class="topic-link" title="Thread Safety in OOP: Locks, Sync &#38; Patterns" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Thread Safety in OOP: Locks, Sync &amp; Patterns</span> </a> </div> </div><div class="module-item" data-module-id="04-design-patterns" data-astro-cid-6munbmg7> <button class="module-header" role="button" tabindex="0" aria-expanded="false" aria-controls="module-topics-04-design-patterns" data-module-id="04-design-patterns" data-astro-cid-6munbmg7> <span class="module-chevron" data-astro-cid-6munbmg7> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><path d="m9 18 6-6-6-6" data-astro-cid-6munbmg7></path></svg> </span> <span class="module-number" data-astro-cid-6munbmg7> 4 </span> <span class="module-name" style="color: var(--sidebar-text);" data-astro-cid-6munbmg7> Design Patterns </span> <span class="module-count" style="color: var(--sidebar-text-secondary);" data-astro-cid-6munbmg7> 23 </span> </button> <div id="module-topics-04-design-patterns" class="module-topics" role="region" aria-label="Design Patterns topics" data-astro-cid-6munbmg7> <a href="../04-design-patterns/singleton.html" class="topic-link" title="Singleton Pattern: Ensure One Instance" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Singleton Pattern: Ensure One Instance</span> </a><a href="../04-design-patterns/factory-method.html" class="topic-link" title="Factory Method Pattern: Creational Design Guide" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Factory Method Pattern: Creational Design Guide</span> </a><a href="../04-design-patterns/abstract-factory.html" class="topic-link" title="Abstract Factory Pattern: Guide &#38; Examples" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Abstract Factory Pattern: Guide &amp; Examples</span> </a><a href="../04-design-patterns/builder.html" class="topic-link" title="Builder Pattern: Creational Design Guide" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Builder Pattern: Creational Design Guide</span> </a><a href="../04-design-patterns/prototype.html" class="topic-link" title="Prototype Pattern: Clone Objects Efficiently" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Prototype Pattern: Clone Objects Efficiently</span> </a><a href="../04-design-patterns/adapter.html" class="topic-link" title="Adapter Pattern: Structural Design Guide" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Adapter Pattern: Structural Design Guide</span> </a><a href="../04-design-patterns/bridge.html" class="topic-link" title="Bridge Pattern: Decouple Abstraction from Implementation" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Bridge Pattern: Decouple Abstraction from Implementation</span> </a><a href="../04-design-patterns/composite.html" class="topic-link" title="Composite Pattern: Tree Structure Design Guide" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Composite Pattern: Tree Structure Design Guide</span> </a><a href="../04-design-patterns/decorator.html" class="topic-link" title="Decorator Pattern: Add Behavior Dynamically" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Decorator Pattern: Add Behavior Dynamically</span> </a><a href="../04-design-patterns/facade.html" class="topic-link" title="Facade Pattern: Simplify Complex Subsystems" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Facade Pattern: Simplify Complex Subsystems</span> </a><a href="../04-design-patterns/flyweight.html" class="topic-link" title="Flyweight Pattern: Memory Optimization Design" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Flyweight Pattern: Memory Optimization Design</span> </a><a href="../04-design-patterns/proxy.html" class="topic-link" title="Proxy Pattern: Control Object Access in OOP" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Proxy Pattern: Control Object Access in OOP</span> </a><a href="../04-design-patterns/iterator.html" class="topic-link" title="Iterator Pattern: Traverse Collections in OOP" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Iterator Pattern: Traverse Collections in OOP</span> </a><a href="../04-design-patterns/observer.html" class="topic-link" title="Observer Pattern: Event-Driven Design Guide" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Observer Pattern: Event-Driven Design Guide</span> </a><a href="../04-design-patterns/strategy.html" class="topic-link" title="Strategy Pattern: Swap Algorithms at Runtime" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Strategy Pattern: Swap Algorithms at Runtime</span> </a><a href="../04-design-patterns/command.html" class="topic-link" title="Command Pattern: Behavioral Design Guide" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Command Pattern: Behavioral Design Guide</span> </a><a href="../04-design-patterns/state.html" class="topic-link" title="State Pattern: Manage Object State Transitions" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>State Pattern: Manage Object State Transitions</span> </a><a href="../04-design-patterns/template-method.html" class="topic-link" title="Template Method Pattern: Define Algorithm Skeleton" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Template Method Pattern: Define Algorithm Skeleton</span> </a><a href="../04-design-patterns/visitor.html" class="topic-link" title="Visitor Pattern: Add Operations Without Changing Classes" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Visitor Pattern: Add Operations Without Changing Classes</span> </a><a href="../04-design-patterns/mediator.html" class="topic-link" title="Mediator Pattern: Reduce Object Coupling" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Mediator Pattern: Reduce Object Coupling</span> </a><a href="../04-design-patterns/memento.html" class="topic-link" title="Memento Pattern: Undo/Redo State Management" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Memento Pattern: Undo/Redo State Management</span> </a><a href="../04-design-patterns/chain-of-responsibility.html" class="topic-link" title="Chain of Responsibility Pattern Explained" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Chain of Responsibility Pattern Explained</span> </a><a href="../04-design-patterns/interpreter.html" class="topic-link" title="Interpreter Pattern: Parse Grammars in OOP" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Interpreter Pattern: Parse Grammars in OOP</span> </a> </div> </div><div class="module-item" data-module-id="05-uml-diagrams" data-astro-cid-6munbmg7> <button class="module-header" role="button" tabindex="0" aria-expanded="false" aria-controls="module-topics-05-uml-diagrams" data-module-id="05-uml-diagrams" data-astro-cid-6munbmg7> <span class="module-chevron" data-astro-cid-6munbmg7> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><path d="m9 18 6-6-6-6" data-astro-cid-6munbmg7></path></svg> </span> <span class="module-number" data-astro-cid-6munbmg7> 5 </span> <span class="module-name" style="color: var(--sidebar-text);" data-astro-cid-6munbmg7> UML Diagrams </span> <span class="module-count" style="color: var(--sidebar-text-secondary);" data-astro-cid-6munbmg7> 5 </span> </button> <div id="module-topics-05-uml-diagrams" class="module-topics" role="region" aria-label="UML Diagrams topics" data-astro-cid-6munbmg7> <a href="../05-uml-diagrams/class-diagram.html" class="topic-link" title="Class Diagrams in UML: Notation &#38; Examples" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Class Diagrams in UML: Notation &amp; Examples</span> </a><a href="../05-uml-diagrams/use-case-diagram.html" class="topic-link" title="Use Case Diagrams in UML: Guide &#38; Examples" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Use Case Diagrams in UML: Guide &amp; Examples</span> </a><a href="../05-uml-diagrams/sequence-diagram.html" class="topic-link" title="Sequence Diagrams in UML: Guide &#38; Examples" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Sequence Diagrams in UML: Guide &amp; Examples</span> </a><a href="../05-uml-diagrams/activity-diagram.html" class="topic-link" title="Activity Diagrams in UML: Guide &#38; Examples" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Activity Diagrams in UML: Guide &amp; Examples</span> </a><a href="../05-uml-diagrams/state-machine-diagram.html" class="topic-link" title="State Machine Diagrams in UML Explained" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>State Machine Diagrams in UML Explained</span> </a> </div> </div><div class="module-item" data-module-id="06-concurrency-and-threading" data-astro-cid-6munbmg7> <button class="module-header" role="button" tabindex="0" aria-expanded="false" aria-controls="module-topics-06-concurrency-and-threading" data-module-id="06-concurrency-and-threading" data-astro-cid-6munbmg7> <span class="module-chevron" data-astro-cid-6munbmg7> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><path d="m9 18 6-6-6-6" data-astro-cid-6munbmg7></path></svg> </span> <span class="module-number" data-astro-cid-6munbmg7> 6 </span> <span class="module-name" style="color: var(--sidebar-text);" data-astro-cid-6munbmg7> Concurrency &amp; Threading </span> <span class="module-count" style="color: var(--sidebar-text-secondary);" data-astro-cid-6munbmg7> 6 </span> </button> <div id="module-topics-06-concurrency-and-threading" class="module-topics" role="region" aria-label="Concurrency &#38; Threading topics" data-astro-cid-6munbmg7> <a href="../06-concurrency-and-threading/deadlock-livelock-starvation.html" class="topic-link" title="Deadlock, Livelock &#38; Starvation in Java" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Deadlock, Livelock &amp; Starvation in Java</span> </a><a href="../06-concurrency-and-threading/producer-consumer-problem.html" class="topic-link" title="Producer-Consumer Problem: Java Thread Solution" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Producer-Consumer Problem: Java Thread Solution</span> </a><a href="../06-concurrency-and-threading/synchronization.html" class="topic-link" title="Synchronization in Java: Locks &#38; Monitors Guide" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Synchronization in Java: Locks &amp; Monitors Guide</span> </a><a href="../06-concurrency-and-threading/threads-vs-processes.html" class="topic-link" title="Threads vs Processes: Key Differences Explained" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Threads vs Processes: Key Differences Explained</span> </a><a href="../06-concurrency-and-threading/thread-pools.html" class="topic-link" title="Thread Pools in Java: ExecutorService Guide" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Thread Pools in Java: ExecutorService Guide</span> </a><a href="../06-concurrency-and-threading/volatile-atomic-variables.html" class="topic-link" title="Volatile vs Atomic Variables: Java Concurrency Guide" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Volatile vs Atomic Variables: Java Concurrency Guide</span> </a> </div> </div><div class="module-item" data-module-id="07-interview-approach" data-astro-cid-6munbmg7> <button class="module-header" role="button" tabindex="0" aria-expanded="false" aria-controls="module-topics-07-interview-approach" data-module-id="07-interview-approach" data-astro-cid-6munbmg7> <span class="module-chevron" data-astro-cid-6munbmg7> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><path d="m9 18 6-6-6-6" data-astro-cid-6munbmg7></path></svg> </span> <span class="module-number" data-astro-cid-6munbmg7> 7 </span> <span class="module-name" style="color: var(--sidebar-text);" data-astro-cid-6munbmg7> Interview Approach </span> <span class="module-count" style="color: var(--sidebar-text-secondary);" data-astro-cid-6munbmg7> 0 </span> </button> <div id="module-topics-07-interview-approach" class="module-topics" role="region" aria-label="Interview Approach topics" data-astro-cid-6munbmg7>  </div> </div> </div>  </nav> <!-- Bottom section --> <div class="sidebar-bottom" style="border-top: 1px solid var(--sidebar-border);" data-astro-cid-6munbmg7> <!-- Expand/Collapse toggle - consistent position at bottom --> <button id="sidebar-expand-btn" class="sidebar-toggle-btn" title="Collapse sidebar" aria-label="Toggle sidebar" aria-expanded="true" aria-controls="course-sidebar" style="color: var(--sidebar-text-secondary); border: 1px solid var(--sidebar-border);" data-astro-cid-6munbmg7> <svg class="sidebar-toggle-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><rect width="18" height="18" x="3" y="3" rx="2" data-astro-cid-6munbmg7></rect><path d="M9 3v18" data-astro-cid-6munbmg7></path><path d="m14 9-3 3 3 3" data-astro-cid-6munbmg7></path></svg> <span class="sidebar-label" style="font-size: 0.8125rem; font-weight: 500;" data-astro-cid-6munbmg7>Collapse</span> </button> <!-- Sign In button (hidden when already authenticated) --> <a id="sidebar-signin-btn" href="https://layrs.me/dashboard?next=%2Fcourse%2Flld%2F03-design-principles%2Flaw-of-demeter%2F" class="sidebar-signin-btn" style="color: white; background-color: var(--sidebar-accent);" title="Sign In" data-astro-cid-6munbmg7> <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" data-astro-cid-6munbmg7></path><circle cx="12" cy="7" r="4" data-astro-cid-6munbmg7></circle></svg> <span class="sidebar-label" data-astro-cid-6munbmg7>Sign In</span> </a> <!-- Dashboard button (shown when authenticated) --> <a id="sidebar-dashboard-btn" href="https://layrs.me/dashboard" class="sidebar-signin-btn" style="color: white; background-color: var(--sidebar-accent); display: none;" title="Dashboard" data-astro-cid-6munbmg7> <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><rect x="3" y="3" width="7" height="7" data-astro-cid-6munbmg7></rect><rect x="14" y="3" width="7" height="7" data-astro-cid-6munbmg7></rect><rect x="14" y="14" width="7" height="7" data-astro-cid-6munbmg7></rect><rect x="3" y="14" width="7" height="7" data-astro-cid-6munbmg7></rect></svg> <span class="sidebar-label" data-astro-cid-6munbmg7>Dashboard</span> </a> <!-- Theme toggle --> <div id="theme-toggle" class="sidebar-theme-toggle" style="background-color: rgba(0, 0, 0, 0.05);" data-astro-cid-6munbmg7> <button id="theme-light-btn" class="sidebar-theme-btn" title="Light mode" data-astro-cid-6munbmg7> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><circle cx="12" cy="12" r="4" data-astro-cid-6munbmg7></circle><path d="M12 2v2" data-astro-cid-6munbmg7></path><path d="M12 20v2" data-astro-cid-6munbmg7></path><path d="m4.93 4.93 1.41 1.41" data-astro-cid-6munbmg7></path><path d="m17.66 17.66 1.41 1.41" data-astro-cid-6munbmg7></path><path d="M2 12h2" data-astro-cid-6munbmg7></path><path d="M20 12h2" data-astro-cid-6munbmg7></path><path d="m6.34 17.66-1.41 1.41" data-astro-cid-6munbmg7></path><path d="m19.07 4.93-1.41 1.41" data-astro-cid-6munbmg7></path></svg> </button> <button id="theme-dark-btn" class="sidebar-theme-btn" title="Dark mode" data-astro-cid-6munbmg7> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" data-astro-cid-6munbmg7></path></svg> </button> </div> <!-- Social links (hidden when collapsed) --> <div class="sidebar-social-row sidebar-hide-collapsed" data-astro-cid-6munbmg7> <a href="https://lnkd.in/g9f98NBH" target="_blank" rel="noopener noreferrer" class="sidebar-social-link" style="border: 1px solid var(--sidebar-border); color: var(--sidebar-text-secondary);" aria-label="Discord" title="Discord" data-astro-cid-6munbmg7> <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z" data-astro-cid-6munbmg7></path></svg> </a> <a href="https://www.linkedin.com/company/layrs" target="_blank" rel="noopener noreferrer" class="sidebar-social-link" style="border: 1px solid var(--sidebar-border); color: var(--sidebar-text-secondary);" aria-label="LinkedIn" title="LinkedIn" data-astro-cid-6munbmg7> <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" data-astro-cid-6munbmg7></path><rect width="4" height="12" x="2" y="9" data-astro-cid-6munbmg7></rect><circle cx="4" cy="4" r="2" data-astro-cid-6munbmg7></circle></svg> </a> <a href="https://www.instagram.com/layrs.me" target="_blank" rel="noopener noreferrer" class="sidebar-social-link" style="border: 1px solid var(--sidebar-border); color: var(--sidebar-text-secondary);" aria-label="Instagram" title="Instagram" data-astro-cid-6munbmg7> <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><rect width="20" height="20" x="2" y="2" rx="5" ry="5" data-astro-cid-6munbmg7></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" data-astro-cid-6munbmg7></path><line x1="17.5" x2="17.51" y1="6.5" y2="6.5" data-astro-cid-6munbmg7></line></svg> </a> <a href="mailto:support@layrs.me" class="sidebar-social-link" style="border: 1px solid var(--sidebar-border); color: var(--sidebar-text-secondary);" aria-label="Email" title="Email" data-astro-cid-6munbmg7> <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><rect width="20" height="16" x="2" y="4" rx="2" data-astro-cid-6munbmg7></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" data-astro-cid-6munbmg7></path></svg> </a> </div> </div> </aside>  <script>
+  // Toggle Sign In vs Dashboard based on Supabase auth session in localStorage
+  (function initAuthButton() {
+    var signInBtn = document.getElementById('sidebar-signin-btn');
+    var dashboardBtn = document.getElementById('sidebar-dashboard-btn');
+    if (!signInBtn || !dashboardBtn) return;
+
+    var hasSession = false;
+    try {
+      var keys = Object.keys(localStorage);
+      for (var i = 0; i < keys.length; i++) {
+        if (keys[i].indexOf('sb-') === 0 && keys[i].indexOf('-auth-token') !== -1) {
+          var data = JSON.parse(localStorage.getItem(keys[i]) || '{}');
+          if (data && data.access_token) { hasSession = true; break; }
+        }
+      }
+    } catch (e) {}
+
+    if (hasSession) {
+      signInBtn.style.display = 'none';
+      dashboardBtn.style.display = '';
+    }
+  })();
+</script> <script>
+  // Sidebar collapse toggle + accordion modules + mobile drawer
+  (function initSidebar() {
+    if (window.__sidebarInit) return;
+    window.__sidebarInit = true;
+
+    var sidebar = document.getElementById('course-sidebar');
+    var toggleBtn = document.getElementById('sidebar-expand-btn');
+    var closeBtn = document.getElementById('sidebar-close-btn');
+    if (!sidebar) return;
+
+    // --- Collapse/Expand ---
+    var saved = localStorage.getItem('sidebar-collapsed');
+    if (saved === 'true') {
+      sidebar.classList.add('collapsed');
+      updateToggleState(true);
+    }
+
+    function updateToggleState(isCollapsed) {
+      if (!toggleBtn) return;
+      toggleBtn.setAttribute('aria-expanded', isCollapsed ? 'false' : 'true');
+      toggleBtn.title = isCollapsed ? 'Expand sidebar' : 'Collapse sidebar';
+      var label = toggleBtn.querySelector('.sidebar-label');
+      if (label) label.textContent = isCollapsed ? 'Expand' : 'Collapse';
+    }
+
+    function toggleSidebar() {
+      var isCollapsed = sidebar.classList.contains('collapsed');
+      if (isCollapsed) {
+        sidebar.classList.remove('collapsed');
+        localStorage.setItem('sidebar-collapsed', 'false');
+        updateToggleState(false);
+      } else {
+        sidebar.classList.add('collapsed');
+        localStorage.setItem('sidebar-collapsed', 'true');
+        updateToggleState(true);
+      }
+    }
+
+    if (toggleBtn) {
+      toggleBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        toggleSidebar();
+      });
+    }
+
+    // --- Mobile close button ---
+    if (closeBtn) {
+      closeBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        closeMobileDrawer();
+      });
+    }
+
+    // --- Mobile drawer helpers ---
+    function closeMobileDrawer() {
+      var overlay = document.getElementById('mobile-sidebar-overlay');
+      if (overlay) {
+        overlay.classList.add('closing');
+        setTimeout(function() {
+          overlay.classList.add('hidden');
+          overlay.classList.remove('closing');
+          document.body.style.overflow = '';
+        }, 250);
+      }
+    }
+
+    // Expose for backdrop click
+    window.__closeMobileDrawer = closeMobileDrawer;
+
+    // Escape key handler
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        var overlay = document.getElementById('mobile-sidebar-overlay');
+        if (overlay && !overlay.classList.contains('hidden')) {
+          closeMobileDrawer();
+        }
+      }
+    });
+
+    // --- Module accordion ---
+    var moduleHeaders = sidebar.querySelectorAll('.module-header');
+    moduleHeaders.forEach(function(header) {
+      header.addEventListener('click', function(e) {
+        e.preventDefault();
+        toggleModule(header);
+      });
+
+      // Keyboard support
+      header.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          toggleModule(header);
+        }
+      });
+    });
+
+    function toggleModule(header) {
+      var item = header.closest('.module-item');
+      var topics = item.querySelector('.module-topics');
+      var chevron = header.querySelector('.module-chevron');
+      var isExpanded = header.getAttribute('aria-expanded') === 'true';
+
+      // Close all other modules (accordion behavior)
+      sidebar.querySelectorAll('.module-item').forEach(function(otherItem) {
+        if (otherItem !== item) {
+          var oh = otherItem.querySelector('.module-header');
+          var ot = otherItem.querySelector('.module-topics');
+          var oc = otherItem.querySelector('.module-chevron');
+          if (oh) oh.setAttribute('aria-expanded', 'false');
+          if (ot) ot.classList.remove('expanded');
+          if (oc) oc.classList.remove('expanded');
+        }
+      });
+
+      // Toggle current
+      if (isExpanded) {
+        header.setAttribute('aria-expanded', 'false');
+        if (topics) topics.classList.remove('expanded');
+        if (chevron) chevron.classList.remove('expanded');
+      } else {
+        header.setAttribute('aria-expanded', 'true');
+        if (topics) topics.classList.add('expanded');
+        if (chevron) chevron.classList.add('expanded');
+
+        // Auto-scroll active topic into view
+        setTimeout(function() {
+          var activeLink = topics && topics.querySelector('.topic-link.active, .topic-link[aria-current="page"]');
+          if (activeLink) {
+            activeLink.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+          }
+        }, 280);
+      }
+    }
+
+    // Auto-scroll active topic on load
+    setTimeout(function() {
+      var activeLink = sidebar.querySelector('.topic-link.active, .topic-link[aria-current="page"]');
+      if (activeLink) {
+        activeLink.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+      }
+    }, 100);
+  })();
+
+  // Theme toggle (guard against duplicate listeners)
+  (function initThemeToggle() {
+    if (window.__themeToggleInit) return;
+    window.__themeToggleInit = true;
+    var lightBtn = document.getElementById('theme-light-btn');
+    var darkBtn = document.getElementById('theme-dark-btn');
+    var toggleWrap = document.getElementById('theme-toggle');
+    var root = document.documentElement;
+
+    function applyTheme(theme) {
+      if (theme === 'dark') {
+        root.classList.add('dark');
+        if (toggleWrap) toggleWrap.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
+        if (lightBtn) {
+          lightBtn.style.backgroundColor = 'transparent';
+          lightBtn.style.color = 'var(--sidebar-text-secondary)';
+          lightBtn.style.boxShadow = 'none';
+        }
+        if (darkBtn) {
+          darkBtn.style.backgroundColor = 'var(--sidebar-bg)';
+          darkBtn.style.color = 'var(--sidebar-accent)';
+          darkBtn.style.boxShadow = '0 1px 2px 0 rgba(0,0,0,0.05)';
+        }
+      } else {
+        root.classList.remove('dark');
+        if (toggleWrap) toggleWrap.style.backgroundColor = 'rgba(0, 0, 0, 0.05)';
+        if (lightBtn) {
+          lightBtn.style.backgroundColor = 'var(--sidebar-bg)';
+          lightBtn.style.color = 'var(--sidebar-accent)';
+          lightBtn.style.boxShadow = '0 1px 2px 0 rgba(0,0,0,0.05)';
+        }
+        if (darkBtn) {
+          darkBtn.style.backgroundColor = 'transparent';
+          darkBtn.style.color = 'var(--sidebar-text-secondary)';
+          darkBtn.style.boxShadow = 'none';
+        }
+      }
+    }
+
+    var saved = localStorage.getItem('theme') || 'light';
+    applyTheme(saved);
+
+    if (lightBtn) {
+      lightBtn.addEventListener('click', function() {
+        localStorage.setItem('theme', 'light');
+        applyTheme('light');
+      });
+    }
+    if (darkBtn) {
+      darkBtn.addEventListener('click', function() {
+        localStorage.setItem('theme', 'dark');
+        applyTheme('dark');
+      });
+    }
+  })();
+</script> </div> <!-- Mobile sidebar overlay (hidden by default) --> <div id="mobile-sidebar-overlay" class="mobile-overlay hidden lg:hidden"> <div class="mobile-backdrop" id="mobile-sidebar-backdrop"></div> <div class="mobile-drawer"> <aside id="course-sidebar" class="sidebar h-screen flex flex-col" role="navigation" aria-label="Course navigation" style="background-color: var(--sidebar-bg); border-right: 1px solid var(--sidebar-border);" data-astro-cid-6munbmg7> <!-- Logo + Collapse button (desktop) / Close button (mobile) --> <div class="sidebar-logo-section" style="border-bottom: 1px solid var(--sidebar-border);" data-astro-cid-6munbmg7> <a href="https://layrs.me/" class="sidebar-logo-link" title="Layrs" data-astro-cid-6munbmg7> <div class="sidebar-icon-box" data-astro-cid-6munbmg7> <img src="../../Layrs.jpeg" alt="Layrs Logo" class="w-full h-full object-cover" onerror="this.style.display='none'" data-astro-cid-6munbmg7> </div> <span class="sidebar-label text-lg font-semibold" style="color: var(--sidebar-text);" data-astro-cid-6munbmg7>Layrs</span> </a> <!-- Mobile close button --> <button id="sidebar-close-btn" class="sidebar-close-btn sidebar-mobile-only" title="Close menu" aria-label="Close menu" style="color: var(--sidebar-text-secondary);" data-astro-cid-6munbmg7> <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><path d="M18 6 6 18" data-astro-cid-6munbmg7></path><path d="m6 6 12 12" data-astro-cid-6munbmg7></path></svg> </button> </div> <!-- Navigation --> <nav class="flex-1 overflow-y-auto py-3" id="sidebar-nav-area" data-astro-cid-6munbmg7> <!-- Back to Dashboard - always visible, icon-only when collapsed --> <a href="https://layrs.me/dashboard" class="nav-item sidebar-nav-link" style="color: var(--sidebar-text);" title="Back to Dashboard" data-astro-cid-6munbmg7> <span class="sidebar-nav-icon" style="color: var(--sidebar-text-secondary);" data-astro-cid-6munbmg7> <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><path d="m12 19-7-7 7-7" data-astro-cid-6munbmg7></path><path d="M19 12H5" data-astro-cid-6munbmg7></path></svg> </span> <span class="sidebar-label" data-astro-cid-6munbmg7>Back to Dashboard</span> </a> <!-- Divider --> <div class="sidebar-divider" style="border-top: 1px solid var(--sidebar-border);" data-astro-cid-6munbmg7></div> <!-- Course switcher --> <a href="../../hld.html" class="nav-item sidebar-child-link" style="color: var(--sidebar-text); background-color: transparent;" title="HLD Course" data-astro-cid-6munbmg7> <span class="sidebar-nav-icon" style="color: var(--sidebar-text-secondary);" data-astro-cid-6munbmg7> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" data-astro-cid-6munbmg7></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" data-astro-cid-6munbmg7></path></svg> </span> <span class="sidebar-label flex-1" data-astro-cid-6munbmg7>HLD Course</span> </a> <a href="../../lld.html" class="nav-item sidebar-child-link nav-item-active" style="color: var(--sidebar-accent); background-color: var(--sidebar-accent-bg);" title="LLD Course" data-astro-cid-6munbmg7> <span class="sidebar-nav-icon" style="color: var(--sidebar-text-secondary);" data-astro-cid-6munbmg7> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><path d="m18 16 4-4-4-4" data-astro-cid-6munbmg7></path><path d="m6 8-4 4 4 4" data-astro-cid-6munbmg7></path><path d="m14.5 4-5 16" data-astro-cid-6munbmg7></path></svg> </span> <span class="sidebar-label flex-1" data-astro-cid-6munbmg7>LLD Course</span> <span class="sidebar-label text-[10px] font-semibold rounded-full px-2 py-0.5" style="background-color: var(--sidebar-accent-bg); color: var(--sidebar-accent);" data-astro-cid-6munbmg7>
+New
+</span> </a>   <div class="sidebar-divider sidebar-show-expanded" style="border-top: 1px solid var(--sidebar-border);" data-astro-cid-6munbmg7></div> <div class="sidebar-modules-section sidebar-show-expanded" data-astro-cid-6munbmg7> <div class="sidebar-modules-label" style="color: var(--sidebar-text-secondary);" data-astro-cid-6munbmg7>
+Modules
+</div> <div class="module-item" data-module-id="01-oop-fundamentals" data-astro-cid-6munbmg7> <button class="module-header" role="button" tabindex="0" aria-expanded="false" aria-controls="module-topics-01-oop-fundamentals" data-module-id="01-oop-fundamentals" data-astro-cid-6munbmg7> <span class="module-chevron" data-astro-cid-6munbmg7> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><path d="m9 18 6-6-6-6" data-astro-cid-6munbmg7></path></svg> </span> <span class="module-number" data-astro-cid-6munbmg7> 1 </span> <span class="module-name" style="color: var(--sidebar-text);" data-astro-cid-6munbmg7> OOP Fundamentals </span> <span class="module-count" style="color: var(--sidebar-text-secondary);" data-astro-cid-6munbmg7> 9 </span> </button> <div id="module-topics-01-oop-fundamentals" class="module-topics" role="region" aria-label="OOP Fundamentals topics" data-astro-cid-6munbmg7> <a href="../01-oop-fundamentals/classes-and-objects.html" class="topic-link" title="Classes and Objects in OOP Explained" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Classes and Objects in OOP Explained</span> </a><a href="../01-oop-fundamentals/enums.html" class="topic-link" title="Enums in OOP: Use Cases &#38; Best Practices" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Enums in OOP: Use Cases &amp; Best Practices</span> </a><a href="../01-oop-fundamentals/interfaces.html" class="topic-link" title="Interfaces in OOP: When &#38; How to Use Them" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Interfaces in OOP: When &amp; How to Use Them</span> </a><a href="../01-oop-fundamentals/encapsulation.html" class="topic-link" title="Encapsulation in OOP: Definition &#38; Examples" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Encapsulation in OOP: Definition &amp; Examples</span> </a><a href="../01-oop-fundamentals/abstraction.html" class="topic-link" title="Abstraction in OOP: Concepts &#38; Interview Guide" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Abstraction in OOP: Concepts &amp; Interview Guide</span> </a><a href="../01-oop-fundamentals/inheritance.html" class="topic-link" title="Inheritance in OOP: Types &#38; Interview Guide" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Inheritance in OOP: Types &amp; Interview Guide</span> </a><a href="../01-oop-fundamentals/polymorphism.html" class="topic-link" title="Polymorphism in OOP: Runtime vs Compile-Time" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Polymorphism in OOP: Runtime vs Compile-Time</span> </a><a href="../01-oop-fundamentals/abstract-classes-vs-interfaces.html" class="topic-link" title="Abstract Classes vs Interfaces in OOP" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Abstract Classes vs Interfaces in OOP</span> </a><a href="../01-oop-fundamentals/method-overloading-vs-overriding.html" class="topic-link" title="Method Overloading vs Overriding in OOP" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Method Overloading vs Overriding in OOP</span> </a> </div> </div><div class="module-item" data-module-id="02-class-relationships" data-astro-cid-6munbmg7> <button class="module-header" role="button" tabindex="0" aria-expanded="false" aria-controls="module-topics-02-class-relationships" data-module-id="02-class-relationships" data-astro-cid-6munbmg7> <span class="module-chevron" data-astro-cid-6munbmg7> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><path d="m9 18 6-6-6-6" data-astro-cid-6munbmg7></path></svg> </span> <span class="module-number" data-astro-cid-6munbmg7> 2 </span> <span class="module-name" style="color: var(--sidebar-text);" data-astro-cid-6munbmg7> Class Relationships </span> <span class="module-count" style="color: var(--sidebar-text-secondary);" data-astro-cid-6munbmg7> 4 </span> </button> <div id="module-topics-02-class-relationships" class="module-topics" role="region" aria-label="Class Relationships topics" data-astro-cid-6munbmg7> <a href="../02-class-relationships/association.html" class="topic-link" title="Association in OOP: Object Relationships Guide" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Association in OOP: Object Relationships Guide</span> </a><a href="../02-class-relationships/aggregation.html" class="topic-link" title="Aggregation in OOP: Has-A Relationship Explained" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Aggregation in OOP: Has-A Relationship Explained</span> </a><a href="../02-class-relationships/composition.html" class="topic-link" title="Composition in OOP: Strong Has-A Relationship" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Composition in OOP: Strong Has-A Relationship</span> </a><a href="../02-class-relationships/dependency.html" class="topic-link" title="Dependency in OOP: Uses-A Relationship Guide" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Dependency in OOP: Uses-A Relationship Guide</span> </a> </div> </div><div class="module-item" data-module-id="03-design-principles" data-astro-cid-6munbmg7> <button class="module-header active-module" role="button" tabindex="0" aria-expanded="true" aria-controls="module-topics-03-design-principles" data-module-id="03-design-principles" data-astro-cid-6munbmg7> <span class="module-chevron expanded" data-astro-cid-6munbmg7> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><path d="m9 18 6-6-6-6" data-astro-cid-6munbmg7></path></svg> </span> <span class="module-number module-number-active" data-astro-cid-6munbmg7> 3 </span> <span class="module-name" style="color: var(--sidebar-accent); font-weight: 600;" data-astro-cid-6munbmg7> Design Principles </span> <span class="module-count" style="color: var(--sidebar-text-secondary);" data-astro-cid-6munbmg7> 12 </span> </button> <div id="module-topics-03-design-principles" class="module-topics expanded" role="region" aria-label="Design Principles topics" data-astro-cid-6munbmg7> <a href="dry.html" class="topic-link" title="DRY Principle: Don't Repeat Yourself in Code" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>DRY Principle: Don&#39;t Repeat Yourself in Code</span> </a><a href="yagni.html" class="topic-link" title="YAGNI Principle: You Aren't Gonna Need It" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>YAGNI Principle: You Aren&#39;t Gonna Need It</span> </a><a href="kiss.html" class="topic-link" title="KISS Principle: Keep It Simple in Software Design" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>KISS Principle: Keep It Simple in Software Design</span> </a><a href="single-responsibility.html" class="topic-link" title="Single Responsibility Principle (SRP) Explained" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Single Responsibility Principle (SRP) Explained</span> </a><a href="open-closed.html" class="topic-link" title="Open-Closed Principle (OCP): Extend, Don't Modify" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Open-Closed Principle (OCP): Extend, Don&#39;t Modify</span> </a><a href="liskov-substitution.html" class="topic-link" title="Liskov Substitution Principle (LSP) Explained" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Liskov Substitution Principle (LSP) Explained</span> </a><a href="interface-segregation.html" class="topic-link" title="Interface Segregation Principle (ISP) Explained" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Interface Segregation Principle (ISP) Explained</span> </a><a href="dependency-inversion.html" class="topic-link" title="Dependency Inversion Principle (DIP) Explained" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Dependency Inversion Principle (DIP) Explained</span> </a><a href="composition-over-inheritance.html" class="topic-link" title="Composition over Inheritance: When and Why" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Composition over Inheritance: When and Why</span> </a><a href="law-of-demeter.html" class="topic-link active" aria-current="page" title="Law of Demeter: Principle of Least Knowledge" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Law of Demeter: Principle of Least Knowledge</span> </a><a href="cohesion-and-coupling.html" class="topic-link" title="Cohesion and Coupling in Software Design" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Cohesion and Coupling in Software Design</span> </a><a href="thread-safety-in-ood.html" class="topic-link" title="Thread Safety in OOP: Locks, Sync &#38; Patterns" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Thread Safety in OOP: Locks, Sync &amp; Patterns</span> </a> </div> </div><div class="module-item" data-module-id="04-design-patterns" data-astro-cid-6munbmg7> <button class="module-header" role="button" tabindex="0" aria-expanded="false" aria-controls="module-topics-04-design-patterns" data-module-id="04-design-patterns" data-astro-cid-6munbmg7> <span class="module-chevron" data-astro-cid-6munbmg7> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><path d="m9 18 6-6-6-6" data-astro-cid-6munbmg7></path></svg> </span> <span class="module-number" data-astro-cid-6munbmg7> 4 </span> <span class="module-name" style="color: var(--sidebar-text);" data-astro-cid-6munbmg7> Design Patterns </span> <span class="module-count" style="color: var(--sidebar-text-secondary);" data-astro-cid-6munbmg7> 23 </span> </button> <div id="module-topics-04-design-patterns" class="module-topics" role="region" aria-label="Design Patterns topics" data-astro-cid-6munbmg7> <a href="../04-design-patterns/singleton.html" class="topic-link" title="Singleton Pattern: Ensure One Instance" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Singleton Pattern: Ensure One Instance</span> </a><a href="../04-design-patterns/factory-method.html" class="topic-link" title="Factory Method Pattern: Creational Design Guide" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Factory Method Pattern: Creational Design Guide</span> </a><a href="../04-design-patterns/abstract-factory.html" class="topic-link" title="Abstract Factory Pattern: Guide &#38; Examples" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Abstract Factory Pattern: Guide &amp; Examples</span> </a><a href="../04-design-patterns/builder.html" class="topic-link" title="Builder Pattern: Creational Design Guide" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Builder Pattern: Creational Design Guide</span> </a><a href="../04-design-patterns/prototype.html" class="topic-link" title="Prototype Pattern: Clone Objects Efficiently" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Prototype Pattern: Clone Objects Efficiently</span> </a><a href="../04-design-patterns/adapter.html" class="topic-link" title="Adapter Pattern: Structural Design Guide" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Adapter Pattern: Structural Design Guide</span> </a><a href="../04-design-patterns/bridge.html" class="topic-link" title="Bridge Pattern: Decouple Abstraction from Implementation" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Bridge Pattern: Decouple Abstraction from Implementation</span> </a><a href="../04-design-patterns/composite.html" class="topic-link" title="Composite Pattern: Tree Structure Design Guide" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Composite Pattern: Tree Structure Design Guide</span> </a><a href="../04-design-patterns/decorator.html" class="topic-link" title="Decorator Pattern: Add Behavior Dynamically" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Decorator Pattern: Add Behavior Dynamically</span> </a><a href="../04-design-patterns/facade.html" class="topic-link" title="Facade Pattern: Simplify Complex Subsystems" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Facade Pattern: Simplify Complex Subsystems</span> </a><a href="../04-design-patterns/flyweight.html" class="topic-link" title="Flyweight Pattern: Memory Optimization Design" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Flyweight Pattern: Memory Optimization Design</span> </a><a href="../04-design-patterns/proxy.html" class="topic-link" title="Proxy Pattern: Control Object Access in OOP" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Proxy Pattern: Control Object Access in OOP</span> </a><a href="../04-design-patterns/iterator.html" class="topic-link" title="Iterator Pattern: Traverse Collections in OOP" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Iterator Pattern: Traverse Collections in OOP</span> </a><a href="../04-design-patterns/observer.html" class="topic-link" title="Observer Pattern: Event-Driven Design Guide" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Observer Pattern: Event-Driven Design Guide</span> </a><a href="../04-design-patterns/strategy.html" class="topic-link" title="Strategy Pattern: Swap Algorithms at Runtime" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Strategy Pattern: Swap Algorithms at Runtime</span> </a><a href="../04-design-patterns/command.html" class="topic-link" title="Command Pattern: Behavioral Design Guide" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Command Pattern: Behavioral Design Guide</span> </a><a href="../04-design-patterns/state.html" class="topic-link" title="State Pattern: Manage Object State Transitions" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>State Pattern: Manage Object State Transitions</span> </a><a href="../04-design-patterns/template-method.html" class="topic-link" title="Template Method Pattern: Define Algorithm Skeleton" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Template Method Pattern: Define Algorithm Skeleton</span> </a><a href="../04-design-patterns/visitor.html" class="topic-link" title="Visitor Pattern: Add Operations Without Changing Classes" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Visitor Pattern: Add Operations Without Changing Classes</span> </a><a href="../04-design-patterns/mediator.html" class="topic-link" title="Mediator Pattern: Reduce Object Coupling" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Mediator Pattern: Reduce Object Coupling</span> </a><a href="../04-design-patterns/memento.html" class="topic-link" title="Memento Pattern: Undo/Redo State Management" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Memento Pattern: Undo/Redo State Management</span> </a><a href="../04-design-patterns/chain-of-responsibility.html" class="topic-link" title="Chain of Responsibility Pattern Explained" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Chain of Responsibility Pattern Explained</span> </a><a href="../04-design-patterns/interpreter.html" class="topic-link" title="Interpreter Pattern: Parse Grammars in OOP" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Interpreter Pattern: Parse Grammars in OOP</span> </a> </div> </div><div class="module-item" data-module-id="05-uml-diagrams" data-astro-cid-6munbmg7> <button class="module-header" role="button" tabindex="0" aria-expanded="false" aria-controls="module-topics-05-uml-diagrams" data-module-id="05-uml-diagrams" data-astro-cid-6munbmg7> <span class="module-chevron" data-astro-cid-6munbmg7> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><path d="m9 18 6-6-6-6" data-astro-cid-6munbmg7></path></svg> </span> <span class="module-number" data-astro-cid-6munbmg7> 5 </span> <span class="module-name" style="color: var(--sidebar-text);" data-astro-cid-6munbmg7> UML Diagrams </span> <span class="module-count" style="color: var(--sidebar-text-secondary);" data-astro-cid-6munbmg7> 5 </span> </button> <div id="module-topics-05-uml-diagrams" class="module-topics" role="region" aria-label="UML Diagrams topics" data-astro-cid-6munbmg7> <a href="../05-uml-diagrams/class-diagram.html" class="topic-link" title="Class Diagrams in UML: Notation &#38; Examples" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Class Diagrams in UML: Notation &amp; Examples</span> </a><a href="../05-uml-diagrams/use-case-diagram.html" class="topic-link" title="Use Case Diagrams in UML: Guide &#38; Examples" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Use Case Diagrams in UML: Guide &amp; Examples</span> </a><a href="../05-uml-diagrams/sequence-diagram.html" class="topic-link" title="Sequence Diagrams in UML: Guide &#38; Examples" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Sequence Diagrams in UML: Guide &amp; Examples</span> </a><a href="../05-uml-diagrams/activity-diagram.html" class="topic-link" title="Activity Diagrams in UML: Guide &#38; Examples" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Activity Diagrams in UML: Guide &amp; Examples</span> </a><a href="../05-uml-diagrams/state-machine-diagram.html" class="topic-link" title="State Machine Diagrams in UML Explained" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>State Machine Diagrams in UML Explained</span> </a> </div> </div><div class="module-item" data-module-id="06-concurrency-and-threading" data-astro-cid-6munbmg7> <button class="module-header" role="button" tabindex="0" aria-expanded="false" aria-controls="module-topics-06-concurrency-and-threading" data-module-id="06-concurrency-and-threading" data-astro-cid-6munbmg7> <span class="module-chevron" data-astro-cid-6munbmg7> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><path d="m9 18 6-6-6-6" data-astro-cid-6munbmg7></path></svg> </span> <span class="module-number" data-astro-cid-6munbmg7> 6 </span> <span class="module-name" style="color: var(--sidebar-text);" data-astro-cid-6munbmg7> Concurrency &amp; Threading </span> <span class="module-count" style="color: var(--sidebar-text-secondary);" data-astro-cid-6munbmg7> 6 </span> </button> <div id="module-topics-06-concurrency-and-threading" class="module-topics" role="region" aria-label="Concurrency &#38; Threading topics" data-astro-cid-6munbmg7> <a href="../06-concurrency-and-threading/deadlock-livelock-starvation.html" class="topic-link" title="Deadlock, Livelock &#38; Starvation in Java" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Deadlock, Livelock &amp; Starvation in Java</span> </a><a href="../06-concurrency-and-threading/producer-consumer-problem.html" class="topic-link" title="Producer-Consumer Problem: Java Thread Solution" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Producer-Consumer Problem: Java Thread Solution</span> </a><a href="../06-concurrency-and-threading/synchronization.html" class="topic-link" title="Synchronization in Java: Locks &#38; Monitors Guide" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Synchronization in Java: Locks &amp; Monitors Guide</span> </a><a href="../06-concurrency-and-threading/threads-vs-processes.html" class="topic-link" title="Threads vs Processes: Key Differences Explained" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Threads vs Processes: Key Differences Explained</span> </a><a href="../06-concurrency-and-threading/thread-pools.html" class="topic-link" title="Thread Pools in Java: ExecutorService Guide" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Thread Pools in Java: ExecutorService Guide</span> </a><a href="../06-concurrency-and-threading/volatile-atomic-variables.html" class="topic-link" title="Volatile vs Atomic Variables: Java Concurrency Guide" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Volatile vs Atomic Variables: Java Concurrency Guide</span> </a> </div> </div><div class="module-item" data-module-id="07-interview-approach" data-astro-cid-6munbmg7> <button class="module-header" role="button" tabindex="0" aria-expanded="false" aria-controls="module-topics-07-interview-approach" data-module-id="07-interview-approach" data-astro-cid-6munbmg7> <span class="module-chevron" data-astro-cid-6munbmg7> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><path d="m9 18 6-6-6-6" data-astro-cid-6munbmg7></path></svg> </span> <span class="module-number" data-astro-cid-6munbmg7> 7 </span> <span class="module-name" style="color: var(--sidebar-text);" data-astro-cid-6munbmg7> Interview Approach </span> <span class="module-count" style="color: var(--sidebar-text-secondary);" data-astro-cid-6munbmg7> 0 </span> </button> <div id="module-topics-07-interview-approach" class="module-topics" role="region" aria-label="Interview Approach topics" data-astro-cid-6munbmg7>  </div> </div> </div>  </nav> <!-- Bottom section --> <div class="sidebar-bottom" style="border-top: 1px solid var(--sidebar-border);" data-astro-cid-6munbmg7> <!-- Expand/Collapse toggle - consistent position at bottom --> <button id="sidebar-expand-btn" class="sidebar-toggle-btn" title="Collapse sidebar" aria-label="Toggle sidebar" aria-expanded="true" aria-controls="course-sidebar" style="color: var(--sidebar-text-secondary); border: 1px solid var(--sidebar-border);" data-astro-cid-6munbmg7> <svg class="sidebar-toggle-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><rect width="18" height="18" x="3" y="3" rx="2" data-astro-cid-6munbmg7></rect><path d="M9 3v18" data-astro-cid-6munbmg7></path><path d="m14 9-3 3 3 3" data-astro-cid-6munbmg7></path></svg> <span class="sidebar-label" style="font-size: 0.8125rem; font-weight: 500;" data-astro-cid-6munbmg7>Collapse</span> </button> <!-- Sign In button (hidden when already authenticated) --> <a id="sidebar-signin-btn" href="https://layrs.me/dashboard?next=%2Fcourse%2Flld%2F03-design-principles%2Flaw-of-demeter%2F" class="sidebar-signin-btn" style="color: white; background-color: var(--sidebar-accent);" title="Sign In" data-astro-cid-6munbmg7> <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" data-astro-cid-6munbmg7></path><circle cx="12" cy="7" r="4" data-astro-cid-6munbmg7></circle></svg> <span class="sidebar-label" data-astro-cid-6munbmg7>Sign In</span> </a> <!-- Dashboard button (shown when authenticated) --> <a id="sidebar-dashboard-btn" href="https://layrs.me/dashboard" class="sidebar-signin-btn" style="color: white; background-color: var(--sidebar-accent); display: none;" title="Dashboard" data-astro-cid-6munbmg7> <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><rect x="3" y="3" width="7" height="7" data-astro-cid-6munbmg7></rect><rect x="14" y="3" width="7" height="7" data-astro-cid-6munbmg7></rect><rect x="14" y="14" width="7" height="7" data-astro-cid-6munbmg7></rect><rect x="3" y="14" width="7" height="7" data-astro-cid-6munbmg7></rect></svg> <span class="sidebar-label" data-astro-cid-6munbmg7>Dashboard</span> </a> <!-- Theme toggle --> <div id="theme-toggle" class="sidebar-theme-toggle" style="background-color: rgba(0, 0, 0, 0.05);" data-astro-cid-6munbmg7> <button id="theme-light-btn" class="sidebar-theme-btn" title="Light mode" data-astro-cid-6munbmg7> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><circle cx="12" cy="12" r="4" data-astro-cid-6munbmg7></circle><path d="M12 2v2" data-astro-cid-6munbmg7></path><path d="M12 20v2" data-astro-cid-6munbmg7></path><path d="m4.93 4.93 1.41 1.41" data-astro-cid-6munbmg7></path><path d="m17.66 17.66 1.41 1.41" data-astro-cid-6munbmg7></path><path d="M2 12h2" data-astro-cid-6munbmg7></path><path d="M20 12h2" data-astro-cid-6munbmg7></path><path d="m6.34 17.66-1.41 1.41" data-astro-cid-6munbmg7></path><path d="m19.07 4.93-1.41 1.41" data-astro-cid-6munbmg7></path></svg> </button> <button id="theme-dark-btn" class="sidebar-theme-btn" title="Dark mode" data-astro-cid-6munbmg7> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" data-astro-cid-6munbmg7></path></svg> </button> </div> <!-- Social links (hidden when collapsed) --> <div class="sidebar-social-row sidebar-hide-collapsed" data-astro-cid-6munbmg7> <a href="https://lnkd.in/g9f98NBH" target="_blank" rel="noopener noreferrer" class="sidebar-social-link" style="border: 1px solid var(--sidebar-border); color: var(--sidebar-text-secondary);" aria-label="Discord" title="Discord" data-astro-cid-6munbmg7> <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z" data-astro-cid-6munbmg7></path></svg> </a> <a href="https://www.linkedin.com/company/layrs" target="_blank" rel="noopener noreferrer" class="sidebar-social-link" style="border: 1px solid var(--sidebar-border); color: var(--sidebar-text-secondary);" aria-label="LinkedIn" title="LinkedIn" data-astro-cid-6munbmg7> <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" data-astro-cid-6munbmg7></path><rect width="4" height="12" x="2" y="9" data-astro-cid-6munbmg7></rect><circle cx="4" cy="4" r="2" data-astro-cid-6munbmg7></circle></svg> </a> <a href="https://www.instagram.com/layrs.me" target="_blank" rel="noopener noreferrer" class="sidebar-social-link" style="border: 1px solid var(--sidebar-border); color: var(--sidebar-text-secondary);" aria-label="Instagram" title="Instagram" data-astro-cid-6munbmg7> <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><rect width="20" height="20" x="2" y="2" rx="5" ry="5" data-astro-cid-6munbmg7></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" data-astro-cid-6munbmg7></path><line x1="17.5" x2="17.51" y1="6.5" y2="6.5" data-astro-cid-6munbmg7></line></svg> </a> <a href="mailto:support@layrs.me" class="sidebar-social-link" style="border: 1px solid var(--sidebar-border); color: var(--sidebar-text-secondary);" aria-label="Email" title="Email" data-astro-cid-6munbmg7> <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><rect width="20" height="16" x="2" y="4" rx="2" data-astro-cid-6munbmg7></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" data-astro-cid-6munbmg7></path></svg> </a> </div> </div> </aside>  <script>
+  // Toggle Sign In vs Dashboard based on Supabase auth session in localStorage
+  (function initAuthButton() {
+    var signInBtn = document.getElementById('sidebar-signin-btn');
+    var dashboardBtn = document.getElementById('sidebar-dashboard-btn');
+    if (!signInBtn || !dashboardBtn) return;
+
+    var hasSession = false;
+    try {
+      var keys = Object.keys(localStorage);
+      for (var i = 0; i < keys.length; i++) {
+        if (keys[i].indexOf('sb-') === 0 && keys[i].indexOf('-auth-token') !== -1) {
+          var data = JSON.parse(localStorage.getItem(keys[i]) || '{}');
+          if (data && data.access_token) { hasSession = true; break; }
+        }
+      }
+    } catch (e) {}
+
+    if (hasSession) {
+      signInBtn.style.display = 'none';
+      dashboardBtn.style.display = '';
+    }
+  })();
+</script> <script>
+  // Sidebar collapse toggle + accordion modules + mobile drawer
+  (function initSidebar() {
+    if (window.__sidebarInit) return;
+    window.__sidebarInit = true;
+
+    var sidebar = document.getElementById('course-sidebar');
+    var toggleBtn = document.getElementById('sidebar-expand-btn');
+    var closeBtn = document.getElementById('sidebar-close-btn');
+    if (!sidebar) return;
+
+    // --- Collapse/Expand ---
+    var saved = localStorage.getItem('sidebar-collapsed');
+    if (saved === 'true') {
+      sidebar.classList.add('collapsed');
+      updateToggleState(true);
+    }
+
+    function updateToggleState(isCollapsed) {
+      if (!toggleBtn) return;
+      toggleBtn.setAttribute('aria-expanded', isCollapsed ? 'false' : 'true');
+      toggleBtn.title = isCollapsed ? 'Expand sidebar' : 'Collapse sidebar';
+      var label = toggleBtn.querySelector('.sidebar-label');
+      if (label) label.textContent = isCollapsed ? 'Expand' : 'Collapse';
+    }
+
+    function toggleSidebar() {
+      var isCollapsed = sidebar.classList.contains('collapsed');
+      if (isCollapsed) {
+        sidebar.classList.remove('collapsed');
+        localStorage.setItem('sidebar-collapsed', 'false');
+        updateToggleState(false);
+      } else {
+        sidebar.classList.add('collapsed');
+        localStorage.setItem('sidebar-collapsed', 'true');
+        updateToggleState(true);
+      }
+    }
+
+    if (toggleBtn) {
+      toggleBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        toggleSidebar();
+      });
+    }
+
+    // --- Mobile close button ---
+    if (closeBtn) {
+      closeBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        closeMobileDrawer();
+      });
+    }
+
+    // --- Mobile drawer helpers ---
+    function closeMobileDrawer() {
+      var overlay = document.getElementById('mobile-sidebar-overlay');
+      if (overlay) {
+        overlay.classList.add('closing');
+        setTimeout(function() {
+          overlay.classList.add('hidden');
+          overlay.classList.remove('closing');
+          document.body.style.overflow = '';
+        }, 250);
+      }
+    }
+
+    // Expose for backdrop click
+    window.__closeMobileDrawer = closeMobileDrawer;
+
+    // Escape key handler
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        var overlay = document.getElementById('mobile-sidebar-overlay');
+        if (overlay && !overlay.classList.contains('hidden')) {
+          closeMobileDrawer();
+        }
+      }
+    });
+
+    // --- Module accordion ---
+    var moduleHeaders = sidebar.querySelectorAll('.module-header');
+    moduleHeaders.forEach(function(header) {
+      header.addEventListener('click', function(e) {
+        e.preventDefault();
+        toggleModule(header);
+      });
+
+      // Keyboard support
+      header.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          toggleModule(header);
+        }
+      });
+    });
+
+    function toggleModule(header) {
+      var item = header.closest('.module-item');
+      var topics = item.querySelector('.module-topics');
+      var chevron = header.querySelector('.module-chevron');
+      var isExpanded = header.getAttribute('aria-expanded') === 'true';
+
+      // Close all other modules (accordion behavior)
+      sidebar.querySelectorAll('.module-item').forEach(function(otherItem) {
+        if (otherItem !== item) {
+          var oh = otherItem.querySelector('.module-header');
+          var ot = otherItem.querySelector('.module-topics');
+          var oc = otherItem.querySelector('.module-chevron');
+          if (oh) oh.setAttribute('aria-expanded', 'false');
+          if (ot) ot.classList.remove('expanded');
+          if (oc) oc.classList.remove('expanded');
+        }
+      });
+
+      // Toggle current
+      if (isExpanded) {
+        header.setAttribute('aria-expanded', 'false');
+        if (topics) topics.classList.remove('expanded');
+        if (chevron) chevron.classList.remove('expanded');
+      } else {
+        header.setAttribute('aria-expanded', 'true');
+        if (topics) topics.classList.add('expanded');
+        if (chevron) chevron.classList.add('expanded');
+
+        // Auto-scroll active topic into view
+        setTimeout(function() {
+          var activeLink = topics && topics.querySelector('.topic-link.active, .topic-link[aria-current="page"]');
+          if (activeLink) {
+            activeLink.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+          }
+        }, 280);
+      }
+    }
+
+    // Auto-scroll active topic on load
+    setTimeout(function() {
+      var activeLink = sidebar.querySelector('.topic-link.active, .topic-link[aria-current="page"]');
+      if (activeLink) {
+        activeLink.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+      }
+    }, 100);
+  })();
+
+  // Theme toggle (guard against duplicate listeners)
+  (function initThemeToggle() {
+    if (window.__themeToggleInit) return;
+    window.__themeToggleInit = true;
+    var lightBtn = document.getElementById('theme-light-btn');
+    var darkBtn = document.getElementById('theme-dark-btn');
+    var toggleWrap = document.getElementById('theme-toggle');
+    var root = document.documentElement;
+
+    function applyTheme(theme) {
+      if (theme === 'dark') {
+        root.classList.add('dark');
+        if (toggleWrap) toggleWrap.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
+        if (lightBtn) {
+          lightBtn.style.backgroundColor = 'transparent';
+          lightBtn.style.color = 'var(--sidebar-text-secondary)';
+          lightBtn.style.boxShadow = 'none';
+        }
+        if (darkBtn) {
+          darkBtn.style.backgroundColor = 'var(--sidebar-bg)';
+          darkBtn.style.color = 'var(--sidebar-accent)';
+          darkBtn.style.boxShadow = '0 1px 2px 0 rgba(0,0,0,0.05)';
+        }
+      } else {
+        root.classList.remove('dark');
+        if (toggleWrap) toggleWrap.style.backgroundColor = 'rgba(0, 0, 0, 0.05)';
+        if (lightBtn) {
+          lightBtn.style.backgroundColor = 'var(--sidebar-bg)';
+          lightBtn.style.color = 'var(--sidebar-accent)';
+          lightBtn.style.boxShadow = '0 1px 2px 0 rgba(0,0,0,0.05)';
+        }
+        if (darkBtn) {
+          darkBtn.style.backgroundColor = 'transparent';
+          darkBtn.style.color = 'var(--sidebar-text-secondary)';
+          darkBtn.style.boxShadow = 'none';
+        }
+      }
+    }
+
+    var saved = localStorage.getItem('theme') || 'light';
+    applyTheme(saved);
+
+    if (lightBtn) {
+      lightBtn.addEventListener('click', function() {
+        localStorage.setItem('theme', 'light');
+        applyTheme('light');
+      });
+    }
+    if (darkBtn) {
+      darkBtn.addEventListener('click', function() {
+        localStorage.setItem('theme', 'dark');
+        applyTheme('dark');
+      });
+    }
+  })();
+</script> </div> </div> <!-- Main content area --> <div class="flex-1 flex flex-col overflow-hidden"> <!-- Mobile header with hamburger (lg:hidden) --> <div class="lg:hidden px-4 py-3 flex items-center" style="border-bottom: 1px solid var(--sidebar-border); background-color: var(--sidebar-bg);"> <button id="menu-toggle" class="p-1 rounded-md transition-colors" style="color: var(--sidebar-text);" aria-label="Open menu"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"></line><line x1="4" x2="20" y1="6" y2="6"></line><line x1="4" x2="20" y1="18" y2="18"></line></svg> </button> <a href="https://layrs.me/" class="ml-3 flex items-center gap-2 no-underline"> <span class="font-semibold" style="color: var(--sidebar-text);">Layrs</span> </a> </div> <!-- Scrollable content --> <div class="flex-1 overflow-y-auto">  <div class="px-4 sm:px-6 lg:px-8 py-8 max-w-6xl mx-auto"> <nav aria-label="Breadcrumb" class="mb-6"> <ol class="flex flex-wrap items-center gap-1.5 text-sm text-[hsl(var(--muted-foreground))]"> <li> <a href="https://layrs.me/course" class="hover:text-layrs-primary transition-colors">Course</a> </li> <li class="flex items-center gap-1.5"> <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="opacity-50"> <polyline points="9 18 15 12 9 6"></polyline> </svg> <a href="../../lld.html" class="hover:text-layrs-primary transition-colors">LLD</a> </li><li class="flex items-center gap-1.5"> <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="opacity-50"> <polyline points="9 18 15 12 9 6"></polyline> </svg> <a href="../03-design-principles.html" class="hover:text-layrs-primary transition-colors">Design Principles</a> </li><li class="flex items-center gap-1.5"> <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="opacity-50"> <polyline points="9 18 15 12 9 6"></polyline> </svg> <span class="text-[hsl(var(--foreground))]">Law of Demeter: Principle of Least Knowledge</span> </li> </ol> </nav> <div class="flex gap-10"> <!-- Main content --> <article class="min-w-0 flex-1 max-w-3xl"> <!-- Article header --> <header class="mb-8 pb-6 border-b border-[hsl(var(--border))]"> <h1 class="font-display text-3xl sm:text-4xl font-bold text-[hsl(var(--foreground))] mb-4 leading-tight"> Law of Demeter: Principle of Least Knowledge </h1> <div class="flex flex-wrap items-center gap-3 text-sm text-[hsl(var(--muted-foreground))]">     <span class="flex items-center gap-1.5"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="opacity-60"> <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path> <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path> </svg>
+Updated 2026-03-11 </span> </div> </header> <!-- MDX content --> <div class="prose max-w-none course-prose">  <h2 id="tldr">TL;DR</h2>
+<p>The Law of Demeter states that an object should only talk to its immediate friends, not strangers. This means calling methods only on objects you directly own, receive as parameters, or create locally—avoiding chains like <code>obj.getA().getB().doSomething()</code>. Following this principle reduces coupling and makes code more maintainable and testable.</p>
+<div class="tutorial-meta"><p><strong>Prerequisites:</strong> Understanding of classes and objects, method calls, basic encapsulation concepts, and familiarity with object composition. You should be comfortable reading code that instantiates objects and calls methods on them.</p><p><strong>After this topic:</strong> Identify violations of the Law of Demeter in existing code, refactor coupled code to follow the principle of least knowledge, and design class interfaces that minimize dependencies between distant objects. You’ll be able to explain why method chaining creates tight coupling and propose better alternatives.</p></div>
+<h2 id="core-concept">Core Concept</h2>
+<h2 id="what-is-the-law-of-demeter">What Is the Law of Demeter?</h2>
+<p>The <strong>Law of Demeter</strong> (LoD), also called the <strong>Principle of Least Knowledge</strong>, is a design guideline that limits which objects a method can interact with. The rule is simple: a method of an object should only call methods on:</p>
+<ol>
+<li><strong>The object itself</strong> (<code>self</code> or <code>this</code>)</li>
+<li><strong>Objects passed as parameters</strong> to the method</li>
+<li><strong>Objects the method creates</strong> locally</li>
+<li><strong>Direct component objects</strong> (instance variables/fields)</li>
+</ol>
+<p>You should NOT call methods on objects returned by other method calls. This prevents “train wrecks” like <code>customer.getWallet().getMoney().getAmount()</code>.</p>
+<h2 id="why-it-matters">Why It Matters</h2>
+<p>The Law of Demeter reduces <strong>coupling</strong>—the degree to which one class depends on the internal structure of another. When you chain method calls through multiple objects, you create dependencies on the entire chain. If any intermediate object changes its structure, your code breaks.</p>
+<p><strong>Benefits:</strong></p>
+<ul>
+<li><strong>Easier maintenance</strong>: Changes to internal structures don’t ripple through unrelated code</li>
+<li><strong>Better encapsulation</strong>: Objects hide their internal structure</li>
+<li><strong>Improved testability</strong>: Fewer dependencies mean easier mocking and testing</li>
+<li><strong>Clearer responsibilities</strong>: Each object manages its own behavior</li>
+</ul>
+<h2 id="the-only-one-dot-rule">The “Only One Dot” Rule</h2>
+<p>A simplified heuristic is: <strong>use only one dot per statement</strong> (excluding the object itself). While not absolute, <code>object.method()</code> is usually fine, but <code>object.method().anotherMethod()</code> often violates LoD.</p>
+<p><strong>Exception</strong>: Fluent interfaces and builder patterns intentionally chain methods on the same object (<code>builder.setName().setAge().build()</code>), which is acceptable because you’re talking to the same “friend” throughout.</p>
+<h2 id="formal-definition">Formal Definition</h2>
+<p>For a method <code>M</code> of object <code>O</code>, <code>M</code> should only invoke methods of:</p>
+<ul>
+<li><code>O</code> itself</li>
+<li>Parameters of <code>M</code></li>
+<li>Any objects created within <code>M</code></li>
+<li>Direct components of <code>O</code> (instance variables)</li>
+<li>Global variables accessible by <code>O</code> (use sparingly)</li>
+</ul>
+<h2 id="visual-guide">Visual Guide</h2>
+<h3 id="law-of-demeter-violation-vs-compliance">Law of Demeter Violation vs. Compliance</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="mermaid"><code><span class="line"><span style="color:#E1E4E8">graph LR</span></span>
+<span class="line"><span style="color:#E1E4E8">    A[Client] --&gt;|violates LoD| B[Customer]</span></span>
+<span class="line"><span style="color:#E1E4E8">    B --&gt;|getWallet| C[Wallet]</span></span>
+<span class="line"><span style="color:#E1E4E8">    C --&gt;|getMoney| D[Money]</span></span>
+<span class="line"><span style="color:#E1E4E8">    D --&gt;|getAmount| E[Amount]</span></span>
+<span class="line"><span style="color:#E1E4E8">    </span></span>
+<span class="line"><span style="color:#E1E4E8">    style A fill:#ffcccc</span></span>
+<span class="line"><span style="color:#E1E4E8">    style E fill:#ffcccc</span></span>
+<span class="line"><span style="color:#E1E4E8">    </span></span>
+<span class="line"><span style="color:#E1E4E8">    A2[Client] --&gt;|complies with LoD| B2[Customer]</span></span>
+<span class="line"><span style="color:#E1E4E8">    B2[Customer] -.-&gt;|internal| C2[Wallet]</span></span>
+<span class="line"><span style="color:#E1E4E8">    C2 -.-&gt;|internal| D2[Money]</span></span>
+<span class="line"><span style="color:#E1E4E8">    </span></span>
+<span class="line"><span style="color:#E1E4E8">    style A2 fill:#ccffcc</span></span>
+<span class="line"><span style="color:#E1E4E8">    style B2 fill:#ccffcc</span></span></code></pre>
+<p><em>Top: Client reaches through multiple objects (violation). Bottom: Client asks Customer directly, Customer handles internal navigation (compliant).</em></p>
+<h3 id="allowed-method-calls-under-law-of-demeter">Allowed Method Calls Under Law of Demeter</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="mermaid"><code><span class="line"><span style="color:#E1E4E8">graph TD</span></span>
+<span class="line"><span style="color:#E1E4E8">    M[Method M in Object O]</span></span>
+<span class="line"><span style="color:#E1E4E8">    M --&gt;|1. Call methods on self| O[Object O itself]</span></span>
+<span class="line"><span style="color:#E1E4E8">    M --&gt;|2. Call methods on| P[Parameters]</span></span>
+<span class="line"><span style="color:#E1E4E8">    M --&gt;|3. Call methods on| L[Locally created objects]</span></span>
+<span class="line"><span style="color:#E1E4E8">    M --&gt;|4. Call methods on| C[Direct components/fields]</span></span>
+<span class="line"><span style="color:#E1E4E8">    </span></span>
+<span class="line"><span style="color:#E1E4E8">    style M fill:#e1f5ff</span></span>
+<span class="line"><span style="color:#E1E4E8">    style O fill:#d4edda</span></span>
+<span class="line"><span style="color:#E1E4E8">    style P fill:#d4edda</span></span>
+<span class="line"><span style="color:#E1E4E8">    style L fill:#d4edda</span></span>
+<span class="line"><span style="color:#E1E4E8">    style C fill:#d4edda</span></span></code></pre>
+<p><em>The four categories of objects a method can safely call methods on without violating the Law of Demeter.</em></p>
+<h2 id="examples">Examples</h2>
+<h2 id="example-1-violation-and-fix---customer-payment">Example 1: Violation and Fix - Customer Payment</h2>
+<h3 id="violating-the-law-of-demeter">Violating the Law of Demeter</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="python"><code><span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> Money</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#79B8FF"> __init__</span><span style="color:#E1E4E8">(self, amount):</span></span>
+<span class="line"><span style="color:#79B8FF">        self</span><span style="color:#E1E4E8">.amount </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> amount</span></span>
+<span class="line"><span style="color:#E1E4E8">    </span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> get_amount</span><span style="color:#E1E4E8">(self):</span></span>
+<span class="line"><span style="color:#F97583">        return</span><span style="color:#79B8FF"> self</span><span style="color:#E1E4E8">.amount</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> Wallet</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#79B8FF"> __init__</span><span style="color:#E1E4E8">(self, money):</span></span>
+<span class="line"><span style="color:#79B8FF">        self</span><span style="color:#E1E4E8">.money </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> money</span></span>
+<span class="line"><span style="color:#E1E4E8">    </span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> get_money</span><span style="color:#E1E4E8">(self):</span></span>
+<span class="line"><span style="color:#F97583">        return</span><span style="color:#79B8FF"> self</span><span style="color:#E1E4E8">.money</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> Customer</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#79B8FF"> __init__</span><span style="color:#E1E4E8">(self, wallet):</span></span>
+<span class="line"><span style="color:#79B8FF">        self</span><span style="color:#E1E4E8">.wallet </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> wallet</span></span>
+<span class="line"><span style="color:#E1E4E8">    </span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> get_wallet</span><span style="color:#E1E4E8">(self):</span></span>
+<span class="line"><span style="color:#F97583">        return</span><span style="color:#79B8FF"> self</span><span style="color:#E1E4E8">.wallet</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># Client code - VIOLATION</span></span>
+<span class="line"><span style="color:#F97583">def</span><span style="color:#B392F0"> process_payment</span><span style="color:#E1E4E8">(customer, price):</span></span>
+<span class="line"><span style="color:#6A737D">    # Reaching through multiple objects - &quot;train wreck&quot;</span></span>
+<span class="line"><span style="color:#E1E4E8">    available </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> customer.get_wallet().get_money().get_amount()</span></span>
+<span class="line"><span style="color:#F97583">    if</span><span style="color:#E1E4E8"> available </span><span style="color:#F97583">&gt;=</span><span style="color:#E1E4E8"> price:</span></span>
+<span class="line"><span style="color:#79B8FF">        print</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">f</span><span style="color:#9ECBFF">&quot;Payment of $</span><span style="color:#79B8FF">{</span><span style="color:#E1E4E8">price</span><span style="color:#79B8FF">}</span><span style="color:#9ECBFF"> approved&quot;</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">    else</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#79B8FF">        print</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">f</span><span style="color:#9ECBFF">&quot;Insufficient funds: $</span><span style="color:#79B8FF">{</span><span style="color:#E1E4E8">available</span><span style="color:#79B8FF">}</span><span style="color:#9ECBFF"> &lt; $</span><span style="color:#79B8FF">{</span><span style="color:#E1E4E8">price</span><span style="color:#79B8FF">}</span><span style="color:#9ECBFF">&quot;</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># Usage</span></span>
+<span class="line"><span style="color:#E1E4E8">money </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> Money(</span><span style="color:#79B8FF">100</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">wallet </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> Wallet(money)</span></span>
+<span class="line"><span style="color:#E1E4E8">customer </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> Customer(wallet)</span></span>
+<span class="line"><span style="color:#E1E4E8">process_payment(customer, </span><span style="color:#79B8FF">50</span><span style="color:#E1E4E8">)  </span><span style="color:#6A737D"># Output: Payment of $50 approved</span></span></code></pre>
+<p><strong>Problem</strong>: The client knows too much about Customer’s internal structure (Customer has Wallet, Wallet has Money, Money has amount). If we change how Customer stores money, all client code breaks.</p>
+<h3 id="following-the-law-of-demeter">Following the Law of Demeter</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="python"><code><span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> Money</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#79B8FF"> __init__</span><span style="color:#E1E4E8">(self, amount):</span></span>
+<span class="line"><span style="color:#79B8FF">        self</span><span style="color:#E1E4E8">._amount </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> amount  </span><span style="color:#6A737D"># Private</span></span>
+<span class="line"><span style="color:#E1E4E8">    </span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> is_sufficient</span><span style="color:#E1E4E8">(self, required):</span></span>
+<span class="line"><span style="color:#F97583">        return</span><span style="color:#79B8FF"> self</span><span style="color:#E1E4E8">._amount </span><span style="color:#F97583">&gt;=</span><span style="color:#E1E4E8"> required</span></span>
+<span class="line"><span style="color:#E1E4E8">    </span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> subtract</span><span style="color:#E1E4E8">(self, amount):</span></span>
+<span class="line"><span style="color:#F97583">        if</span><span style="color:#79B8FF"> self</span><span style="color:#E1E4E8">.is_sufficient(amount):</span></span>
+<span class="line"><span style="color:#79B8FF">            self</span><span style="color:#E1E4E8">._amount </span><span style="color:#F97583">-=</span><span style="color:#E1E4E8"> amount</span></span>
+<span class="line"><span style="color:#F97583">            return</span><span style="color:#79B8FF"> True</span></span>
+<span class="line"><span style="color:#F97583">        return</span><span style="color:#79B8FF"> False</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> Wallet</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#79B8FF"> __init__</span><span style="color:#E1E4E8">(self, money):</span></span>
+<span class="line"><span style="color:#79B8FF">        self</span><span style="color:#E1E4E8">._money </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> money  </span><span style="color:#6A737D"># Private</span></span>
+<span class="line"><span style="color:#E1E4E8">    </span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> can_afford</span><span style="color:#E1E4E8">(self, price):</span></span>
+<span class="line"><span style="color:#F97583">        return</span><span style="color:#79B8FF"> self</span><span style="color:#E1E4E8">._money.is_sufficient(price)</span></span>
+<span class="line"><span style="color:#E1E4E8">    </span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> deduct</span><span style="color:#E1E4E8">(self, price):</span></span>
+<span class="line"><span style="color:#F97583">        return</span><span style="color:#79B8FF"> self</span><span style="color:#E1E4E8">._money.subtract(price)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> Customer</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#79B8FF"> __init__</span><span style="color:#E1E4E8">(self, wallet):</span></span>
+<span class="line"><span style="color:#79B8FF">        self</span><span style="color:#E1E4E8">._wallet </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> wallet  </span><span style="color:#6A737D"># Private</span></span>
+<span class="line"><span style="color:#E1E4E8">    </span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> make_payment</span><span style="color:#E1E4E8">(self, price):</span></span>
+<span class="line"><span style="color:#9ECBFF">        &quot;&quot;&quot;Customer handles its own payment logic&quot;&quot;&quot;</span></span>
+<span class="line"><span style="color:#F97583">        if</span><span style="color:#79B8FF"> self</span><span style="color:#E1E4E8">._wallet.can_afford(price):</span></span>
+<span class="line"><span style="color:#F97583">            if</span><span style="color:#79B8FF"> self</span><span style="color:#E1E4E8">._wallet.deduct(price):</span></span>
+<span class="line"><span style="color:#F97583">                return</span><span style="color:#79B8FF"> True</span></span>
+<span class="line"><span style="color:#F97583">        return</span><span style="color:#79B8FF"> False</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># Client code - COMPLIANT</span></span>
+<span class="line"><span style="color:#F97583">def</span><span style="color:#B392F0"> process_payment</span><span style="color:#E1E4E8">(customer, price):</span></span>
+<span class="line"><span style="color:#6A737D">    # Only talk to customer, not its internal objects</span></span>
+<span class="line"><span style="color:#F97583">    if</span><span style="color:#E1E4E8"> customer.make_payment(price):</span></span>
+<span class="line"><span style="color:#79B8FF">        print</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">f</span><span style="color:#9ECBFF">&quot;Payment of $</span><span style="color:#79B8FF">{</span><span style="color:#E1E4E8">price</span><span style="color:#79B8FF">}</span><span style="color:#9ECBFF"> approved&quot;</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">    else</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#79B8FF">        print</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">f</span><span style="color:#9ECBFF">&quot;Payment of $</span><span style="color:#79B8FF">{</span><span style="color:#E1E4E8">price</span><span style="color:#79B8FF">}</span><span style="color:#9ECBFF"> declined&quot;</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># Usage</span></span>
+<span class="line"><span style="color:#E1E4E8">money </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> Money(</span><span style="color:#79B8FF">100</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">wallet </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> Wallet(money)</span></span>
+<span class="line"><span style="color:#E1E4E8">customer </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> Customer(wallet)</span></span>
+<span class="line"><span style="color:#E1E4E8">process_payment(customer, </span><span style="color:#79B8FF">50</span><span style="color:#E1E4E8">)  </span><span style="color:#6A737D"># Output: Payment of $50 approved</span></span>
+<span class="line"><span style="color:#E1E4E8">process_payment(customer, </span><span style="color:#79B8FF">60</span><span style="color:#E1E4E8">)  </span><span style="color:#6A737D"># Output: Payment of $60 declined</span></span></code></pre>
+<p><strong>Solution</strong>: Each object manages its own data. The client only talks to Customer, Customer talks to Wallet, Wallet talks to Money. Changes to internal structure don’t affect the client.</p>
+<p><strong>Try it yourself</strong>: Add a <code>CreditCard</code> class as an alternative payment method in Wallet. Notice how the client code doesn’t need to change.</p>
+<hr/>
+<h2 id="example-2-document-formatting---avoiding-deep-navigation">Example 2: Document Formatting - Avoiding Deep Navigation</h2>
+<h3 id="violating-the-law-of-demeter-1">Violating the Law of Demeter</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="python"><code><span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> Font</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#79B8FF"> __init__</span><span style="color:#E1E4E8">(self, size):</span></span>
+<span class="line"><span style="color:#79B8FF">        self</span><span style="color:#E1E4E8">.size </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> size</span></span>
+<span class="line"><span style="color:#E1E4E8">    </span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> get_size</span><span style="color:#E1E4E8">(self):</span></span>
+<span class="line"><span style="color:#F97583">        return</span><span style="color:#79B8FF"> self</span><span style="color:#E1E4E8">.size</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> Paragraph</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#79B8FF"> __init__</span><span style="color:#E1E4E8">(self, font):</span></span>
+<span class="line"><span style="color:#79B8FF">        self</span><span style="color:#E1E4E8">.font </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> font</span></span>
+<span class="line"><span style="color:#E1E4E8">    </span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> get_font</span><span style="color:#E1E4E8">(self):</span></span>
+<span class="line"><span style="color:#F97583">        return</span><span style="color:#79B8FF"> self</span><span style="color:#E1E4E8">.font</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> Document</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#79B8FF"> __init__</span><span style="color:#E1E4E8">(self, paragraphs):</span></span>
+<span class="line"><span style="color:#79B8FF">        self</span><span style="color:#E1E4E8">.paragraphs </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> paragraphs</span></span>
+<span class="line"><span style="color:#E1E4E8">    </span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> get_paragraphs</span><span style="color:#E1E4E8">(self):</span></span>
+<span class="line"><span style="color:#F97583">        return</span><span style="color:#79B8FF"> self</span><span style="color:#E1E4E8">.paragraphs</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># Client code - VIOLATION</span></span>
+<span class="line"><span style="color:#F97583">def</span><span style="color:#B392F0"> calculate_total_font_size</span><span style="color:#E1E4E8">(document):</span></span>
+<span class="line"><span style="color:#E1E4E8">    total </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 0</span></span>
+<span class="line"><span style="color:#6A737D">    # Reaching deep into document structure</span></span>
+<span class="line"><span style="color:#F97583">    for</span><span style="color:#E1E4E8"> paragraph </span><span style="color:#F97583">in</span><span style="color:#E1E4E8"> document.get_paragraphs():</span></span>
+<span class="line"><span style="color:#E1E4E8">        total </span><span style="color:#F97583">+=</span><span style="color:#E1E4E8"> paragraph.get_font().get_size()</span></span>
+<span class="line"><span style="color:#F97583">    return</span><span style="color:#E1E4E8"> total</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># Usage</span></span>
+<span class="line"><span style="color:#E1E4E8">font1 </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> Font(</span><span style="color:#79B8FF">12</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">font2 </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> Font(</span><span style="color:#79B8FF">14</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">para1 </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> Paragraph(font1)</span></span>
+<span class="line"><span style="color:#E1E4E8">para2 </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> Paragraph(font2)</span></span>
+<span class="line"><span style="color:#E1E4E8">doc </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> Document([para1, para2])</span></span>
+<span class="line"><span style="color:#79B8FF">print</span><span style="color:#E1E4E8">(calculate_total_font_size(doc))  </span><span style="color:#6A737D"># Output: 26</span></span></code></pre>
+<p><strong>Problem</strong>: Client code navigates through Document → Paragraph → Font. If we change how fonts are stored, client code breaks.</p>
+<h3 id="following-the-law-of-demeter-1">Following the Law of Demeter</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="python"><code><span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> Font</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#79B8FF"> __init__</span><span style="color:#E1E4E8">(self, size):</span></span>
+<span class="line"><span style="color:#79B8FF">        self</span><span style="color:#E1E4E8">._size </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> size</span></span>
+<span class="line"><span style="color:#E1E4E8">    </span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> get_size</span><span style="color:#E1E4E8">(self):</span></span>
+<span class="line"><span style="color:#F97583">        return</span><span style="color:#79B8FF"> self</span><span style="color:#E1E4E8">._size</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> Paragraph</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#79B8FF"> __init__</span><span style="color:#E1E4E8">(self, font):</span></span>
+<span class="line"><span style="color:#79B8FF">        self</span><span style="color:#E1E4E8">._font </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> font</span></span>
+<span class="line"><span style="color:#E1E4E8">    </span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> get_font_size</span><span style="color:#E1E4E8">(self):</span></span>
+<span class="line"><span style="color:#9ECBFF">        &quot;&quot;&quot;Paragraph knows how to get its own font size&quot;&quot;&quot;</span></span>
+<span class="line"><span style="color:#F97583">        return</span><span style="color:#79B8FF"> self</span><span style="color:#E1E4E8">._font.get_size()</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> Document</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#79B8FF"> __init__</span><span style="color:#E1E4E8">(self, paragraphs):</span></span>
+<span class="line"><span style="color:#79B8FF">        self</span><span style="color:#E1E4E8">._paragraphs </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> paragraphs</span></span>
+<span class="line"><span style="color:#E1E4E8">    </span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> calculate_total_font_size</span><span style="color:#E1E4E8">(self):</span></span>
+<span class="line"><span style="color:#9ECBFF">        &quot;&quot;&quot;Document calculates its own metrics&quot;&quot;&quot;</span></span>
+<span class="line"><span style="color:#F97583">        return</span><span style="color:#79B8FF"> sum</span><span style="color:#E1E4E8">(p.get_font_size() </span><span style="color:#F97583">for</span><span style="color:#E1E4E8"> p </span><span style="color:#F97583">in</span><span style="color:#79B8FF"> self</span><span style="color:#E1E4E8">._paragraphs)</span></span>
+<span class="line"><span style="color:#E1E4E8">    </span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> get_paragraph_count</span><span style="color:#E1E4E8">(self):</span></span>
+<span class="line"><span style="color:#F97583">        return</span><span style="color:#79B8FF"> len</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">self</span><span style="color:#E1E4E8">._paragraphs)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># Client code - COMPLIANT</span></span>
+<span class="line"><span style="color:#F97583">def</span><span style="color:#B392F0"> display_document_stats</span><span style="color:#E1E4E8">(document):</span></span>
+<span class="line"><span style="color:#6A737D">    # Only talk to document</span></span>
+<span class="line"><span style="color:#E1E4E8">    total_size </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> document.calculate_total_font_size()</span></span>
+<span class="line"><span style="color:#E1E4E8">    count </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> document.get_paragraph_count()</span></span>
+<span class="line"><span style="color:#79B8FF">    print</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">f</span><span style="color:#9ECBFF">&quot;Total font size: </span><span style="color:#79B8FF">{</span><span style="color:#E1E4E8">total_size</span><span style="color:#79B8FF">}</span><span style="color:#9ECBFF">, Paragraphs: </span><span style="color:#79B8FF">{</span><span style="color:#E1E4E8">count</span><span style="color:#79B8FF">}</span><span style="color:#9ECBFF">&quot;</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># Usage</span></span>
+<span class="line"><span style="color:#E1E4E8">font1 </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> Font(</span><span style="color:#79B8FF">12</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">font2 </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> Font(</span><span style="color:#79B8FF">14</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">para1 </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> Paragraph(font1)</span></span>
+<span class="line"><span style="color:#E1E4E8">para2 </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> Paragraph(font2)</span></span>
+<span class="line"><span style="color:#E1E4E8">doc </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> Document([para1, para2])</span></span>
+<span class="line"><span style="color:#E1E4E8">display_document_stats(doc)  </span><span style="color:#6A737D"># Output: Total font size: 26, Paragraphs: 2</span></span></code></pre>
+<p><strong>Solution</strong>: Each object provides high-level operations. Document calculates its own statistics, Paragraph provides its font size. The client doesn’t navigate the internal structure.</p>
+<p><strong>Java/C++ Note</strong>: In Java, you’d use private fields with getter methods. In C++, use private members with public accessor methods. The principle remains the same: avoid exposing internal structure that allows deep navigation.</p>
+<p><strong>Try it yourself</strong>: Add a method to Document that returns the average font size. Implement it without violating LoD.</p>
+<h2 id="common-mistakes">Common Mistakes</h2>
+<h2 id="1-confusing-lod-with-never-use-getters">1. Confusing LoD with “Never Use Getters”</h2>
+<p><strong>Mistake</strong>: Thinking the Law of Demeter means you can never use getter methods.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="python"><code><span class="line"><span style="color:#6A737D"># This is FINE - talking to a direct component</span></span>
+<span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> Order</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#79B8FF"> __init__</span><span style="color:#E1E4E8">(self, customer):</span></span>
+<span class="line"><span style="color:#79B8FF">        self</span><span style="color:#E1E4E8">._customer </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> customer</span></span>
+<span class="line"><span style="color:#E1E4E8">    </span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> get_customer_name</span><span style="color:#E1E4E8">(self):</span></span>
+<span class="line"><span style="color:#F97583">        return</span><span style="color:#79B8FF"> self</span><span style="color:#E1E4E8">._customer.get_name()  </span><span style="color:#6A737D"># OK: customer is a direct component</span></span></code></pre>
+<p><strong>Explanation</strong>: Getters are fine when used on direct components (instance variables). The problem is chaining getters to reach distant objects. <code>order.get_customer().get_name()</code> from outside Order is a violation, but Order internally calling <code>self._customer.get_name()</code> is not.</p>
+<hr/>
+<h2 id="2-violating-lod-with-data-structures">2. Violating LoD with Data Structures</h2>
+<p><strong>Mistake</strong>: Treating data structures (like lists, dictionaries) as if LoD doesn’t apply.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="python"><code><span class="line"><span style="color:#6A737D"># VIOLATION - even with built-in types</span></span>
+<span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> ShoppingCart</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#79B8FF"> __init__</span><span style="color:#E1E4E8">(self):</span></span>
+<span class="line"><span style="color:#79B8FF">        self</span><span style="color:#E1E4E8">.items </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> []  </span><span style="color:#6A737D"># Public list</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># Client code</span></span>
+<span class="line"><span style="color:#E1E4E8">cart </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> ShoppingCart()</span></span>
+<span class="line"><span style="color:#E1E4E8">cart.items.append(item)  </span><span style="color:#6A737D"># Reaching into cart&#39;s internals</span></span>
+<span class="line"><span style="color:#E1E4E8">total </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> sum</span><span style="color:#E1E4E8">(i.get_price() </span><span style="color:#F97583">for</span><span style="color:#E1E4E8"> i </span><span style="color:#F97583">in</span><span style="color:#E1E4E8"> cart.items)  </span><span style="color:#6A737D"># Navigating internal structure</span></span></code></pre>
+<p><strong>Better approach</strong>:</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="python"><code><span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> ShoppingCart</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#79B8FF"> __init__</span><span style="color:#E1E4E8">(self):</span></span>
+<span class="line"><span style="color:#79B8FF">        self</span><span style="color:#E1E4E8">._items </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> []  </span><span style="color:#6A737D"># Private</span></span>
+<span class="line"><span style="color:#E1E4E8">    </span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> add_item</span><span style="color:#E1E4E8">(self, item):</span></span>
+<span class="line"><span style="color:#79B8FF">        self</span><span style="color:#E1E4E8">._items.append(item)</span></span>
+<span class="line"><span style="color:#E1E4E8">    </span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> get_total</span><span style="color:#E1E4E8">(self):</span></span>
+<span class="line"><span style="color:#F97583">        return</span><span style="color:#79B8FF"> sum</span><span style="color:#E1E4E8">(i.get_price() </span><span style="color:#F97583">for</span><span style="color:#E1E4E8"> i </span><span style="color:#F97583">in</span><span style="color:#79B8FF"> self</span><span style="color:#E1E4E8">._items)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># Client code</span></span>
+<span class="line"><span style="color:#E1E4E8">cart </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> ShoppingCart()</span></span>
+<span class="line"><span style="color:#E1E4E8">cart.add_item(item)  </span><span style="color:#6A737D"># Talk to cart, not its internals</span></span>
+<span class="line"><span style="color:#E1E4E8">total </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> cart.get_total()</span></span></code></pre>
+<p><strong>Explanation</strong>: Even collections should be encapsulated. Provide methods that operate on the collection rather than exposing it directly.</p>
+<hr/>
+<h2 id="3-over-engineering-with-wrapper-methods">3. Over-Engineering with Wrapper Methods</h2>
+<p><strong>Mistake</strong>: Creating excessive wrapper methods that just delegate without adding value.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="python"><code><span class="line"><span style="color:#6A737D"># OVER-ENGINEERED</span></span>
+<span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> Customer</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#79B8FF"> __init__</span><span style="color:#E1E4E8">(self, address):</span></span>
+<span class="line"><span style="color:#79B8FF">        self</span><span style="color:#E1E4E8">._address </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> address</span></span>
+<span class="line"><span style="color:#E1E4E8">    </span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> get_street</span><span style="color:#E1E4E8">(self):</span></span>
+<span class="line"><span style="color:#F97583">        return</span><span style="color:#79B8FF"> self</span><span style="color:#E1E4E8">._address.get_street()</span></span>
+<span class="line"><span style="color:#E1E4E8">    </span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> get_city</span><span style="color:#E1E4E8">(self):</span></span>
+<span class="line"><span style="color:#F97583">        return</span><span style="color:#79B8FF"> self</span><span style="color:#E1E4E8">._address.get_city()</span></span>
+<span class="line"><span style="color:#E1E4E8">    </span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> get_zip</span><span style="color:#E1E4E8">(self):</span></span>
+<span class="line"><span style="color:#F97583">        return</span><span style="color:#79B8FF"> self</span><span style="color:#E1E4E8">._address.get_zip()</span></span>
+<span class="line"><span style="color:#6A737D">    # ... wrapping every address method</span></span></code></pre>
+<p><strong>Better approach</strong>: Provide high-level operations instead of wrapping every detail.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="python"><code><span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> Customer</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#79B8FF"> __init__</span><span style="color:#E1E4E8">(self, address):</span></span>
+<span class="line"><span style="color:#79B8FF">        self</span><span style="color:#E1E4E8">._address </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> address</span></span>
+<span class="line"><span style="color:#E1E4E8">    </span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> get_formatted_address</span><span style="color:#E1E4E8">(self):</span></span>
+<span class="line"><span style="color:#F97583">        return</span><span style="color:#79B8FF"> self</span><span style="color:#E1E4E8">._address.format()  </span><span style="color:#6A737D"># High-level operation</span></span>
+<span class="line"><span style="color:#E1E4E8">    </span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> is_in_delivery_zone</span><span style="color:#E1E4E8">(self, zone):</span></span>
+<span class="line"><span style="color:#F97583">        return</span><span style="color:#79B8FF"> self</span><span style="color:#E1E4E8">._address.is_in_zone(zone)  </span><span style="color:#6A737D"># Meaningful operation</span></span></code></pre>
+<p><strong>Explanation</strong>: Don’t blindly wrap every method. Instead, think about what operations make sense at each level of abstraction.</p>
+<hr/>
+<h2 id="4-ignoring-lod-for-fluent-interfaces">4. Ignoring LoD for Fluent Interfaces</h2>
+<p><strong>Mistake</strong>: Thinking fluent interfaces (method chaining on the same object) violate LoD.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="python"><code><span class="line"><span style="color:#6A737D"># This is FINE - fluent interface, same object throughout</span></span>
+<span class="line"><span style="color:#E1E4E8">query </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> QueryBuilder()</span></span>
+<span class="line"><span style="color:#E1E4E8">query.select(</span><span style="color:#9ECBFF">&#39;name&#39;</span><span style="color:#E1E4E8">).from_table(</span><span style="color:#9ECBFF">&#39;users&#39;</span><span style="color:#E1E4E8">).where(</span><span style="color:#9ECBFF">&#39;age &gt; 18&#39;</span><span style="color:#E1E4E8">).order_by(</span><span style="color:#9ECBFF">&#39;name&#39;</span><span style="color:#E1E4E8">)</span></span></code></pre>
+<p><strong>Explanation</strong>: Fluent interfaces return <code>self</code> (or the same object type), so you’re always talking to the same “friend.” This doesn’t violate LoD because you’re not reaching through to different objects.</p>
+<hr/>
+<h2 id="5-applying-lod-too-strictly-to-domain-logic">5. Applying LoD Too Strictly to Domain Logic</h2>
+<p><strong>Mistake</strong>: Forcing LoD compliance when it obscures clear domain relationships.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="python"><code><span class="line"><span style="color:#6A737D"># Sometimes this is clearer for simple data objects</span></span>
+<span class="line"><span style="color:#E1E4E8">address_string </span><span style="color:#F97583">=</span><span style="color:#F97583"> f</span><span style="color:#9ECBFF">&quot;</span><span style="color:#79B8FF">{</span><span style="color:#E1E4E8">person.address.street</span><span style="color:#79B8FF">}</span><span style="color:#9ECBFF">, </span><span style="color:#79B8FF">{</span><span style="color:#E1E4E8">person.address.city</span><span style="color:#79B8FF">}</span><span style="color:#9ECBFF">&quot;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># vs. over-engineered</span></span>
+<span class="line"><span style="color:#E1E4E8">address_string </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> person.get_formatted_address()  </span><span style="color:#6A737D"># Might be overkill for DTOs</span></span></code></pre>
+<p><strong>Explanation</strong>: For simple <strong>Data Transfer Objects (DTOs)</strong> or <strong>value objects</strong> with public fields and no behavior, strict LoD compliance can add unnecessary complexity. Use judgment: if the object is purely data with no logic, direct field access might be acceptable. But for objects with behavior and invariants, follow LoD.</p>
+<h2 id="interview-tips">Interview Tips</h2>
+<h2 id="how-interviewers-test-law-of-demeter">How Interviewers Test Law of Demeter</h2>
+<p><strong>1. Code Review Questions</strong>: You’ll be shown code with method chaining and asked to identify problems.</p>
+<ul>
+<li><strong>Example</strong>: “What’s wrong with <code>order.getCustomer().getAddress().getZipCode()</code>?”</li>
+<li><strong>Answer</strong>: Explain the coupling issue, then refactor to <code>order.getCustomerZipCode()</code> or <code>customer.getZipCode()</code> depending on context.</li>
+</ul>
+<p><strong>2. Design Questions</strong>: You’ll be asked to design a system and they’ll watch for LoD violations.</p>
+<ul>
+<li><strong>Example</strong>: “Design a library system where users can borrow books.”</li>
+<li><strong>Watch out</strong>: Don’t write <code>user.getAccount().getBooks().get(0).getTitle()</code>. Instead, provide <code>user.getBorrowedBookTitles()</code> or similar high-level methods.</li>
+</ul>
+<p><strong>3. Refactoring Exercises</strong>: You’ll be given poorly designed code and asked to improve it.</p>
+<ul>
+<li><strong>Strategy</strong>: Look for “train wrecks” (multiple dots). Identify which object should own the responsibility. Move logic closer to the data.</li>
+</ul>
+<h2 id="key-points-to-mention">Key Points to Mention</h2>
+<p><strong>When explaining LoD, cover these points</strong>:</p>
+<ol>
+<li><strong>Definition</strong>: “Only talk to immediate friends, not strangers”</li>
+<li><strong>Why it matters</strong>: Reduces coupling, improves maintainability</li>
+<li><strong>The four allowed calls</strong>: self, parameters, local objects, direct components</li>
+<li><strong>Trade-offs</strong>: Sometimes creates more methods, but the decoupling is worth it</li>
+</ol>
+<h2 id="common-interview-scenario">Common Interview Scenario</h2>
+<p><strong>Interviewer</strong>: “How would you handle this situation where you need data from a nested object?”</p>
+<p><strong>Strong answer structure</strong>:</p>
+<ol>
+<li>Identify the violation: “This creates tight coupling to the internal structure”</li>
+<li>Explain the problem: “If we change how X stores Y, all clients break”</li>
+<li>Propose solution: “Move the responsibility to the object that owns the data”</li>
+<li>Show code: Demonstrate the refactoring</li>
+<li>Discuss trade-offs: “We add a method to X, but we decouple clients from X’s internals”</li>
+</ol>
+<h2 id="red-flags-to-avoid">Red Flags to Avoid</h2>
+<ul>
+<li><strong>Don’t say</strong>: “We should never use getters” (too extreme)</li>
+<li><strong>Don’t say</strong>: “LoD is just about counting dots” (oversimplification)</li>
+<li><strong>Don’t</strong>: Blindly apply LoD to every situation without considering context</li>
+</ul>
+<h2 id="bonus-points">Bonus Points</h2>
+<ul>
+<li>Mention the <strong>Tell, Don’t Ask</strong> principle as related concept</li>
+<li>Discuss how LoD relates to <strong>encapsulation</strong> and <strong>information hiding</strong></li>
+<li>Note that LoD is a <strong>guideline</strong>, not an absolute rule—use professional judgment</li>
+<li>Connect to <strong>testing</strong>: “Following LoD makes mocking easier because we have fewer dependencies”</li>
+</ul>
+<h2 id="key-takeaways">Key Takeaways</h2>
+<ul>
+<li>
+<p><strong>The Law of Demeter limits method calls to four categories</strong>: the object itself, method parameters, locally created objects, and direct component objects—avoiding chains through multiple objects.</p>
+</li>
+<li>
+<p><strong>“Train wrecks” like <code>obj.getA().getB().getC()</code> create tight coupling</strong> to internal structures, making code fragile and hard to maintain when those structures change.</p>
+</li>
+<li>
+<p><strong>Push responsibility down to the objects that own the data</strong> rather than letting clients navigate through object graphs—each object should manage its own internals.</p>
+</li>
+<li>
+<p><strong>Fluent interfaces and builder patterns are exceptions</strong> because they chain methods on the same object, not reaching through to different objects.</p>
+</li>
+<li>
+<p><strong>Balance LoD with pragmatism</strong>: for simple data transfer objects or value objects, strict compliance might add unnecessary complexity—apply the principle where it provides clear benefits in reducing coupling.</p>
+</li>
+</ul>  </div> <nav class="prev-next-nav" aria-label="Previous and next topics" data-astro-cid-fxft7bm5><a href="composition-over-inheritance.html" class="prev-next-card group" data-astro-cid-fxft7bm5><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="prev-next-arrow group-hover:text-layrs-primary transition-colors shrink-0" data-astro-cid-fxft7bm5><path d="m15 18-6-6 6-6" data-astro-cid-fxft7bm5></path></svg><div class="flex flex-col items-start gap-0.5 min-w-0" data-astro-cid-fxft7bm5><span class="prev-next-label" data-astro-cid-fxft7bm5>Previous</span><span class="prev-next-title group-hover:text-layrs-primary transition-colors" data-astro-cid-fxft7bm5>Composition over Inheritance: When and Why</span></div></a><a href="cohesion-and-coupling.html" class="prev-next-card prev-next-card-right group" data-astro-cid-fxft7bm5><div class="flex flex-col items-end gap-0.5 min-w-0" data-astro-cid-fxft7bm5><span class="prev-next-label" data-astro-cid-fxft7bm5>Next</span><span class="prev-next-title text-right group-hover:text-layrs-primary transition-colors" data-astro-cid-fxft7bm5>Cohesion and Coupling in Software Design</span></div><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="prev-next-arrow group-hover:text-layrs-primary transition-colors shrink-0" data-astro-cid-fxft7bm5><path d="m9 18 6-6-6-6" data-astro-cid-fxft7bm5></path></svg></a></nav>  </article> <!-- Right sidebar: CTA + TOC (sticky, always visible) --> <aside class="hidden xl:block w-64 shrink-0" data-astro-cid-xvrfupwn><div class="sticky top-8 max-h-[calc(100vh-4rem)] flex flex-col gap-5" data-astro-cid-xvrfupwn><!-- CTA actions --><div class="rounded-xl border border-layrs-primary/20 bg-gradient-to-b from-layrs-primary/[0.06] to-transparent p-4" data-astro-cid-xvrfupwn><p class="text-[11px] font-semibold uppercase tracking-wider text-[hsl(var(--muted-foreground))] mb-3" data-astro-cid-xvrfupwn>
+Practice
+</p><div class="flex flex-col gap-2" data-astro-cid-xvrfupwn><!-- AI Tutor toggle button --><button type="button" id="ai-tutor-toggle" class="inline-flex items-center gap-2 rounded-lg bg-layrs-primary px-3 py-2.5 text-xs font-medium text-white hover:bg-layrs-secondary transition-all duration-200 shadow-sm shadow-layrs-primary/20 hover:shadow-md hover:shadow-layrs-primary/30 w-full" data-astro-cid-xvrfupwn><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-xvrfupwn><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" data-astro-cid-xvrfupwn></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" data-astro-cid-xvrfupwn></path></svg>
+AI Tutor
+</button><!-- Hidden panel: start/resume (revealed on AI Tutor click) --><div id="ai-tutor-panel" class="hidden flex flex-col gap-2" data-astro-cid-xvrfupwn><!-- Start New Session --><a id="ai-tutor-link" href="https://layrs.me/tutor-lld-concepts?autoStart=1&amp;concept=law-of-demeter&amp;conceptTitle=Law%20of%20Demeter%3A%20Principle%20of%20Least%20Knowledge&amp;language=en" class="inline-flex items-center justify-center gap-1.5 rounded-lg bg-layrs-primary/90 px-3 py-2 text-[11px] font-medium text-white hover:bg-layrs-primary transition-all duration-200 no-underline" data-astro-cid-xvrfupwn><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-xvrfupwn><polygon points="5 3 19 12 5 21 5 3" data-astro-cid-xvrfupwn></polygon></svg>
+Start New Session
+</a><!-- Resume Session (hidden by default, shown via JS if paused session exists) --><a id="ai-tutor-resume-link" href="https://layrs.me/tutor-lld-concepts?autoStart=1&amp;concept=law-of-demeter&amp;conceptTitle=Law%20of%20Demeter%3A%20Principle%20of%20Least%20Knowledge&amp;language=en" class="hidden inline-flex items-center justify-center gap-1.5 rounded-lg border border-layrs-primary/30 px-3 py-2 text-[11px] font-medium text-layrs-primary hover:bg-layrs-primary/10 transition-all duration-200 no-underline" data-astro-cid-xvrfupwn><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-xvrfupwn><path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8" data-astro-cid-xvrfupwn></path><path d="M21 3v5h-5" data-astro-cid-xvrfupwn></path></svg>
+Resume Session
+</a></div><a href="https://layrs.me/interviews" class="inline-flex items-center gap-2 rounded-lg border border-layrs-primary/30 px-3 py-2.5 text-xs font-medium text-layrs-primary hover:bg-layrs-primary/10 transition-all duration-200 no-underline" data-astro-cid-xvrfupwn><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-xvrfupwn><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" data-astro-cid-xvrfupwn></path></svg>
+Mock Interview
+</a></div></div><!-- On this page --><nav id="toc-nav" aria-label="Table of contents" class="overflow-y-auto" data-astro-cid-xvrfupwn><h2 class="text-[11px] font-semibold uppercase tracking-wider text-[hsl(var(--muted-foreground))] mb-3" data-astro-cid-xvrfupwn>
+On this page
+</h2><ul class="space-y-0.5 text-[13px] border-l-2 border-[hsl(var(--border))]" data-astro-cid-xvrfupwn><li class data-astro-cid-xvrfupwn><a href="law-of-demeter.html#tldr" class="toc-link block py-1.5 leading-snug transition-all duration-150 no-underline pl-3" style="color: hsl(var(--muted-foreground));" data-toc-slug="tldr" data-astro-cid-xvrfupwn>TL;DR</a></li><li class data-astro-cid-xvrfupwn><a href="law-of-demeter.html#core-concept" class="toc-link block py-1.5 leading-snug transition-all duration-150 no-underline pl-3" style="color: hsl(var(--muted-foreground));" data-toc-slug="core-concept" data-astro-cid-xvrfupwn>Core Concept</a></li><li class data-astro-cid-xvrfupwn><a href="law-of-demeter.html#what-is-the-law-of-demeter" class="toc-link block py-1.5 leading-snug transition-all duration-150 no-underline pl-3" style="color: hsl(var(--muted-foreground));" data-toc-slug="what-is-the-law-of-demeter" data-astro-cid-xvrfupwn>What Is the Law of Demeter?</a></li><li class data-astro-cid-xvrfupwn><a href="law-of-demeter.html#why-it-matters" class="toc-link block py-1.5 leading-snug transition-all duration-150 no-underline pl-3" style="color: hsl(var(--muted-foreground));" data-toc-slug="why-it-matters" data-astro-cid-xvrfupwn>Why It Matters</a></li><li class data-astro-cid-xvrfupwn><a href="law-of-demeter.html#the-only-one-dot-rule" class="toc-link block py-1.5 leading-snug transition-all duration-150 no-underline pl-3" style="color: hsl(var(--muted-foreground));" data-toc-slug="the-only-one-dot-rule" data-astro-cid-xvrfupwn>The “Only One Dot” Rule</a></li><li class data-astro-cid-xvrfupwn><a href="law-of-demeter.html#formal-definition" class="toc-link block py-1.5 leading-snug transition-all duration-150 no-underline pl-3" style="color: hsl(var(--muted-foreground));" data-toc-slug="formal-definition" data-astro-cid-xvrfupwn>Formal Definition</a></li><li class data-astro-cid-xvrfupwn><a href="law-of-demeter.html#visual-guide" class="toc-link block py-1.5 leading-snug transition-all duration-150 no-underline pl-3" style="color: hsl(var(--muted-foreground));" data-toc-slug="visual-guide" data-astro-cid-xvrfupwn>Visual Guide</a></li><li class="ml-0" data-astro-cid-xvrfupwn><a href="law-of-demeter.html#law-of-demeter-violation-vs-compliance" class="toc-link block py-1.5 leading-snug transition-all duration-150 no-underline pl-5 text-[12px]" style="color: hsl(var(--muted-foreground));" data-toc-slug="law-of-demeter-violation-vs-compliance" data-astro-cid-xvrfupwn>Law of Demeter Violation vs. Compliance</a></li><li class="ml-0" data-astro-cid-xvrfupwn><a href="law-of-demeter.html#allowed-method-calls-under-law-of-demeter" class="toc-link block py-1.5 leading-snug transition-all duration-150 no-underline pl-5 text-[12px]" style="color: hsl(var(--muted-foreground));" data-toc-slug="allowed-method-calls-under-law-of-demeter" data-astro-cid-xvrfupwn>Allowed Method Calls Under Law of Demeter</a></li><li class data-astro-cid-xvrfupwn><a href="law-of-demeter.html#examples" class="toc-link block py-1.5 leading-snug transition-all duration-150 no-underline pl-3" style="color: hsl(var(--muted-foreground));" data-toc-slug="examples" data-astro-cid-xvrfupwn>Examples</a></li><li class data-astro-cid-xvrfupwn><a href="law-of-demeter.html#example-1-violation-and-fix---customer-payment" class="toc-link block py-1.5 leading-snug transition-all duration-150 no-underline pl-3" style="color: hsl(var(--muted-foreground));" data-toc-slug="example-1-violation-and-fix---customer-payment" data-astro-cid-xvrfupwn>Example 1: Violation and Fix - Customer Payment</a></li><li class="ml-0" data-astro-cid-xvrfupwn><a href="law-of-demeter.html#violating-the-law-of-demeter" class="toc-link block py-1.5 leading-snug transition-all duration-150 no-underline pl-5 text-[12px]" style="color: hsl(var(--muted-foreground));" data-toc-slug="violating-the-law-of-demeter" data-astro-cid-xvrfupwn>Violating the Law of Demeter</a></li><li class="ml-0" data-astro-cid-xvrfupwn><a href="law-of-demeter.html#following-the-law-of-demeter" class="toc-link block py-1.5 leading-snug transition-all duration-150 no-underline pl-5 text-[12px]" style="color: hsl(var(--muted-foreground));" data-toc-slug="following-the-law-of-demeter" data-astro-cid-xvrfupwn>Following the Law of Demeter</a></li><li class data-astro-cid-xvrfupwn><a href="law-of-demeter.html#example-2-document-formatting---avoiding-deep-navigation" class="toc-link block py-1.5 leading-snug transition-all duration-150 no-underline pl-3" style="color: hsl(var(--muted-foreground));" data-toc-slug="example-2-document-formatting---avoiding-deep-navigation" data-astro-cid-xvrfupwn>Example 2: Document Formatting - Avoiding Deep Navigation</a></li><li class="ml-0" data-astro-cid-xvrfupwn><a href="law-of-demeter.html#violating-the-law-of-demeter-1" class="toc-link block py-1.5 leading-snug transition-all duration-150 no-underline pl-5 text-[12px]" style="color: hsl(var(--muted-foreground));" data-toc-slug="violating-the-law-of-demeter-1" data-astro-cid-xvrfupwn>Violating the Law of Demeter</a></li><li class="ml-0" data-astro-cid-xvrfupwn><a href="law-of-demeter.html#following-the-law-of-demeter-1" class="toc-link block py-1.5 leading-snug transition-all duration-150 no-underline pl-5 text-[12px]" style="color: hsl(var(--muted-foreground));" data-toc-slug="following-the-law-of-demeter-1" data-astro-cid-xvrfupwn>Following the Law of Demeter</a></li><li class data-astro-cid-xvrfupwn><a href="law-of-demeter.html#common-mistakes" class="toc-link block py-1.5 leading-snug transition-all duration-150 no-underline pl-3" style="color: hsl(var(--muted-foreground));" data-toc-slug="common-mistakes" data-astro-cid-xvrfupwn>Common Mistakes</a></li><li class data-astro-cid-xvrfupwn><a href="law-of-demeter.html#1-confusing-lod-with-never-use-getters" class="toc-link block py-1.5 leading-snug transition-all duration-150 no-underline pl-3" style="color: hsl(var(--muted-foreground));" data-toc-slug="1-confusing-lod-with-never-use-getters" data-astro-cid-xvrfupwn>1. Confusing LoD with “Never Use Getters”</a></li><li class data-astro-cid-xvrfupwn><a href="law-of-demeter.html#2-violating-lod-with-data-structures" class="toc-link block py-1.5 leading-snug transition-all duration-150 no-underline pl-3" style="color: hsl(var(--muted-foreground));" data-toc-slug="2-violating-lod-with-data-structures" data-astro-cid-xvrfupwn>2. Violating LoD with Data Structures</a></li><li class data-astro-cid-xvrfupwn><a href="law-of-demeter.html#3-over-engineering-with-wrapper-methods" class="toc-link block py-1.5 leading-snug transition-all duration-150 no-underline pl-3" style="color: hsl(var(--muted-foreground));" data-toc-slug="3-over-engineering-with-wrapper-methods" data-astro-cid-xvrfupwn>3. Over-Engineering with Wrapper Methods</a></li><li class data-astro-cid-xvrfupwn><a href="law-of-demeter.html#4-ignoring-lod-for-fluent-interfaces" class="toc-link block py-1.5 leading-snug transition-all duration-150 no-underline pl-3" style="color: hsl(var(--muted-foreground));" data-toc-slug="4-ignoring-lod-for-fluent-interfaces" data-astro-cid-xvrfupwn>4. Ignoring LoD for Fluent Interfaces</a></li><li class data-astro-cid-xvrfupwn><a href="law-of-demeter.html#5-applying-lod-too-strictly-to-domain-logic" class="toc-link block py-1.5 leading-snug transition-all duration-150 no-underline pl-3" style="color: hsl(var(--muted-foreground));" data-toc-slug="5-applying-lod-too-strictly-to-domain-logic" data-astro-cid-xvrfupwn>5. Applying LoD Too Strictly to Domain Logic</a></li><li class data-astro-cid-xvrfupwn><a href="law-of-demeter.html#interview-tips" class="toc-link block py-1.5 leading-snug transition-all duration-150 no-underline pl-3" style="color: hsl(var(--muted-foreground));" data-toc-slug="interview-tips" data-astro-cid-xvrfupwn>Interview Tips</a></li><li class data-astro-cid-xvrfupwn><a href="law-of-demeter.html#how-interviewers-test-law-of-demeter" class="toc-link block py-1.5 leading-snug transition-all duration-150 no-underline pl-3" style="color: hsl(var(--muted-foreground));" data-toc-slug="how-interviewers-test-law-of-demeter" data-astro-cid-xvrfupwn>How Interviewers Test Law of Demeter</a></li><li class data-astro-cid-xvrfupwn><a href="law-of-demeter.html#key-points-to-mention" class="toc-link block py-1.5 leading-snug transition-all duration-150 no-underline pl-3" style="color: hsl(var(--muted-foreground));" data-toc-slug="key-points-to-mention" data-astro-cid-xvrfupwn>Key Points to Mention</a></li><li class data-astro-cid-xvrfupwn><a href="law-of-demeter.html#common-interview-scenario" class="toc-link block py-1.5 leading-snug transition-all duration-150 no-underline pl-3" style="color: hsl(var(--muted-foreground));" data-toc-slug="common-interview-scenario" data-astro-cid-xvrfupwn>Common Interview Scenario</a></li><li class data-astro-cid-xvrfupwn><a href="law-of-demeter.html#red-flags-to-avoid" class="toc-link block py-1.5 leading-snug transition-all duration-150 no-underline pl-3" style="color: hsl(var(--muted-foreground));" data-toc-slug="red-flags-to-avoid" data-astro-cid-xvrfupwn>Red Flags to Avoid</a></li><li class data-astro-cid-xvrfupwn><a href="law-of-demeter.html#bonus-points" class="toc-link block py-1.5 leading-snug transition-all duration-150 no-underline pl-3" style="color: hsl(var(--muted-foreground));" data-toc-slug="bonus-points" data-astro-cid-xvrfupwn>Bonus Points</a></li><li class data-astro-cid-xvrfupwn><a href="law-of-demeter.html#key-takeaways" class="toc-link block py-1.5 leading-snug transition-all duration-150 no-underline pl-3" style="color: hsl(var(--muted-foreground));" data-toc-slug="key-takeaways" data-astro-cid-xvrfupwn>Key Takeaways</a></li></ul></nav></div></aside><script>
+  // AI Tutor panel toggle
+  (function initAiTutorPanel() {
+    var tutorToggle = document.getElementById('ai-tutor-toggle');
+    var panel = document.getElementById('ai-tutor-panel');
+    var link = document.getElementById('ai-tutor-link');
+    var resumeLink = document.getElementById('ai-tutor-resume-link');
+    if (!tutorToggle || !panel || !link) return;
+
+    // Toggle panel visibility on AI Tutor button click
+    tutorToggle.addEventListener('click', function() {
+      var isHidden = panel.classList.contains('hidden');
+      panel.classList.toggle('hidden');
+      // Update button style when panel is open
+      if (isHidden) {
+        tutorToggle.classList.add('ring-2', 'ring-layrs-primary/30');
+      } else {
+        tutorToggle.classList.remove('ring-2', 'ring-layrs-primary/30');
+      }
+    });
+
+    // Check for paused session via Supabase (if user is logged in on the main app)
+    (function checkPausedSession() {
+      if (!resumeLink) return;
+
+      var supabaseUrl = 'https://tcdieywqoophloivzszp.supabase.co';
+      var anonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRjZGlleXdxb29waGxvaXZ6c3pwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDY3NDMzMzksImV4cCI6MjA2MjMxOTMzOX0.Ypel9zPDOVJVBiEZFT-__cTZqgQL2-prOxiUXjieihM';
+
+      try {
+        var keys = Object.keys(localStorage);
+        var sbKey = keys.find(function(k) { return k.startsWith('sb-') && k.endsWith('-auth-token'); });
+        if (!sbKey) return;
+
+        var raw = localStorage.getItem(sbKey);
+        if (!raw) return;
+        var stored = JSON.parse(raw);
+
+        var refreshToken = stored.refresh_token || (stored.current_session && stored.current_session.refresh_token);
+        var user = stored.user || (stored.current_session && stored.current_session.user);
+        var userId = user && user.id;
+        if (!refreshToken || !userId) return;
+
+        var conceptMatch = link.getAttribute('href').match(/[?&]concept=([^&]+)/);
+        var conceptSlug = conceptMatch ? decodeURIComponent(conceptMatch[1]) : '';
+        if (!conceptSlug) return;
+
+        // Refresh the token first, then query
+        fetch(supabaseUrl + '/auth/v1/token?grant_type=refresh_token', {
+          method: 'POST',
+          headers: {
+            'apikey': anonKey,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ refresh_token: refreshToken })
+        })
+        .then(function(res) { return res.json(); })
+        .then(function(authData) {
+          if (!authData || !authData.access_token) return;
+
+          // Update localStorage with fresh tokens so future loads are faster
+          stored.access_token = authData.access_token;
+          stored.refresh_token = authData.refresh_token;
+          if (stored.current_session) {
+            stored.current_session.access_token = authData.access_token;
+            stored.current_session.refresh_token = authData.refresh_token;
+          }
+          localStorage.setItem(sbKey, JSON.stringify(stored));
+
+          // Now query for paused sessions with the fresh token
+          return fetch(supabaseUrl + '/rest/v1/interview_sessions?select=id,metadata,paused_at&user_id=eq.' + userId + '&skill_type=eq.concepts_tutor&status=eq.paused&pause_checkpoint=not.is.null&order=paused_at.desc&limit=10', {
+            headers: {
+              'apikey': anonKey,
+              'Authorization': 'Bearer ' + authData.access_token,
+            }
+          });
+        })
+        .then(function(res) { return res && res.json(); })
+        .then(function(data) {
+          if (!Array.isArray(data)) return;
+          console.log('[AI Tutor] Looking for conceptId:', conceptSlug, 'in', data.length, 'paused sessions');
+          console.log('[AI Tutor] Available conceptIds:', data.map(function(s) { return s.metadata && s.metadata.conceptId; }));
+          var match = data.find(function(s) {
+            return s.metadata && s.metadata.conceptId === conceptSlug;
+          });
+          if (match) {
+            var currentHref = resumeLink.getAttribute('href').replace(/&resumeSessionId=[^&]+/, '');
+            resumeLink.setAttribute('href', currentHref + '&resumeSessionId=' + match.id);
+            resumeLink.classList.remove('hidden');
+            console.log('[AI Tutor] Resume link set to:', resumeLink.getAttribute('href'));
+          } else {
+            console.log('[AI Tutor] No match for concept:', conceptSlug);
+          }
+        })
+        .catch(function() { /* silently fail */ });
+      } catch(e) { /* silently fail */ }
+    })();
+  })();
+</script><script>
+  // Active section highlighting via IntersectionObserver
+  (function initTocHighlight() {
+    var tocLinks = document.querySelectorAll('.toc-link[data-toc-slug]');
+    if (tocLinks.length === 0) return;
+
+    var headingElements = [];
+    tocLinks.forEach(function(link) {
+      var slug = link.getAttribute('data-toc-slug');
+      var el = document.getElementById(slug);
+      if (el) headingElements.push({ el: el, link: link });
+    });
+
+    if (headingElements.length === 0) return;
+
+    var currentActive = null;
+
+    function setActive(link) {
+      if (currentActive === link) return;
+      if (currentActive) currentActive.classList.remove('active');
+      link.classList.add('active');
+      currentActive = link;
+    }
+
+    var observer = new IntersectionObserver(function(entries) {
+      // Find the topmost visible heading
+      var visible = [];
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          visible.push(entry);
+        }
+      });
+
+      if (visible.length > 0) {
+        // Sort by position in document
+        visible.sort(function(a, b) {
+          return a.target.getBoundingClientRect().top - b.target.getBoundingClientRect().top;
+        });
+        var slug = visible[0].target.id;
+        tocLinks.forEach(function(link) {
+          if (link.getAttribute('data-toc-slug') === slug) {
+            setActive(link);
+          }
+        });
+      }
+    }, {
+      rootMargin: '-80px 0px -70% 0px',
+      threshold: 0
+    });
+
+    headingElements.forEach(function(item) {
+      observer.observe(item.el);
+    });
+
+    // Also handle scroll to set active on the closest heading above viewport
+    var rafId = null;
+    window.addEventListener('scroll', function() {
+      if (rafId) return;
+      rafId = requestAnimationFrame(function() {
+        rafId = null;
+        var scrollY = window.scrollY || document.documentElement.scrollTop;
+        var best = null;
+        headingElements.forEach(function(item) {
+          var top = item.el.getBoundingClientRect().top + scrollY - 100;
+          if (top <= scrollY + 100) {
+            best = item;
+          }
+        });
+        if (best) setActive(best.link);
+      });
+    });
+  })();
+</script> </div> </div>  </div> </div> </div> <!-- Mobile menu toggle script --> <script>
+      (function() {
+        var toggle = document.getElementById('menu-toggle');
+        var overlay = document.getElementById('mobile-sidebar-overlay');
+        var backdrop = document.getElementById('mobile-sidebar-backdrop');
+
+        if (toggle && overlay) {
+          toggle.addEventListener('click', function() {
+            overlay.classList.remove('hidden');
+            overlay.classList.remove('closing');
+            document.body.style.overflow = 'hidden';
+            // Show close button, hide collapse button on mobile sidebar
+            var mobileSidebar = overlay.querySelector('#course-sidebar');
+            if (mobileSidebar) {
+              var mobileOnlyBtns = mobileSidebar.querySelectorAll('.sidebar-mobile-only');
+              var desktopOnlyBtns = mobileSidebar.querySelectorAll('.sidebar-desktop-only');
+              mobileOnlyBtns.forEach(function(b) { b.style.display = 'flex'; });
+              desktopOnlyBtns.forEach(function(b) { b.style.display = 'none'; });
+            }
+          });
+        }
+        if (backdrop && overlay) {
+          backdrop.addEventListener('click', function() {
+            if (window.__closeMobileDrawer) {
+              window.__closeMobileDrawer();
+            } else {
+              overlay.classList.add('hidden');
+              document.body.style.overflow = '';
+            }
+          });
+        }
+      })();
+    </script> <!-- Mermaid client-side rendering (always light theme for consistent contrast) --> <script>
+      (async function() {
+        const pres = document.querySelectorAll('pre[data-language="mermaid"]');
+        if (pres.length === 0) return;
+
+        var themeVars = {
+          primaryColor: '#DBEAFE',
+          primaryTextColor: '#1e3a5f',
+          primaryBorderColor: '#3B82F6',
+          lineColor: '#6B7280',
+          secondaryColor: '#F3F4F6',
+          tertiaryColor: '#EFF6FF',
+          background: '#FFFFFF',
+          mainBkg: '#DBEAFE',
+          nodeBorder: '#3B82F6',
+          clusterBkg: '#F9FAFB',
+          clusterBorder: '#D1D5DB',
+          titleColor: '#111827',
+          edgeLabelBackground: '#FFFFFF',
+          textColor: '#111827',
+          noteTextColor: '#374151',
+          noteBkgColor: '#FEF3C7',
+          noteBorderColor: '#F59E0B',
+        };
+
+        const { default: mermaid } = await import('https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs');
+        mermaid.initialize({
+          startOnLoad: false,
+          theme: 'default',
+          themeVariables: themeVars,
+          fontFamily: 'Inter, system-ui, sans-serif',
+          fontSize: 14,
+        });
+
+        let id = 0;
+        for (const pre of pres) {
+          const code = pre.textContent || '';
+          const wrapper = document.createElement('div');
+          wrapper.className = 'mermaid-wrapper';
+          try {
+            const { svg } = await mermaid.render('mermaid-' + (id++), code);
+            wrapper.innerHTML = svg;
+            // Add expand hint badge
+            var hint = document.createElement('span');
+            hint.className = 'mermaid-expand-hint';
+            hint.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M9 21H3v-6"/><path d="M21 3l-7 7"/><path d="M3 21l7-7"/></svg>Expand';
+            wrapper.appendChild(hint);
+          } catch (e) {
+            wrapper.innerHTML = '<pre style="color:#EF4444;font-size:0.875rem;">Diagram rendering failed</pre>';
+          }
+          pre.replaceWith(wrapper);
+        }
+
+        // Click-to-expand handler
+        document.addEventListener('click', function(e) {
+          var wrapper = e.target.closest('.mermaid-wrapper');
+          if (!wrapper || wrapper.querySelector('pre')) return; // skip failed renders
+          var svgEl = wrapper.querySelector('svg');
+          if (!svgEl) return;
+
+          var overlay = document.createElement('div');
+          overlay.className = 'mermaid-overlay';
+
+          var content = document.createElement('div');
+          content.className = 'mermaid-overlay-content';
+
+          var closeBtn = document.createElement('button');
+          closeBtn.className = 'mermaid-overlay-close';
+          closeBtn.innerHTML = '&times;';
+          closeBtn.setAttribute('aria-label', 'Close diagram');
+
+          // Clone the SVG at full natural size using viewBox dimensions
+          var svgClone = svgEl.cloneNode(true);
+          var vb = svgEl.getAttribute('viewBox');
+          if (vb) {
+            var vbParts = vb.split(' ');
+            var vbW = parseFloat(vbParts[2]);
+            var vbH = parseFloat(vbParts[3]);
+            svgClone.removeAttribute('width');
+            svgClone.removeAttribute('height');
+            svgClone.style.width = vbW + 'px';
+            svgClone.style.height = vbH + 'px';
+            svgClone.style.maxWidth = 'none';
+          }
+
+          content.appendChild(svgClone);
+          overlay.appendChild(content);
+          overlay.appendChild(closeBtn);
+          document.body.appendChild(overlay);
+          document.body.style.overflow = 'hidden';
+
+          function closeOverlay() {
+            overlay.classList.add('closing');
+            setTimeout(function() {
+              overlay.remove();
+              document.body.style.overflow = '';
+            }, 200);
+          }
+
+          closeBtn.addEventListener('click', function(ev) {
+            ev.stopPropagation();
+            closeOverlay();
+          });
+          overlay.addEventListener('click', function(ev) {
+            if (ev.target === overlay) closeOverlay();
+          });
+          document.addEventListener('keydown', function handler(ev) {
+            if (ev.key === 'Escape') {
+              closeOverlay();
+              document.removeEventListener('keydown', handler);
+            }
+          });
+        });
+      })();
+    </script> </body> </html>

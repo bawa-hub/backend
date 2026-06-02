@@ -1,0 +1,49 @@
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Twitterbot
+Allow: /
+
+User-agent: facebookexternalhit
+Allow: /
+
+# AI Crawlers
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://layrs.me/sitemap.xml
+Sitemap: https://layrs.me/course/sitemap-index.xml
+
+# LLM Context Files
+# AI crawlers can access these files for context about the site
+# llms.txt: https://layrs.me/llms.txt
+# llms-full.txt: https://layrs.me/llms-full.txt
+
+# Disallow admin or sensitive areas (if any)
+# Disallow: /admin/
+# Disallow: /api/
+
+
+

@@ -1,0 +1,1328 @@
+<!DOCTYPE html><html lang="en"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Strategy Pattern: Swap Algorithms at Runtime | Layrs</title><meta name="description" content="Define family of interchangeable algorithms"><meta name="keywords" content="strategy design pattern java, strategy pattern example, strategy vs template method pattern, behavioral design patterns interview, strategy pattern python"><link rel="canonical" href="strategy/index.html"><meta name="robots" content="index, follow"><!-- Favicon --><link rel="icon" type="image/svg+xml" href="../../../favicon.svg.html"><!-- Fonts --><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@600;700&display=swap" rel="stylesheet"><!-- Open Graph --><meta property="og:type" content="article"><meta property="og:title" content="Strategy Pattern: Swap Algorithms at Runtime | Layrs"><meta property="og:description" content="Define family of interchangeable algorithms"><meta property="og:url" content="https://layrs.me/course/lld/04-design-patterns/strategy/"><meta property="og:image" content="https://layrs.me/og-course.png"><meta property="og:site_name" content="Layrs"><!-- Twitter Card --><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Strategy Pattern: Swap Algorithms at Runtime | Layrs"><meta name="twitter:description" content="Define family of interchangeable algorithms"><meta name="twitter:image" content="https://layrs.me/og-course.png"><!-- JSON-LD LearningResource --><script type="application/ld+json">{"@context":"https://schema.org","@type":"LearningResource","name":"Strategy Pattern: Swap Algorithms at Runtime","description":"Define family of interchangeable algorithms","url":"https://layrs.me/course/lld/04-design-patterns/strategy/","inLanguage":"en","provider":{"@type":"Organization","name":"Layrs","url":"https://layrs.me"}}</script><!-- JSON-LD BreadcrumbList --><script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Course","item":"https://layrs.me/course/"},{"@type":"ListItem","position":2,"name":"LLD","item":"https://layrs.me/course/lld/"},{"@type":"ListItem","position":3,"name":"Design Patterns","item":"https://layrs.me/course/lld/04-design-patterns/"},{"@type":"ListItem","position":4,"name":"Strategy Pattern: Swap Algorithms at Runtime","item":"https://layrs.me/course/lld/04-design-patterns/strategy/"}]}</script><!-- Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-B4C8VH12BN"></script><script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-B4C8VH12BN');
+</script><link rel="stylesheet" href="../../_astro/_topic_.CHm0_rTz.css">
+<link rel="stylesheet" href="../../_astro/_topic_.HS6iB5yD.css">
+<style>.toc-link[data-astro-cid-xvrfupwn]:hover{color:var(--sidebar-accent)!important}.toc-link[data-astro-cid-xvrfupwn].active{color:var(--sidebar-accent)!important;font-weight:500;border-left:2px solid var(--sidebar-accent);margin-left:-2px;background:linear-gradient(to right,rgba(59,130,246,.06),transparent)}.prev-next-nav[data-astro-cid-fxft7bm5]{display:grid;grid-template-columns:1fr;gap:12px;margin-top:40px;padding-top:0}@media(min-width:640px){.prev-next-nav[data-astro-cid-fxft7bm5]{grid-template-columns:1fr 1fr}}.prev-next-card[data-astro-cid-fxft7bm5]{display:flex;align-items:center;gap:12px;padding:16px;border-radius:12px;border:1px solid hsl(var(--border));background:hsl(var(--card));text-decoration:none;transition:all .2s ease}.prev-next-card[data-astro-cid-fxft7bm5]:hover{border-color:#3b82f666;box-shadow:0 2px 8px #3b82f614}.prev-next-card-right[data-astro-cid-fxft7bm5]{justify-content:flex-end;text-align:right}.prev-next-arrow[data-astro-cid-fxft7bm5]{color:hsl(var(--muted-foreground))}.prev-next-label[data-astro-cid-fxft7bm5]{font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:hsl(var(--muted-foreground))}.prev-next-title[data-astro-cid-fxft7bm5]{font-size:.875rem;font-weight:500;color:hsl(var(--foreground));overflow:hidden;text-overflow:ellipsis;white-space:nowrap;width:100%}.course-prose>hr:last-child{display:none}
+</style></head> <body> <!-- Theme + sidebar init: apply before paint to avoid flash --> <script>
+      (function() {
+        var theme = localStorage.getItem('theme') || 'light';
+        if (theme === 'dark') {
+          document.documentElement.classList.add('dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+        }
+        // Pre-apply sidebar collapsed state
+        if (localStorage.getItem('sidebar-collapsed') === 'true') {
+          document.documentElement.classList.add('sidebar-is-collapsed');
+        }
+      })();
+    </script> <div class="flex h-screen overflow-hidden"> <!-- Desktop sidebar (hidden below lg) --> <div class="hidden lg:flex flex-shrink-0"> <aside id="course-sidebar" class="sidebar h-screen flex flex-col" role="navigation" aria-label="Course navigation" style="background-color: var(--sidebar-bg); border-right: 1px solid var(--sidebar-border);" data-astro-cid-6munbmg7> <!-- Logo + Collapse button (desktop) / Close button (mobile) --> <div class="sidebar-logo-section" style="border-bottom: 1px solid var(--sidebar-border);" data-astro-cid-6munbmg7> <a href="https://layrs.me/" class="sidebar-logo-link" title="Layrs" data-astro-cid-6munbmg7> <div class="sidebar-icon-box" data-astro-cid-6munbmg7> <img src="../../Layrs.jpeg" alt="Layrs Logo" class="w-full h-full object-cover" onerror="this.style.display='none'" data-astro-cid-6munbmg7> </div> <span class="sidebar-label text-lg font-semibold" style="color: var(--sidebar-text);" data-astro-cid-6munbmg7>Layrs</span> </a> <!-- Mobile close button --> <button id="sidebar-close-btn" class="sidebar-close-btn sidebar-mobile-only" title="Close menu" aria-label="Close menu" style="color: var(--sidebar-text-secondary);" data-astro-cid-6munbmg7> <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><path d="M18 6 6 18" data-astro-cid-6munbmg7></path><path d="m6 6 12 12" data-astro-cid-6munbmg7></path></svg> </button> </div> <!-- Navigation --> <nav class="flex-1 overflow-y-auto py-3" id="sidebar-nav-area" data-astro-cid-6munbmg7> <!-- Back to Dashboard - always visible, icon-only when collapsed --> <a href="https://layrs.me/dashboard" class="nav-item sidebar-nav-link" style="color: var(--sidebar-text);" title="Back to Dashboard" data-astro-cid-6munbmg7> <span class="sidebar-nav-icon" style="color: var(--sidebar-text-secondary);" data-astro-cid-6munbmg7> <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><path d="m12 19-7-7 7-7" data-astro-cid-6munbmg7></path><path d="M19 12H5" data-astro-cid-6munbmg7></path></svg> </span> <span class="sidebar-label" data-astro-cid-6munbmg7>Back to Dashboard</span> </a> <!-- Divider --> <div class="sidebar-divider" style="border-top: 1px solid var(--sidebar-border);" data-astro-cid-6munbmg7></div> <!-- Course switcher --> <a href="../../hld.html" class="nav-item sidebar-child-link" style="color: var(--sidebar-text); background-color: transparent;" title="HLD Course" data-astro-cid-6munbmg7> <span class="sidebar-nav-icon" style="color: var(--sidebar-text-secondary);" data-astro-cid-6munbmg7> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" data-astro-cid-6munbmg7></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" data-astro-cid-6munbmg7></path></svg> </span> <span class="sidebar-label flex-1" data-astro-cid-6munbmg7>HLD Course</span> </a> <a href="../../lld.html" class="nav-item sidebar-child-link nav-item-active" style="color: var(--sidebar-accent); background-color: var(--sidebar-accent-bg);" title="LLD Course" data-astro-cid-6munbmg7> <span class="sidebar-nav-icon" style="color: var(--sidebar-text-secondary);" data-astro-cid-6munbmg7> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><path d="m18 16 4-4-4-4" data-astro-cid-6munbmg7></path><path d="m6 8-4 4 4 4" data-astro-cid-6munbmg7></path><path d="m14.5 4-5 16" data-astro-cid-6munbmg7></path></svg> </span> <span class="sidebar-label flex-1" data-astro-cid-6munbmg7>LLD Course</span> <span class="sidebar-label text-[10px] font-semibold rounded-full px-2 py-0.5" style="background-color: var(--sidebar-accent-bg); color: var(--sidebar-accent);" data-astro-cid-6munbmg7>
+New
+</span> </a>   <div class="sidebar-divider sidebar-show-expanded" style="border-top: 1px solid var(--sidebar-border);" data-astro-cid-6munbmg7></div> <div class="sidebar-modules-section sidebar-show-expanded" data-astro-cid-6munbmg7> <div class="sidebar-modules-label" style="color: var(--sidebar-text-secondary);" data-astro-cid-6munbmg7>
+Modules
+</div> <div class="module-item" data-module-id="01-oop-fundamentals" data-astro-cid-6munbmg7> <button class="module-header" role="button" tabindex="0" aria-expanded="false" aria-controls="module-topics-01-oop-fundamentals" data-module-id="01-oop-fundamentals" data-astro-cid-6munbmg7> <span class="module-chevron" data-astro-cid-6munbmg7> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><path d="m9 18 6-6-6-6" data-astro-cid-6munbmg7></path></svg> </span> <span class="module-number" data-astro-cid-6munbmg7> 1 </span> <span class="module-name" style="color: var(--sidebar-text);" data-astro-cid-6munbmg7> OOP Fundamentals </span> <span class="module-count" style="color: var(--sidebar-text-secondary);" data-astro-cid-6munbmg7> 9 </span> </button> <div id="module-topics-01-oop-fundamentals" class="module-topics" role="region" aria-label="OOP Fundamentals topics" data-astro-cid-6munbmg7> <a href="../01-oop-fundamentals/classes-and-objects.html" class="topic-link" title="Classes and Objects in OOP Explained" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Classes and Objects in OOP Explained</span> </a><a href="../01-oop-fundamentals/enums.html" class="topic-link" title="Enums in OOP: Use Cases &#38; Best Practices" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Enums in OOP: Use Cases &amp; Best Practices</span> </a><a href="../01-oop-fundamentals/interfaces.html" class="topic-link" title="Interfaces in OOP: When &#38; How to Use Them" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Interfaces in OOP: When &amp; How to Use Them</span> </a><a href="../01-oop-fundamentals/encapsulation.html" class="topic-link" title="Encapsulation in OOP: Definition &#38; Examples" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Encapsulation in OOP: Definition &amp; Examples</span> </a><a href="../01-oop-fundamentals/abstraction.html" class="topic-link" title="Abstraction in OOP: Concepts &#38; Interview Guide" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Abstraction in OOP: Concepts &amp; Interview Guide</span> </a><a href="../01-oop-fundamentals/inheritance.html" class="topic-link" title="Inheritance in OOP: Types &#38; Interview Guide" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Inheritance in OOP: Types &amp; Interview Guide</span> </a><a href="../01-oop-fundamentals/polymorphism.html" class="topic-link" title="Polymorphism in OOP: Runtime vs Compile-Time" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Polymorphism in OOP: Runtime vs Compile-Time</span> </a><a href="../01-oop-fundamentals/abstract-classes-vs-interfaces.html" class="topic-link" title="Abstract Classes vs Interfaces in OOP" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Abstract Classes vs Interfaces in OOP</span> </a><a href="../01-oop-fundamentals/method-overloading-vs-overriding.html" class="topic-link" title="Method Overloading vs Overriding in OOP" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Method Overloading vs Overriding in OOP</span> </a> </div> </div><div class="module-item" data-module-id="02-class-relationships" data-astro-cid-6munbmg7> <button class="module-header" role="button" tabindex="0" aria-expanded="false" aria-controls="module-topics-02-class-relationships" data-module-id="02-class-relationships" data-astro-cid-6munbmg7> <span class="module-chevron" data-astro-cid-6munbmg7> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><path d="m9 18 6-6-6-6" data-astro-cid-6munbmg7></path></svg> </span> <span class="module-number" data-astro-cid-6munbmg7> 2 </span> <span class="module-name" style="color: var(--sidebar-text);" data-astro-cid-6munbmg7> Class Relationships </span> <span class="module-count" style="color: var(--sidebar-text-secondary);" data-astro-cid-6munbmg7> 4 </span> </button> <div id="module-topics-02-class-relationships" class="module-topics" role="region" aria-label="Class Relationships topics" data-astro-cid-6munbmg7> <a href="../02-class-relationships/association.html" class="topic-link" title="Association in OOP: Object Relationships Guide" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Association in OOP: Object Relationships Guide</span> </a><a href="../02-class-relationships/aggregation.html" class="topic-link" title="Aggregation in OOP: Has-A Relationship Explained" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Aggregation in OOP: Has-A Relationship Explained</span> </a><a href="../02-class-relationships/composition.html" class="topic-link" title="Composition in OOP: Strong Has-A Relationship" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Composition in OOP: Strong Has-A Relationship</span> </a><a href="../02-class-relationships/dependency.html" class="topic-link" title="Dependency in OOP: Uses-A Relationship Guide" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Dependency in OOP: Uses-A Relationship Guide</span> </a> </div> </div><div class="module-item" data-module-id="03-design-principles" data-astro-cid-6munbmg7> <button class="module-header" role="button" tabindex="0" aria-expanded="false" aria-controls="module-topics-03-design-principles" data-module-id="03-design-principles" data-astro-cid-6munbmg7> <span class="module-chevron" data-astro-cid-6munbmg7> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><path d="m9 18 6-6-6-6" data-astro-cid-6munbmg7></path></svg> </span> <span class="module-number" data-astro-cid-6munbmg7> 3 </span> <span class="module-name" style="color: var(--sidebar-text);" data-astro-cid-6munbmg7> Design Principles </span> <span class="module-count" style="color: var(--sidebar-text-secondary);" data-astro-cid-6munbmg7> 12 </span> </button> <div id="module-topics-03-design-principles" class="module-topics" role="region" aria-label="Design Principles topics" data-astro-cid-6munbmg7> <a href="../03-design-principles/dry.html" class="topic-link" title="DRY Principle: Don't Repeat Yourself in Code" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>DRY Principle: Don&#39;t Repeat Yourself in Code</span> </a><a href="../03-design-principles/yagni.html" class="topic-link" title="YAGNI Principle: You Aren't Gonna Need It" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>YAGNI Principle: You Aren&#39;t Gonna Need It</span> </a><a href="../03-design-principles/kiss.html" class="topic-link" title="KISS Principle: Keep It Simple in Software Design" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>KISS Principle: Keep It Simple in Software Design</span> </a><a href="../03-design-principles/single-responsibility.html" class="topic-link" title="Single Responsibility Principle (SRP) Explained" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Single Responsibility Principle (SRP) Explained</span> </a><a href="../03-design-principles/open-closed.html" class="topic-link" title="Open-Closed Principle (OCP): Extend, Don't Modify" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Open-Closed Principle (OCP): Extend, Don&#39;t Modify</span> </a><a href="../03-design-principles/liskov-substitution.html" class="topic-link" title="Liskov Substitution Principle (LSP) Explained" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Liskov Substitution Principle (LSP) Explained</span> </a><a href="../03-design-principles/interface-segregation.html" class="topic-link" title="Interface Segregation Principle (ISP) Explained" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Interface Segregation Principle (ISP) Explained</span> </a><a href="../03-design-principles/dependency-inversion.html" class="topic-link" title="Dependency Inversion Principle (DIP) Explained" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Dependency Inversion Principle (DIP) Explained</span> </a><a href="../03-design-principles/composition-over-inheritance.html" class="topic-link" title="Composition over Inheritance: When and Why" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Composition over Inheritance: When and Why</span> </a><a href="../03-design-principles/law-of-demeter.html" class="topic-link" title="Law of Demeter: Principle of Least Knowledge" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Law of Demeter: Principle of Least Knowledge</span> </a><a href="../03-design-principles/cohesion-and-coupling.html" class="topic-link" title="Cohesion and Coupling in Software Design" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Cohesion and Coupling in Software Design</span> </a><a href="../03-design-principles/thread-safety-in-ood.html" class="topic-link" title="Thread Safety in OOP: Locks, Sync &#38; Patterns" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Thread Safety in OOP: Locks, Sync &amp; Patterns</span> </a> </div> </div><div class="module-item" data-module-id="04-design-patterns" data-astro-cid-6munbmg7> <button class="module-header active-module" role="button" tabindex="0" aria-expanded="true" aria-controls="module-topics-04-design-patterns" data-module-id="04-design-patterns" data-astro-cid-6munbmg7> <span class="module-chevron expanded" data-astro-cid-6munbmg7> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><path d="m9 18 6-6-6-6" data-astro-cid-6munbmg7></path></svg> </span> <span class="module-number module-number-active" data-astro-cid-6munbmg7> 4 </span> <span class="module-name" style="color: var(--sidebar-accent); font-weight: 600;" data-astro-cid-6munbmg7> Design Patterns </span> <span class="module-count" style="color: var(--sidebar-text-secondary);" data-astro-cid-6munbmg7> 23 </span> </button> <div id="module-topics-04-design-patterns" class="module-topics expanded" role="region" aria-label="Design Patterns topics" data-astro-cid-6munbmg7> <a href="singleton.html" class="topic-link" title="Singleton Pattern: Ensure One Instance" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Singleton Pattern: Ensure One Instance</span> </a><a href="factory-method.html" class="topic-link" title="Factory Method Pattern: Creational Design Guide" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Factory Method Pattern: Creational Design Guide</span> </a><a href="abstract-factory.html" class="topic-link" title="Abstract Factory Pattern: Guide &#38; Examples" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Abstract Factory Pattern: Guide &amp; Examples</span> </a><a href="builder.html" class="topic-link" title="Builder Pattern: Creational Design Guide" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Builder Pattern: Creational Design Guide</span> </a><a href="prototype.html" class="topic-link" title="Prototype Pattern: Clone Objects Efficiently" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Prototype Pattern: Clone Objects Efficiently</span> </a><a href="adapter.html" class="topic-link" title="Adapter Pattern: Structural Design Guide" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Adapter Pattern: Structural Design Guide</span> </a><a href="bridge.html" class="topic-link" title="Bridge Pattern: Decouple Abstraction from Implementation" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Bridge Pattern: Decouple Abstraction from Implementation</span> </a><a href="composite.html" class="topic-link" title="Composite Pattern: Tree Structure Design Guide" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Composite Pattern: Tree Structure Design Guide</span> </a><a href="decorator.html" class="topic-link" title="Decorator Pattern: Add Behavior Dynamically" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Decorator Pattern: Add Behavior Dynamically</span> </a><a href="facade.html" class="topic-link" title="Facade Pattern: Simplify Complex Subsystems" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Facade Pattern: Simplify Complex Subsystems</span> </a><a href="flyweight.html" class="topic-link" title="Flyweight Pattern: Memory Optimization Design" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Flyweight Pattern: Memory Optimization Design</span> </a><a href="proxy.html" class="topic-link" title="Proxy Pattern: Control Object Access in OOP" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Proxy Pattern: Control Object Access in OOP</span> </a><a href="iterator.html" class="topic-link" title="Iterator Pattern: Traverse Collections in OOP" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Iterator Pattern: Traverse Collections in OOP</span> </a><a href="observer.html" class="topic-link" title="Observer Pattern: Event-Driven Design Guide" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Observer Pattern: Event-Driven Design Guide</span> </a><a href="strategy.html" class="topic-link active" aria-current="page" title="Strategy Pattern: Swap Algorithms at Runtime" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Strategy Pattern: Swap Algorithms at Runtime</span> </a><a href="command.html" class="topic-link" title="Command Pattern: Behavioral Design Guide" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Command Pattern: Behavioral Design Guide</span> </a><a href="state.html" class="topic-link" title="State Pattern: Manage Object State Transitions" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>State Pattern: Manage Object State Transitions</span> </a><a href="template-method.html" class="topic-link" title="Template Method Pattern: Define Algorithm Skeleton" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Template Method Pattern: Define Algorithm Skeleton</span> </a><a href="visitor.html" class="topic-link" title="Visitor Pattern: Add Operations Without Changing Classes" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Visitor Pattern: Add Operations Without Changing Classes</span> </a><a href="mediator.html" class="topic-link" title="Mediator Pattern: Reduce Object Coupling" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Mediator Pattern: Reduce Object Coupling</span> </a><a href="memento.html" class="topic-link" title="Memento Pattern: Undo/Redo State Management" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Memento Pattern: Undo/Redo State Management</span> </a><a href="chain-of-responsibility.html" class="topic-link" title="Chain of Responsibility Pattern Explained" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Chain of Responsibility Pattern Explained</span> </a><a href="interpreter.html" class="topic-link" title="Interpreter Pattern: Parse Grammars in OOP" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Interpreter Pattern: Parse Grammars in OOP</span> </a> </div> </div><div class="module-item" data-module-id="05-uml-diagrams" data-astro-cid-6munbmg7> <button class="module-header" role="button" tabindex="0" aria-expanded="false" aria-controls="module-topics-05-uml-diagrams" data-module-id="05-uml-diagrams" data-astro-cid-6munbmg7> <span class="module-chevron" data-astro-cid-6munbmg7> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><path d="m9 18 6-6-6-6" data-astro-cid-6munbmg7></path></svg> </span> <span class="module-number" data-astro-cid-6munbmg7> 5 </span> <span class="module-name" style="color: var(--sidebar-text);" data-astro-cid-6munbmg7> UML Diagrams </span> <span class="module-count" style="color: var(--sidebar-text-secondary);" data-astro-cid-6munbmg7> 5 </span> </button> <div id="module-topics-05-uml-diagrams" class="module-topics" role="region" aria-label="UML Diagrams topics" data-astro-cid-6munbmg7> <a href="../05-uml-diagrams/class-diagram.html" class="topic-link" title="Class Diagrams in UML: Notation &#38; Examples" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Class Diagrams in UML: Notation &amp; Examples</span> </a><a href="../05-uml-diagrams/use-case-diagram.html" class="topic-link" title="Use Case Diagrams in UML: Guide &#38; Examples" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Use Case Diagrams in UML: Guide &amp; Examples</span> </a><a href="../05-uml-diagrams/sequence-diagram.html" class="topic-link" title="Sequence Diagrams in UML: Guide &#38; Examples" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Sequence Diagrams in UML: Guide &amp; Examples</span> </a><a href="../05-uml-diagrams/activity-diagram.html" class="topic-link" title="Activity Diagrams in UML: Guide &#38; Examples" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Activity Diagrams in UML: Guide &amp; Examples</span> </a><a href="../05-uml-diagrams/state-machine-diagram.html" class="topic-link" title="State Machine Diagrams in UML Explained" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>State Machine Diagrams in UML Explained</span> </a> </div> </div><div class="module-item" data-module-id="06-concurrency-and-threading" data-astro-cid-6munbmg7> <button class="module-header" role="button" tabindex="0" aria-expanded="false" aria-controls="module-topics-06-concurrency-and-threading" data-module-id="06-concurrency-and-threading" data-astro-cid-6munbmg7> <span class="module-chevron" data-astro-cid-6munbmg7> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><path d="m9 18 6-6-6-6" data-astro-cid-6munbmg7></path></svg> </span> <span class="module-number" data-astro-cid-6munbmg7> 6 </span> <span class="module-name" style="color: var(--sidebar-text);" data-astro-cid-6munbmg7> Concurrency &amp; Threading </span> <span class="module-count" style="color: var(--sidebar-text-secondary);" data-astro-cid-6munbmg7> 6 </span> </button> <div id="module-topics-06-concurrency-and-threading" class="module-topics" role="region" aria-label="Concurrency &#38; Threading topics" data-astro-cid-6munbmg7> <a href="../06-concurrency-and-threading/deadlock-livelock-starvation.html" class="topic-link" title="Deadlock, Livelock &#38; Starvation in Java" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Deadlock, Livelock &amp; Starvation in Java</span> </a><a href="../06-concurrency-and-threading/producer-consumer-problem.html" class="topic-link" title="Producer-Consumer Problem: Java Thread Solution" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Producer-Consumer Problem: Java Thread Solution</span> </a><a href="../06-concurrency-and-threading/synchronization.html" class="topic-link" title="Synchronization in Java: Locks &#38; Monitors Guide" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Synchronization in Java: Locks &amp; Monitors Guide</span> </a><a href="../06-concurrency-and-threading/threads-vs-processes.html" class="topic-link" title="Threads vs Processes: Key Differences Explained" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Threads vs Processes: Key Differences Explained</span> </a><a href="../06-concurrency-and-threading/thread-pools.html" class="topic-link" title="Thread Pools in Java: ExecutorService Guide" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Thread Pools in Java: ExecutorService Guide</span> </a><a href="../06-concurrency-and-threading/volatile-atomic-variables.html" class="topic-link" title="Volatile vs Atomic Variables: Java Concurrency Guide" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Volatile vs Atomic Variables: Java Concurrency Guide</span> </a> </div> </div><div class="module-item" data-module-id="07-interview-approach" data-astro-cid-6munbmg7> <button class="module-header" role="button" tabindex="0" aria-expanded="false" aria-controls="module-topics-07-interview-approach" data-module-id="07-interview-approach" data-astro-cid-6munbmg7> <span class="module-chevron" data-astro-cid-6munbmg7> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><path d="m9 18 6-6-6-6" data-astro-cid-6munbmg7></path></svg> </span> <span class="module-number" data-astro-cid-6munbmg7> 7 </span> <span class="module-name" style="color: var(--sidebar-text);" data-astro-cid-6munbmg7> Interview Approach </span> <span class="module-count" style="color: var(--sidebar-text-secondary);" data-astro-cid-6munbmg7> 0 </span> </button> <div id="module-topics-07-interview-approach" class="module-topics" role="region" aria-label="Interview Approach topics" data-astro-cid-6munbmg7>  </div> </div> </div>  </nav> <!-- Bottom section --> <div class="sidebar-bottom" style="border-top: 1px solid var(--sidebar-border);" data-astro-cid-6munbmg7> <!-- Expand/Collapse toggle - consistent position at bottom --> <button id="sidebar-expand-btn" class="sidebar-toggle-btn" title="Collapse sidebar" aria-label="Toggle sidebar" aria-expanded="true" aria-controls="course-sidebar" style="color: var(--sidebar-text-secondary); border: 1px solid var(--sidebar-border);" data-astro-cid-6munbmg7> <svg class="sidebar-toggle-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><rect width="18" height="18" x="3" y="3" rx="2" data-astro-cid-6munbmg7></rect><path d="M9 3v18" data-astro-cid-6munbmg7></path><path d="m14 9-3 3 3 3" data-astro-cid-6munbmg7></path></svg> <span class="sidebar-label" style="font-size: 0.8125rem; font-weight: 500;" data-astro-cid-6munbmg7>Collapse</span> </button> <!-- Sign In button (hidden when already authenticated) --> <a id="sidebar-signin-btn" href="https://layrs.me/dashboard?next=%2Fcourse%2Flld%2F04-design-patterns%2Fstrategy%2F" class="sidebar-signin-btn" style="color: white; background-color: var(--sidebar-accent);" title="Sign In" data-astro-cid-6munbmg7> <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" data-astro-cid-6munbmg7></path><circle cx="12" cy="7" r="4" data-astro-cid-6munbmg7></circle></svg> <span class="sidebar-label" data-astro-cid-6munbmg7>Sign In</span> </a> <!-- Dashboard button (shown when authenticated) --> <a id="sidebar-dashboard-btn" href="https://layrs.me/dashboard" class="sidebar-signin-btn" style="color: white; background-color: var(--sidebar-accent); display: none;" title="Dashboard" data-astro-cid-6munbmg7> <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><rect x="3" y="3" width="7" height="7" data-astro-cid-6munbmg7></rect><rect x="14" y="3" width="7" height="7" data-astro-cid-6munbmg7></rect><rect x="14" y="14" width="7" height="7" data-astro-cid-6munbmg7></rect><rect x="3" y="14" width="7" height="7" data-astro-cid-6munbmg7></rect></svg> <span class="sidebar-label" data-astro-cid-6munbmg7>Dashboard</span> </a> <!-- Theme toggle --> <div id="theme-toggle" class="sidebar-theme-toggle" style="background-color: rgba(0, 0, 0, 0.05);" data-astro-cid-6munbmg7> <button id="theme-light-btn" class="sidebar-theme-btn" title="Light mode" data-astro-cid-6munbmg7> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><circle cx="12" cy="12" r="4" data-astro-cid-6munbmg7></circle><path d="M12 2v2" data-astro-cid-6munbmg7></path><path d="M12 20v2" data-astro-cid-6munbmg7></path><path d="m4.93 4.93 1.41 1.41" data-astro-cid-6munbmg7></path><path d="m17.66 17.66 1.41 1.41" data-astro-cid-6munbmg7></path><path d="M2 12h2" data-astro-cid-6munbmg7></path><path d="M20 12h2" data-astro-cid-6munbmg7></path><path d="m6.34 17.66-1.41 1.41" data-astro-cid-6munbmg7></path><path d="m19.07 4.93-1.41 1.41" data-astro-cid-6munbmg7></path></svg> </button> <button id="theme-dark-btn" class="sidebar-theme-btn" title="Dark mode" data-astro-cid-6munbmg7> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" data-astro-cid-6munbmg7></path></svg> </button> </div> <!-- Social links (hidden when collapsed) --> <div class="sidebar-social-row sidebar-hide-collapsed" data-astro-cid-6munbmg7> <a href="https://lnkd.in/g9f98NBH" target="_blank" rel="noopener noreferrer" class="sidebar-social-link" style="border: 1px solid var(--sidebar-border); color: var(--sidebar-text-secondary);" aria-label="Discord" title="Discord" data-astro-cid-6munbmg7> <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z" data-astro-cid-6munbmg7></path></svg> </a> <a href="https://www.linkedin.com/company/layrs" target="_blank" rel="noopener noreferrer" class="sidebar-social-link" style="border: 1px solid var(--sidebar-border); color: var(--sidebar-text-secondary);" aria-label="LinkedIn" title="LinkedIn" data-astro-cid-6munbmg7> <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" data-astro-cid-6munbmg7></path><rect width="4" height="12" x="2" y="9" data-astro-cid-6munbmg7></rect><circle cx="4" cy="4" r="2" data-astro-cid-6munbmg7></circle></svg> </a> <a href="https://www.instagram.com/layrs.me" target="_blank" rel="noopener noreferrer" class="sidebar-social-link" style="border: 1px solid var(--sidebar-border); color: var(--sidebar-text-secondary);" aria-label="Instagram" title="Instagram" data-astro-cid-6munbmg7> <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><rect width="20" height="20" x="2" y="2" rx="5" ry="5" data-astro-cid-6munbmg7></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" data-astro-cid-6munbmg7></path><line x1="17.5" x2="17.51" y1="6.5" y2="6.5" data-astro-cid-6munbmg7></line></svg> </a> <a href="mailto:support@layrs.me" class="sidebar-social-link" style="border: 1px solid var(--sidebar-border); color: var(--sidebar-text-secondary);" aria-label="Email" title="Email" data-astro-cid-6munbmg7> <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><rect width="20" height="16" x="2" y="4" rx="2" data-astro-cid-6munbmg7></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" data-astro-cid-6munbmg7></path></svg> </a> </div> </div> </aside>  <script>
+  // Toggle Sign In vs Dashboard based on Supabase auth session in localStorage
+  (function initAuthButton() {
+    var signInBtn = document.getElementById('sidebar-signin-btn');
+    var dashboardBtn = document.getElementById('sidebar-dashboard-btn');
+    if (!signInBtn || !dashboardBtn) return;
+
+    var hasSession = false;
+    try {
+      var keys = Object.keys(localStorage);
+      for (var i = 0; i < keys.length; i++) {
+        if (keys[i].indexOf('sb-') === 0 && keys[i].indexOf('-auth-token') !== -1) {
+          var data = JSON.parse(localStorage.getItem(keys[i]) || '{}');
+          if (data && data.access_token) { hasSession = true; break; }
+        }
+      }
+    } catch (e) {}
+
+    if (hasSession) {
+      signInBtn.style.display = 'none';
+      dashboardBtn.style.display = '';
+    }
+  })();
+</script> <script>
+  // Sidebar collapse toggle + accordion modules + mobile drawer
+  (function initSidebar() {
+    if (window.__sidebarInit) return;
+    window.__sidebarInit = true;
+
+    var sidebar = document.getElementById('course-sidebar');
+    var toggleBtn = document.getElementById('sidebar-expand-btn');
+    var closeBtn = document.getElementById('sidebar-close-btn');
+    if (!sidebar) return;
+
+    // --- Collapse/Expand ---
+    var saved = localStorage.getItem('sidebar-collapsed');
+    if (saved === 'true') {
+      sidebar.classList.add('collapsed');
+      updateToggleState(true);
+    }
+
+    function updateToggleState(isCollapsed) {
+      if (!toggleBtn) return;
+      toggleBtn.setAttribute('aria-expanded', isCollapsed ? 'false' : 'true');
+      toggleBtn.title = isCollapsed ? 'Expand sidebar' : 'Collapse sidebar';
+      var label = toggleBtn.querySelector('.sidebar-label');
+      if (label) label.textContent = isCollapsed ? 'Expand' : 'Collapse';
+    }
+
+    function toggleSidebar() {
+      var isCollapsed = sidebar.classList.contains('collapsed');
+      if (isCollapsed) {
+        sidebar.classList.remove('collapsed');
+        localStorage.setItem('sidebar-collapsed', 'false');
+        updateToggleState(false);
+      } else {
+        sidebar.classList.add('collapsed');
+        localStorage.setItem('sidebar-collapsed', 'true');
+        updateToggleState(true);
+      }
+    }
+
+    if (toggleBtn) {
+      toggleBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        toggleSidebar();
+      });
+    }
+
+    // --- Mobile close button ---
+    if (closeBtn) {
+      closeBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        closeMobileDrawer();
+      });
+    }
+
+    // --- Mobile drawer helpers ---
+    function closeMobileDrawer() {
+      var overlay = document.getElementById('mobile-sidebar-overlay');
+      if (overlay) {
+        overlay.classList.add('closing');
+        setTimeout(function() {
+          overlay.classList.add('hidden');
+          overlay.classList.remove('closing');
+          document.body.style.overflow = '';
+        }, 250);
+      }
+    }
+
+    // Expose for backdrop click
+    window.__closeMobileDrawer = closeMobileDrawer;
+
+    // Escape key handler
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        var overlay = document.getElementById('mobile-sidebar-overlay');
+        if (overlay && !overlay.classList.contains('hidden')) {
+          closeMobileDrawer();
+        }
+      }
+    });
+
+    // --- Module accordion ---
+    var moduleHeaders = sidebar.querySelectorAll('.module-header');
+    moduleHeaders.forEach(function(header) {
+      header.addEventListener('click', function(e) {
+        e.preventDefault();
+        toggleModule(header);
+      });
+
+      // Keyboard support
+      header.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          toggleModule(header);
+        }
+      });
+    });
+
+    function toggleModule(header) {
+      var item = header.closest('.module-item');
+      var topics = item.querySelector('.module-topics');
+      var chevron = header.querySelector('.module-chevron');
+      var isExpanded = header.getAttribute('aria-expanded') === 'true';
+
+      // Close all other modules (accordion behavior)
+      sidebar.querySelectorAll('.module-item').forEach(function(otherItem) {
+        if (otherItem !== item) {
+          var oh = otherItem.querySelector('.module-header');
+          var ot = otherItem.querySelector('.module-topics');
+          var oc = otherItem.querySelector('.module-chevron');
+          if (oh) oh.setAttribute('aria-expanded', 'false');
+          if (ot) ot.classList.remove('expanded');
+          if (oc) oc.classList.remove('expanded');
+        }
+      });
+
+      // Toggle current
+      if (isExpanded) {
+        header.setAttribute('aria-expanded', 'false');
+        if (topics) topics.classList.remove('expanded');
+        if (chevron) chevron.classList.remove('expanded');
+      } else {
+        header.setAttribute('aria-expanded', 'true');
+        if (topics) topics.classList.add('expanded');
+        if (chevron) chevron.classList.add('expanded');
+
+        // Auto-scroll active topic into view
+        setTimeout(function() {
+          var activeLink = topics && topics.querySelector('.topic-link.active, .topic-link[aria-current="page"]');
+          if (activeLink) {
+            activeLink.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+          }
+        }, 280);
+      }
+    }
+
+    // Auto-scroll active topic on load
+    setTimeout(function() {
+      var activeLink = sidebar.querySelector('.topic-link.active, .topic-link[aria-current="page"]');
+      if (activeLink) {
+        activeLink.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+      }
+    }, 100);
+  })();
+
+  // Theme toggle (guard against duplicate listeners)
+  (function initThemeToggle() {
+    if (window.__themeToggleInit) return;
+    window.__themeToggleInit = true;
+    var lightBtn = document.getElementById('theme-light-btn');
+    var darkBtn = document.getElementById('theme-dark-btn');
+    var toggleWrap = document.getElementById('theme-toggle');
+    var root = document.documentElement;
+
+    function applyTheme(theme) {
+      if (theme === 'dark') {
+        root.classList.add('dark');
+        if (toggleWrap) toggleWrap.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
+        if (lightBtn) {
+          lightBtn.style.backgroundColor = 'transparent';
+          lightBtn.style.color = 'var(--sidebar-text-secondary)';
+          lightBtn.style.boxShadow = 'none';
+        }
+        if (darkBtn) {
+          darkBtn.style.backgroundColor = 'var(--sidebar-bg)';
+          darkBtn.style.color = 'var(--sidebar-accent)';
+          darkBtn.style.boxShadow = '0 1px 2px 0 rgba(0,0,0,0.05)';
+        }
+      } else {
+        root.classList.remove('dark');
+        if (toggleWrap) toggleWrap.style.backgroundColor = 'rgba(0, 0, 0, 0.05)';
+        if (lightBtn) {
+          lightBtn.style.backgroundColor = 'var(--sidebar-bg)';
+          lightBtn.style.color = 'var(--sidebar-accent)';
+          lightBtn.style.boxShadow = '0 1px 2px 0 rgba(0,0,0,0.05)';
+        }
+        if (darkBtn) {
+          darkBtn.style.backgroundColor = 'transparent';
+          darkBtn.style.color = 'var(--sidebar-text-secondary)';
+          darkBtn.style.boxShadow = 'none';
+        }
+      }
+    }
+
+    var saved = localStorage.getItem('theme') || 'light';
+    applyTheme(saved);
+
+    if (lightBtn) {
+      lightBtn.addEventListener('click', function() {
+        localStorage.setItem('theme', 'light');
+        applyTheme('light');
+      });
+    }
+    if (darkBtn) {
+      darkBtn.addEventListener('click', function() {
+        localStorage.setItem('theme', 'dark');
+        applyTheme('dark');
+      });
+    }
+  })();
+</script> </div> <!-- Mobile sidebar overlay (hidden by default) --> <div id="mobile-sidebar-overlay" class="mobile-overlay hidden lg:hidden"> <div class="mobile-backdrop" id="mobile-sidebar-backdrop"></div> <div class="mobile-drawer"> <aside id="course-sidebar" class="sidebar h-screen flex flex-col" role="navigation" aria-label="Course navigation" style="background-color: var(--sidebar-bg); border-right: 1px solid var(--sidebar-border);" data-astro-cid-6munbmg7> <!-- Logo + Collapse button (desktop) / Close button (mobile) --> <div class="sidebar-logo-section" style="border-bottom: 1px solid var(--sidebar-border);" data-astro-cid-6munbmg7> <a href="https://layrs.me/" class="sidebar-logo-link" title="Layrs" data-astro-cid-6munbmg7> <div class="sidebar-icon-box" data-astro-cid-6munbmg7> <img src="../../Layrs.jpeg" alt="Layrs Logo" class="w-full h-full object-cover" onerror="this.style.display='none'" data-astro-cid-6munbmg7> </div> <span class="sidebar-label text-lg font-semibold" style="color: var(--sidebar-text);" data-astro-cid-6munbmg7>Layrs</span> </a> <!-- Mobile close button --> <button id="sidebar-close-btn" class="sidebar-close-btn sidebar-mobile-only" title="Close menu" aria-label="Close menu" style="color: var(--sidebar-text-secondary);" data-astro-cid-6munbmg7> <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><path d="M18 6 6 18" data-astro-cid-6munbmg7></path><path d="m6 6 12 12" data-astro-cid-6munbmg7></path></svg> </button> </div> <!-- Navigation --> <nav class="flex-1 overflow-y-auto py-3" id="sidebar-nav-area" data-astro-cid-6munbmg7> <!-- Back to Dashboard - always visible, icon-only when collapsed --> <a href="https://layrs.me/dashboard" class="nav-item sidebar-nav-link" style="color: var(--sidebar-text);" title="Back to Dashboard" data-astro-cid-6munbmg7> <span class="sidebar-nav-icon" style="color: var(--sidebar-text-secondary);" data-astro-cid-6munbmg7> <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><path d="m12 19-7-7 7-7" data-astro-cid-6munbmg7></path><path d="M19 12H5" data-astro-cid-6munbmg7></path></svg> </span> <span class="sidebar-label" data-astro-cid-6munbmg7>Back to Dashboard</span> </a> <!-- Divider --> <div class="sidebar-divider" style="border-top: 1px solid var(--sidebar-border);" data-astro-cid-6munbmg7></div> <!-- Course switcher --> <a href="../../hld.html" class="nav-item sidebar-child-link" style="color: var(--sidebar-text); background-color: transparent;" title="HLD Course" data-astro-cid-6munbmg7> <span class="sidebar-nav-icon" style="color: var(--sidebar-text-secondary);" data-astro-cid-6munbmg7> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" data-astro-cid-6munbmg7></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" data-astro-cid-6munbmg7></path></svg> </span> <span class="sidebar-label flex-1" data-astro-cid-6munbmg7>HLD Course</span> </a> <a href="../../lld.html" class="nav-item sidebar-child-link nav-item-active" style="color: var(--sidebar-accent); background-color: var(--sidebar-accent-bg);" title="LLD Course" data-astro-cid-6munbmg7> <span class="sidebar-nav-icon" style="color: var(--sidebar-text-secondary);" data-astro-cid-6munbmg7> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><path d="m18 16 4-4-4-4" data-astro-cid-6munbmg7></path><path d="m6 8-4 4 4 4" data-astro-cid-6munbmg7></path><path d="m14.5 4-5 16" data-astro-cid-6munbmg7></path></svg> </span> <span class="sidebar-label flex-1" data-astro-cid-6munbmg7>LLD Course</span> <span class="sidebar-label text-[10px] font-semibold rounded-full px-2 py-0.5" style="background-color: var(--sidebar-accent-bg); color: var(--sidebar-accent);" data-astro-cid-6munbmg7>
+New
+</span> </a>   <div class="sidebar-divider sidebar-show-expanded" style="border-top: 1px solid var(--sidebar-border);" data-astro-cid-6munbmg7></div> <div class="sidebar-modules-section sidebar-show-expanded" data-astro-cid-6munbmg7> <div class="sidebar-modules-label" style="color: var(--sidebar-text-secondary);" data-astro-cid-6munbmg7>
+Modules
+</div> <div class="module-item" data-module-id="01-oop-fundamentals" data-astro-cid-6munbmg7> <button class="module-header" role="button" tabindex="0" aria-expanded="false" aria-controls="module-topics-01-oop-fundamentals" data-module-id="01-oop-fundamentals" data-astro-cid-6munbmg7> <span class="module-chevron" data-astro-cid-6munbmg7> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><path d="m9 18 6-6-6-6" data-astro-cid-6munbmg7></path></svg> </span> <span class="module-number" data-astro-cid-6munbmg7> 1 </span> <span class="module-name" style="color: var(--sidebar-text);" data-astro-cid-6munbmg7> OOP Fundamentals </span> <span class="module-count" style="color: var(--sidebar-text-secondary);" data-astro-cid-6munbmg7> 9 </span> </button> <div id="module-topics-01-oop-fundamentals" class="module-topics" role="region" aria-label="OOP Fundamentals topics" data-astro-cid-6munbmg7> <a href="../01-oop-fundamentals/classes-and-objects.html" class="topic-link" title="Classes and Objects in OOP Explained" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Classes and Objects in OOP Explained</span> </a><a href="../01-oop-fundamentals/enums.html" class="topic-link" title="Enums in OOP: Use Cases &#38; Best Practices" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Enums in OOP: Use Cases &amp; Best Practices</span> </a><a href="../01-oop-fundamentals/interfaces.html" class="topic-link" title="Interfaces in OOP: When &#38; How to Use Them" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Interfaces in OOP: When &amp; How to Use Them</span> </a><a href="../01-oop-fundamentals/encapsulation.html" class="topic-link" title="Encapsulation in OOP: Definition &#38; Examples" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Encapsulation in OOP: Definition &amp; Examples</span> </a><a href="../01-oop-fundamentals/abstraction.html" class="topic-link" title="Abstraction in OOP: Concepts &#38; Interview Guide" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Abstraction in OOP: Concepts &amp; Interview Guide</span> </a><a href="../01-oop-fundamentals/inheritance.html" class="topic-link" title="Inheritance in OOP: Types &#38; Interview Guide" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Inheritance in OOP: Types &amp; Interview Guide</span> </a><a href="../01-oop-fundamentals/polymorphism.html" class="topic-link" title="Polymorphism in OOP: Runtime vs Compile-Time" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Polymorphism in OOP: Runtime vs Compile-Time</span> </a><a href="../01-oop-fundamentals/abstract-classes-vs-interfaces.html" class="topic-link" title="Abstract Classes vs Interfaces in OOP" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Abstract Classes vs Interfaces in OOP</span> </a><a href="../01-oop-fundamentals/method-overloading-vs-overriding.html" class="topic-link" title="Method Overloading vs Overriding in OOP" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Method Overloading vs Overriding in OOP</span> </a> </div> </div><div class="module-item" data-module-id="02-class-relationships" data-astro-cid-6munbmg7> <button class="module-header" role="button" tabindex="0" aria-expanded="false" aria-controls="module-topics-02-class-relationships" data-module-id="02-class-relationships" data-astro-cid-6munbmg7> <span class="module-chevron" data-astro-cid-6munbmg7> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><path d="m9 18 6-6-6-6" data-astro-cid-6munbmg7></path></svg> </span> <span class="module-number" data-astro-cid-6munbmg7> 2 </span> <span class="module-name" style="color: var(--sidebar-text);" data-astro-cid-6munbmg7> Class Relationships </span> <span class="module-count" style="color: var(--sidebar-text-secondary);" data-astro-cid-6munbmg7> 4 </span> </button> <div id="module-topics-02-class-relationships" class="module-topics" role="region" aria-label="Class Relationships topics" data-astro-cid-6munbmg7> <a href="../02-class-relationships/association.html" class="topic-link" title="Association in OOP: Object Relationships Guide" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Association in OOP: Object Relationships Guide</span> </a><a href="../02-class-relationships/aggregation.html" class="topic-link" title="Aggregation in OOP: Has-A Relationship Explained" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Aggregation in OOP: Has-A Relationship Explained</span> </a><a href="../02-class-relationships/composition.html" class="topic-link" title="Composition in OOP: Strong Has-A Relationship" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Composition in OOP: Strong Has-A Relationship</span> </a><a href="../02-class-relationships/dependency.html" class="topic-link" title="Dependency in OOP: Uses-A Relationship Guide" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Dependency in OOP: Uses-A Relationship Guide</span> </a> </div> </div><div class="module-item" data-module-id="03-design-principles" data-astro-cid-6munbmg7> <button class="module-header" role="button" tabindex="0" aria-expanded="false" aria-controls="module-topics-03-design-principles" data-module-id="03-design-principles" data-astro-cid-6munbmg7> <span class="module-chevron" data-astro-cid-6munbmg7> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><path d="m9 18 6-6-6-6" data-astro-cid-6munbmg7></path></svg> </span> <span class="module-number" data-astro-cid-6munbmg7> 3 </span> <span class="module-name" style="color: var(--sidebar-text);" data-astro-cid-6munbmg7> Design Principles </span> <span class="module-count" style="color: var(--sidebar-text-secondary);" data-astro-cid-6munbmg7> 12 </span> </button> <div id="module-topics-03-design-principles" class="module-topics" role="region" aria-label="Design Principles topics" data-astro-cid-6munbmg7> <a href="../03-design-principles/dry.html" class="topic-link" title="DRY Principle: Don't Repeat Yourself in Code" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>DRY Principle: Don&#39;t Repeat Yourself in Code</span> </a><a href="../03-design-principles/yagni.html" class="topic-link" title="YAGNI Principle: You Aren't Gonna Need It" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>YAGNI Principle: You Aren&#39;t Gonna Need It</span> </a><a href="../03-design-principles/kiss.html" class="topic-link" title="KISS Principle: Keep It Simple in Software Design" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>KISS Principle: Keep It Simple in Software Design</span> </a><a href="../03-design-principles/single-responsibility.html" class="topic-link" title="Single Responsibility Principle (SRP) Explained" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Single Responsibility Principle (SRP) Explained</span> </a><a href="../03-design-principles/open-closed.html" class="topic-link" title="Open-Closed Principle (OCP): Extend, Don't Modify" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Open-Closed Principle (OCP): Extend, Don&#39;t Modify</span> </a><a href="../03-design-principles/liskov-substitution.html" class="topic-link" title="Liskov Substitution Principle (LSP) Explained" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Liskov Substitution Principle (LSP) Explained</span> </a><a href="../03-design-principles/interface-segregation.html" class="topic-link" title="Interface Segregation Principle (ISP) Explained" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Interface Segregation Principle (ISP) Explained</span> </a><a href="../03-design-principles/dependency-inversion.html" class="topic-link" title="Dependency Inversion Principle (DIP) Explained" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Dependency Inversion Principle (DIP) Explained</span> </a><a href="../03-design-principles/composition-over-inheritance.html" class="topic-link" title="Composition over Inheritance: When and Why" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Composition over Inheritance: When and Why</span> </a><a href="../03-design-principles/law-of-demeter.html" class="topic-link" title="Law of Demeter: Principle of Least Knowledge" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Law of Demeter: Principle of Least Knowledge</span> </a><a href="../03-design-principles/cohesion-and-coupling.html" class="topic-link" title="Cohesion and Coupling in Software Design" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Cohesion and Coupling in Software Design</span> </a><a href="../03-design-principles/thread-safety-in-ood.html" class="topic-link" title="Thread Safety in OOP: Locks, Sync &#38; Patterns" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Thread Safety in OOP: Locks, Sync &amp; Patterns</span> </a> </div> </div><div class="module-item" data-module-id="04-design-patterns" data-astro-cid-6munbmg7> <button class="module-header active-module" role="button" tabindex="0" aria-expanded="true" aria-controls="module-topics-04-design-patterns" data-module-id="04-design-patterns" data-astro-cid-6munbmg7> <span class="module-chevron expanded" data-astro-cid-6munbmg7> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><path d="m9 18 6-6-6-6" data-astro-cid-6munbmg7></path></svg> </span> <span class="module-number module-number-active" data-astro-cid-6munbmg7> 4 </span> <span class="module-name" style="color: var(--sidebar-accent); font-weight: 600;" data-astro-cid-6munbmg7> Design Patterns </span> <span class="module-count" style="color: var(--sidebar-text-secondary);" data-astro-cid-6munbmg7> 23 </span> </button> <div id="module-topics-04-design-patterns" class="module-topics expanded" role="region" aria-label="Design Patterns topics" data-astro-cid-6munbmg7> <a href="singleton.html" class="topic-link" title="Singleton Pattern: Ensure One Instance" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Singleton Pattern: Ensure One Instance</span> </a><a href="factory-method.html" class="topic-link" title="Factory Method Pattern: Creational Design Guide" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Factory Method Pattern: Creational Design Guide</span> </a><a href="abstract-factory.html" class="topic-link" title="Abstract Factory Pattern: Guide &#38; Examples" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Abstract Factory Pattern: Guide &amp; Examples</span> </a><a href="builder.html" class="topic-link" title="Builder Pattern: Creational Design Guide" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Builder Pattern: Creational Design Guide</span> </a><a href="prototype.html" class="topic-link" title="Prototype Pattern: Clone Objects Efficiently" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Prototype Pattern: Clone Objects Efficiently</span> </a><a href="adapter.html" class="topic-link" title="Adapter Pattern: Structural Design Guide" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Adapter Pattern: Structural Design Guide</span> </a><a href="bridge.html" class="topic-link" title="Bridge Pattern: Decouple Abstraction from Implementation" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Bridge Pattern: Decouple Abstraction from Implementation</span> </a><a href="composite.html" class="topic-link" title="Composite Pattern: Tree Structure Design Guide" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Composite Pattern: Tree Structure Design Guide</span> </a><a href="decorator.html" class="topic-link" title="Decorator Pattern: Add Behavior Dynamically" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Decorator Pattern: Add Behavior Dynamically</span> </a><a href="facade.html" class="topic-link" title="Facade Pattern: Simplify Complex Subsystems" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Facade Pattern: Simplify Complex Subsystems</span> </a><a href="flyweight.html" class="topic-link" title="Flyweight Pattern: Memory Optimization Design" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Flyweight Pattern: Memory Optimization Design</span> </a><a href="proxy.html" class="topic-link" title="Proxy Pattern: Control Object Access in OOP" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Proxy Pattern: Control Object Access in OOP</span> </a><a href="iterator.html" class="topic-link" title="Iterator Pattern: Traverse Collections in OOP" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Iterator Pattern: Traverse Collections in OOP</span> </a><a href="observer.html" class="topic-link" title="Observer Pattern: Event-Driven Design Guide" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Observer Pattern: Event-Driven Design Guide</span> </a><a href="strategy.html" class="topic-link active" aria-current="page" title="Strategy Pattern: Swap Algorithms at Runtime" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Strategy Pattern: Swap Algorithms at Runtime</span> </a><a href="command.html" class="topic-link" title="Command Pattern: Behavioral Design Guide" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Command Pattern: Behavioral Design Guide</span> </a><a href="state.html" class="topic-link" title="State Pattern: Manage Object State Transitions" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>State Pattern: Manage Object State Transitions</span> </a><a href="template-method.html" class="topic-link" title="Template Method Pattern: Define Algorithm Skeleton" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Template Method Pattern: Define Algorithm Skeleton</span> </a><a href="visitor.html" class="topic-link" title="Visitor Pattern: Add Operations Without Changing Classes" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Visitor Pattern: Add Operations Without Changing Classes</span> </a><a href="mediator.html" class="topic-link" title="Mediator Pattern: Reduce Object Coupling" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Mediator Pattern: Reduce Object Coupling</span> </a><a href="memento.html" class="topic-link" title="Memento Pattern: Undo/Redo State Management" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Memento Pattern: Undo/Redo State Management</span> </a><a href="chain-of-responsibility.html" class="topic-link" title="Chain of Responsibility Pattern Explained" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Chain of Responsibility Pattern Explained</span> </a><a href="interpreter.html" class="topic-link" title="Interpreter Pattern: Parse Grammars in OOP" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Interpreter Pattern: Parse Grammars in OOP</span> </a> </div> </div><div class="module-item" data-module-id="05-uml-diagrams" data-astro-cid-6munbmg7> <button class="module-header" role="button" tabindex="0" aria-expanded="false" aria-controls="module-topics-05-uml-diagrams" data-module-id="05-uml-diagrams" data-astro-cid-6munbmg7> <span class="module-chevron" data-astro-cid-6munbmg7> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><path d="m9 18 6-6-6-6" data-astro-cid-6munbmg7></path></svg> </span> <span class="module-number" data-astro-cid-6munbmg7> 5 </span> <span class="module-name" style="color: var(--sidebar-text);" data-astro-cid-6munbmg7> UML Diagrams </span> <span class="module-count" style="color: var(--sidebar-text-secondary);" data-astro-cid-6munbmg7> 5 </span> </button> <div id="module-topics-05-uml-diagrams" class="module-topics" role="region" aria-label="UML Diagrams topics" data-astro-cid-6munbmg7> <a href="../05-uml-diagrams/class-diagram.html" class="topic-link" title="Class Diagrams in UML: Notation &#38; Examples" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Class Diagrams in UML: Notation &amp; Examples</span> </a><a href="../05-uml-diagrams/use-case-diagram.html" class="topic-link" title="Use Case Diagrams in UML: Guide &#38; Examples" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Use Case Diagrams in UML: Guide &amp; Examples</span> </a><a href="../05-uml-diagrams/sequence-diagram.html" class="topic-link" title="Sequence Diagrams in UML: Guide &#38; Examples" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Sequence Diagrams in UML: Guide &amp; Examples</span> </a><a href="../05-uml-diagrams/activity-diagram.html" class="topic-link" title="Activity Diagrams in UML: Guide &#38; Examples" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Activity Diagrams in UML: Guide &amp; Examples</span> </a><a href="../05-uml-diagrams/state-machine-diagram.html" class="topic-link" title="State Machine Diagrams in UML Explained" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>State Machine Diagrams in UML Explained</span> </a> </div> </div><div class="module-item" data-module-id="06-concurrency-and-threading" data-astro-cid-6munbmg7> <button class="module-header" role="button" tabindex="0" aria-expanded="false" aria-controls="module-topics-06-concurrency-and-threading" data-module-id="06-concurrency-and-threading" data-astro-cid-6munbmg7> <span class="module-chevron" data-astro-cid-6munbmg7> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><path d="m9 18 6-6-6-6" data-astro-cid-6munbmg7></path></svg> </span> <span class="module-number" data-astro-cid-6munbmg7> 6 </span> <span class="module-name" style="color: var(--sidebar-text);" data-astro-cid-6munbmg7> Concurrency &amp; Threading </span> <span class="module-count" style="color: var(--sidebar-text-secondary);" data-astro-cid-6munbmg7> 6 </span> </button> <div id="module-topics-06-concurrency-and-threading" class="module-topics" role="region" aria-label="Concurrency &#38; Threading topics" data-astro-cid-6munbmg7> <a href="../06-concurrency-and-threading/deadlock-livelock-starvation.html" class="topic-link" title="Deadlock, Livelock &#38; Starvation in Java" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Deadlock, Livelock &amp; Starvation in Java</span> </a><a href="../06-concurrency-and-threading/producer-consumer-problem.html" class="topic-link" title="Producer-Consumer Problem: Java Thread Solution" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Producer-Consumer Problem: Java Thread Solution</span> </a><a href="../06-concurrency-and-threading/synchronization.html" class="topic-link" title="Synchronization in Java: Locks &#38; Monitors Guide" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Synchronization in Java: Locks &amp; Monitors Guide</span> </a><a href="../06-concurrency-and-threading/threads-vs-processes.html" class="topic-link" title="Threads vs Processes: Key Differences Explained" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Threads vs Processes: Key Differences Explained</span> </a><a href="../06-concurrency-and-threading/thread-pools.html" class="topic-link" title="Thread Pools in Java: ExecutorService Guide" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Thread Pools in Java: ExecutorService Guide</span> </a><a href="../06-concurrency-and-threading/volatile-atomic-variables.html" class="topic-link" title="Volatile vs Atomic Variables: Java Concurrency Guide" data-astro-cid-6munbmg7> <span class="topic-dot" data-astro-cid-6munbmg7></span> <span class="topic-text" data-astro-cid-6munbmg7>Volatile vs Atomic Variables: Java Concurrency Guide</span> </a> </div> </div><div class="module-item" data-module-id="07-interview-approach" data-astro-cid-6munbmg7> <button class="module-header" role="button" tabindex="0" aria-expanded="false" aria-controls="module-topics-07-interview-approach" data-module-id="07-interview-approach" data-astro-cid-6munbmg7> <span class="module-chevron" data-astro-cid-6munbmg7> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><path d="m9 18 6-6-6-6" data-astro-cid-6munbmg7></path></svg> </span> <span class="module-number" data-astro-cid-6munbmg7> 7 </span> <span class="module-name" style="color: var(--sidebar-text);" data-astro-cid-6munbmg7> Interview Approach </span> <span class="module-count" style="color: var(--sidebar-text-secondary);" data-astro-cid-6munbmg7> 0 </span> </button> <div id="module-topics-07-interview-approach" class="module-topics" role="region" aria-label="Interview Approach topics" data-astro-cid-6munbmg7>  </div> </div> </div>  </nav> <!-- Bottom section --> <div class="sidebar-bottom" style="border-top: 1px solid var(--sidebar-border);" data-astro-cid-6munbmg7> <!-- Expand/Collapse toggle - consistent position at bottom --> <button id="sidebar-expand-btn" class="sidebar-toggle-btn" title="Collapse sidebar" aria-label="Toggle sidebar" aria-expanded="true" aria-controls="course-sidebar" style="color: var(--sidebar-text-secondary); border: 1px solid var(--sidebar-border);" data-astro-cid-6munbmg7> <svg class="sidebar-toggle-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><rect width="18" height="18" x="3" y="3" rx="2" data-astro-cid-6munbmg7></rect><path d="M9 3v18" data-astro-cid-6munbmg7></path><path d="m14 9-3 3 3 3" data-astro-cid-6munbmg7></path></svg> <span class="sidebar-label" style="font-size: 0.8125rem; font-weight: 500;" data-astro-cid-6munbmg7>Collapse</span> </button> <!-- Sign In button (hidden when already authenticated) --> <a id="sidebar-signin-btn" href="https://layrs.me/dashboard?next=%2Fcourse%2Flld%2F04-design-patterns%2Fstrategy%2F" class="sidebar-signin-btn" style="color: white; background-color: var(--sidebar-accent);" title="Sign In" data-astro-cid-6munbmg7> <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" data-astro-cid-6munbmg7></path><circle cx="12" cy="7" r="4" data-astro-cid-6munbmg7></circle></svg> <span class="sidebar-label" data-astro-cid-6munbmg7>Sign In</span> </a> <!-- Dashboard button (shown when authenticated) --> <a id="sidebar-dashboard-btn" href="https://layrs.me/dashboard" class="sidebar-signin-btn" style="color: white; background-color: var(--sidebar-accent); display: none;" title="Dashboard" data-astro-cid-6munbmg7> <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><rect x="3" y="3" width="7" height="7" data-astro-cid-6munbmg7></rect><rect x="14" y="3" width="7" height="7" data-astro-cid-6munbmg7></rect><rect x="14" y="14" width="7" height="7" data-astro-cid-6munbmg7></rect><rect x="3" y="14" width="7" height="7" data-astro-cid-6munbmg7></rect></svg> <span class="sidebar-label" data-astro-cid-6munbmg7>Dashboard</span> </a> <!-- Theme toggle --> <div id="theme-toggle" class="sidebar-theme-toggle" style="background-color: rgba(0, 0, 0, 0.05);" data-astro-cid-6munbmg7> <button id="theme-light-btn" class="sidebar-theme-btn" title="Light mode" data-astro-cid-6munbmg7> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><circle cx="12" cy="12" r="4" data-astro-cid-6munbmg7></circle><path d="M12 2v2" data-astro-cid-6munbmg7></path><path d="M12 20v2" data-astro-cid-6munbmg7></path><path d="m4.93 4.93 1.41 1.41" data-astro-cid-6munbmg7></path><path d="m17.66 17.66 1.41 1.41" data-astro-cid-6munbmg7></path><path d="M2 12h2" data-astro-cid-6munbmg7></path><path d="M20 12h2" data-astro-cid-6munbmg7></path><path d="m6.34 17.66-1.41 1.41" data-astro-cid-6munbmg7></path><path d="m19.07 4.93-1.41 1.41" data-astro-cid-6munbmg7></path></svg> </button> <button id="theme-dark-btn" class="sidebar-theme-btn" title="Dark mode" data-astro-cid-6munbmg7> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" data-astro-cid-6munbmg7></path></svg> </button> </div> <!-- Social links (hidden when collapsed) --> <div class="sidebar-social-row sidebar-hide-collapsed" data-astro-cid-6munbmg7> <a href="https://lnkd.in/g9f98NBH" target="_blank" rel="noopener noreferrer" class="sidebar-social-link" style="border: 1px solid var(--sidebar-border); color: var(--sidebar-text-secondary);" aria-label="Discord" title="Discord" data-astro-cid-6munbmg7> <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z" data-astro-cid-6munbmg7></path></svg> </a> <a href="https://www.linkedin.com/company/layrs" target="_blank" rel="noopener noreferrer" class="sidebar-social-link" style="border: 1px solid var(--sidebar-border); color: var(--sidebar-text-secondary);" aria-label="LinkedIn" title="LinkedIn" data-astro-cid-6munbmg7> <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" data-astro-cid-6munbmg7></path><rect width="4" height="12" x="2" y="9" data-astro-cid-6munbmg7></rect><circle cx="4" cy="4" r="2" data-astro-cid-6munbmg7></circle></svg> </a> <a href="https://www.instagram.com/layrs.me" target="_blank" rel="noopener noreferrer" class="sidebar-social-link" style="border: 1px solid var(--sidebar-border); color: var(--sidebar-text-secondary);" aria-label="Instagram" title="Instagram" data-astro-cid-6munbmg7> <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><rect width="20" height="20" x="2" y="2" rx="5" ry="5" data-astro-cid-6munbmg7></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" data-astro-cid-6munbmg7></path><line x1="17.5" x2="17.51" y1="6.5" y2="6.5" data-astro-cid-6munbmg7></line></svg> </a> <a href="mailto:support@layrs.me" class="sidebar-social-link" style="border: 1px solid var(--sidebar-border); color: var(--sidebar-text-secondary);" aria-label="Email" title="Email" data-astro-cid-6munbmg7> <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6munbmg7><rect width="20" height="16" x="2" y="4" rx="2" data-astro-cid-6munbmg7></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" data-astro-cid-6munbmg7></path></svg> </a> </div> </div> </aside>  <script>
+  // Toggle Sign In vs Dashboard based on Supabase auth session in localStorage
+  (function initAuthButton() {
+    var signInBtn = document.getElementById('sidebar-signin-btn');
+    var dashboardBtn = document.getElementById('sidebar-dashboard-btn');
+    if (!signInBtn || !dashboardBtn) return;
+
+    var hasSession = false;
+    try {
+      var keys = Object.keys(localStorage);
+      for (var i = 0; i < keys.length; i++) {
+        if (keys[i].indexOf('sb-') === 0 && keys[i].indexOf('-auth-token') !== -1) {
+          var data = JSON.parse(localStorage.getItem(keys[i]) || '{}');
+          if (data && data.access_token) { hasSession = true; break; }
+        }
+      }
+    } catch (e) {}
+
+    if (hasSession) {
+      signInBtn.style.display = 'none';
+      dashboardBtn.style.display = '';
+    }
+  })();
+</script> <script>
+  // Sidebar collapse toggle + accordion modules + mobile drawer
+  (function initSidebar() {
+    if (window.__sidebarInit) return;
+    window.__sidebarInit = true;
+
+    var sidebar = document.getElementById('course-sidebar');
+    var toggleBtn = document.getElementById('sidebar-expand-btn');
+    var closeBtn = document.getElementById('sidebar-close-btn');
+    if (!sidebar) return;
+
+    // --- Collapse/Expand ---
+    var saved = localStorage.getItem('sidebar-collapsed');
+    if (saved === 'true') {
+      sidebar.classList.add('collapsed');
+      updateToggleState(true);
+    }
+
+    function updateToggleState(isCollapsed) {
+      if (!toggleBtn) return;
+      toggleBtn.setAttribute('aria-expanded', isCollapsed ? 'false' : 'true');
+      toggleBtn.title = isCollapsed ? 'Expand sidebar' : 'Collapse sidebar';
+      var label = toggleBtn.querySelector('.sidebar-label');
+      if (label) label.textContent = isCollapsed ? 'Expand' : 'Collapse';
+    }
+
+    function toggleSidebar() {
+      var isCollapsed = sidebar.classList.contains('collapsed');
+      if (isCollapsed) {
+        sidebar.classList.remove('collapsed');
+        localStorage.setItem('sidebar-collapsed', 'false');
+        updateToggleState(false);
+      } else {
+        sidebar.classList.add('collapsed');
+        localStorage.setItem('sidebar-collapsed', 'true');
+        updateToggleState(true);
+      }
+    }
+
+    if (toggleBtn) {
+      toggleBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        toggleSidebar();
+      });
+    }
+
+    // --- Mobile close button ---
+    if (closeBtn) {
+      closeBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        closeMobileDrawer();
+      });
+    }
+
+    // --- Mobile drawer helpers ---
+    function closeMobileDrawer() {
+      var overlay = document.getElementById('mobile-sidebar-overlay');
+      if (overlay) {
+        overlay.classList.add('closing');
+        setTimeout(function() {
+          overlay.classList.add('hidden');
+          overlay.classList.remove('closing');
+          document.body.style.overflow = '';
+        }, 250);
+      }
+    }
+
+    // Expose for backdrop click
+    window.__closeMobileDrawer = closeMobileDrawer;
+
+    // Escape key handler
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        var overlay = document.getElementById('mobile-sidebar-overlay');
+        if (overlay && !overlay.classList.contains('hidden')) {
+          closeMobileDrawer();
+        }
+      }
+    });
+
+    // --- Module accordion ---
+    var moduleHeaders = sidebar.querySelectorAll('.module-header');
+    moduleHeaders.forEach(function(header) {
+      header.addEventListener('click', function(e) {
+        e.preventDefault();
+        toggleModule(header);
+      });
+
+      // Keyboard support
+      header.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          toggleModule(header);
+        }
+      });
+    });
+
+    function toggleModule(header) {
+      var item = header.closest('.module-item');
+      var topics = item.querySelector('.module-topics');
+      var chevron = header.querySelector('.module-chevron');
+      var isExpanded = header.getAttribute('aria-expanded') === 'true';
+
+      // Close all other modules (accordion behavior)
+      sidebar.querySelectorAll('.module-item').forEach(function(otherItem) {
+        if (otherItem !== item) {
+          var oh = otherItem.querySelector('.module-header');
+          var ot = otherItem.querySelector('.module-topics');
+          var oc = otherItem.querySelector('.module-chevron');
+          if (oh) oh.setAttribute('aria-expanded', 'false');
+          if (ot) ot.classList.remove('expanded');
+          if (oc) oc.classList.remove('expanded');
+        }
+      });
+
+      // Toggle current
+      if (isExpanded) {
+        header.setAttribute('aria-expanded', 'false');
+        if (topics) topics.classList.remove('expanded');
+        if (chevron) chevron.classList.remove('expanded');
+      } else {
+        header.setAttribute('aria-expanded', 'true');
+        if (topics) topics.classList.add('expanded');
+        if (chevron) chevron.classList.add('expanded');
+
+        // Auto-scroll active topic into view
+        setTimeout(function() {
+          var activeLink = topics && topics.querySelector('.topic-link.active, .topic-link[aria-current="page"]');
+          if (activeLink) {
+            activeLink.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+          }
+        }, 280);
+      }
+    }
+
+    // Auto-scroll active topic on load
+    setTimeout(function() {
+      var activeLink = sidebar.querySelector('.topic-link.active, .topic-link[aria-current="page"]');
+      if (activeLink) {
+        activeLink.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+      }
+    }, 100);
+  })();
+
+  // Theme toggle (guard against duplicate listeners)
+  (function initThemeToggle() {
+    if (window.__themeToggleInit) return;
+    window.__themeToggleInit = true;
+    var lightBtn = document.getElementById('theme-light-btn');
+    var darkBtn = document.getElementById('theme-dark-btn');
+    var toggleWrap = document.getElementById('theme-toggle');
+    var root = document.documentElement;
+
+    function applyTheme(theme) {
+      if (theme === 'dark') {
+        root.classList.add('dark');
+        if (toggleWrap) toggleWrap.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
+        if (lightBtn) {
+          lightBtn.style.backgroundColor = 'transparent';
+          lightBtn.style.color = 'var(--sidebar-text-secondary)';
+          lightBtn.style.boxShadow = 'none';
+        }
+        if (darkBtn) {
+          darkBtn.style.backgroundColor = 'var(--sidebar-bg)';
+          darkBtn.style.color = 'var(--sidebar-accent)';
+          darkBtn.style.boxShadow = '0 1px 2px 0 rgba(0,0,0,0.05)';
+        }
+      } else {
+        root.classList.remove('dark');
+        if (toggleWrap) toggleWrap.style.backgroundColor = 'rgba(0, 0, 0, 0.05)';
+        if (lightBtn) {
+          lightBtn.style.backgroundColor = 'var(--sidebar-bg)';
+          lightBtn.style.color = 'var(--sidebar-accent)';
+          lightBtn.style.boxShadow = '0 1px 2px 0 rgba(0,0,0,0.05)';
+        }
+        if (darkBtn) {
+          darkBtn.style.backgroundColor = 'transparent';
+          darkBtn.style.color = 'var(--sidebar-text-secondary)';
+          darkBtn.style.boxShadow = 'none';
+        }
+      }
+    }
+
+    var saved = localStorage.getItem('theme') || 'light';
+    applyTheme(saved);
+
+    if (lightBtn) {
+      lightBtn.addEventListener('click', function() {
+        localStorage.setItem('theme', 'light');
+        applyTheme('light');
+      });
+    }
+    if (darkBtn) {
+      darkBtn.addEventListener('click', function() {
+        localStorage.setItem('theme', 'dark');
+        applyTheme('dark');
+      });
+    }
+  })();
+</script> </div> </div> <!-- Main content area --> <div class="flex-1 flex flex-col overflow-hidden"> <!-- Mobile header with hamburger (lg:hidden) --> <div class="lg:hidden px-4 py-3 flex items-center" style="border-bottom: 1px solid var(--sidebar-border); background-color: var(--sidebar-bg);"> <button id="menu-toggle" class="p-1 rounded-md transition-colors" style="color: var(--sidebar-text);" aria-label="Open menu"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"></line><line x1="4" x2="20" y1="6" y2="6"></line><line x1="4" x2="20" y1="18" y2="18"></line></svg> </button> <a href="https://layrs.me/" class="ml-3 flex items-center gap-2 no-underline"> <span class="font-semibold" style="color: var(--sidebar-text);">Layrs</span> </a> </div> <!-- Scrollable content --> <div class="flex-1 overflow-y-auto">  <div class="px-4 sm:px-6 lg:px-8 py-8 max-w-6xl mx-auto"> <nav aria-label="Breadcrumb" class="mb-6"> <ol class="flex flex-wrap items-center gap-1.5 text-sm text-[hsl(var(--muted-foreground))]"> <li> <a href="https://layrs.me/course" class="hover:text-layrs-primary transition-colors">Course</a> </li> <li class="flex items-center gap-1.5"> <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="opacity-50"> <polyline points="9 18 15 12 9 6"></polyline> </svg> <a href="../../lld.html" class="hover:text-layrs-primary transition-colors">LLD</a> </li><li class="flex items-center gap-1.5"> <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="opacity-50"> <polyline points="9 18 15 12 9 6"></polyline> </svg> <a href="../04-design-patterns.html" class="hover:text-layrs-primary transition-colors">Design Patterns</a> </li><li class="flex items-center gap-1.5"> <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="opacity-50"> <polyline points="9 18 15 12 9 6"></polyline> </svg> <span class="text-[hsl(var(--foreground))]">Strategy Pattern: Swap Algorithms at Runtime</span> </li> </ol> </nav> <div class="flex gap-10"> <!-- Main content --> <article class="min-w-0 flex-1 max-w-3xl"> <!-- Article header --> <header class="mb-8 pb-6 border-b border-[hsl(var(--border))]"> <h1 class="font-display text-3xl sm:text-4xl font-bold text-[hsl(var(--foreground))] mb-4 leading-tight"> Strategy Pattern: Swap Algorithms at Runtime </h1> <div class="flex flex-wrap items-center gap-3 text-sm text-[hsl(var(--muted-foreground))]">     <span class="flex items-center gap-1.5"> <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="opacity-60"> <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path> <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path> </svg>
+Updated 2026-03-11 </span> </div> </header> <!-- MDX content --> <div class="prose max-w-none course-prose">  <h2 id="tldr">TL;DR</h2>
+<p>The Strategy Pattern defines a family of interchangeable algorithms, encapsulates each one, and makes them interchangeable at runtime. Instead of hardcoding behavior into a class, you inject the algorithm as an object, allowing you to swap strategies without changing the client code.</p>
+<div class="tutorial-meta"><p><strong>Prerequisites:</strong> Understanding of classes and objects, inheritance and polymorphism, interfaces or abstract base classes, and basic dependency injection concepts. Familiarity with composition over inheritance principle is helpful.</p><p><strong>After this topic:</strong> Implement the Strategy Pattern to create flexible, maintainable code where algorithms can be selected and swapped at runtime. Identify situations where Strategy Pattern eliminates conditional logic and improves testability. Design systems that follow the Open/Closed Principle by adding new behaviors without modifying existing code.</p></div>
+<h2 id="core-concept">Core Concept</h2>
+<h2 id="what-is-the-strategy-pattern">What is the Strategy Pattern?</h2>
+<p>The <strong>Strategy Pattern</strong> is a behavioral design pattern that enables you to define a family of algorithms, put each one in a separate class, and make their objects interchangeable. The pattern extracts varying behavior into separate classes that all implement a common interface.</p>
+<h2 id="why-use-strategy-pattern">Why Use Strategy Pattern?</h2>
+<p>Without Strategy Pattern, you often end up with large conditional statements (if-else or switch) that select behavior based on some flag or type. This violates the Open/Closed Principle — every time you add a new behavior, you must modify existing code.</p>
+<p>Strategy Pattern solves this by:</p>
+<ul>
+<li><strong>Eliminating conditionals</strong>: Replace complex if-else chains with polymorphism</li>
+<li><strong>Enabling runtime flexibility</strong>: Swap algorithms dynamically based on context</li>
+<li><strong>Improving testability</strong>: Test each strategy in isolation</li>
+<li><strong>Following Open/Closed</strong>: Add new strategies without touching existing code</li>
+</ul>
+<h2 id="core-components">Core Components</h2>
+<ol>
+<li><strong>Strategy Interface</strong>: Defines the contract all concrete strategies must follow</li>
+<li><strong>Concrete Strategies</strong>: Implement the strategy interface with specific algorithms</li>
+<li><strong>Context</strong>: Maintains a reference to a strategy object and delegates work to it</li>
+</ol>
+<h2 id="when-to-use">When to Use</h2>
+<p>Use Strategy Pattern when:</p>
+<ul>
+<li>You have multiple ways to perform an operation and want to choose at runtime</li>
+<li>You want to avoid exposing complex, algorithm-specific data structures</li>
+<li>A class has multiple conditional statements that select different behaviors</li>
+<li>You need different variants of an algorithm (e.g., sorting, compression, validation)</li>
+</ul>
+<h2 id="real-world-analogy">Real-World Analogy</h2>
+<p>Think of navigation apps. You can choose different routing strategies: fastest route, shortest distance, avoid highways, or scenic route. The app (context) doesn’t change, but the algorithm (strategy) for calculating the route does. You select your preferred strategy, and the app uses it to compute directions.</p>
+<h2 id="visual-guide">Visual Guide</h2>
+<h3 id="strategy-pattern-structure">Strategy Pattern Structure</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="mermaid"><code><span class="line"><span style="color:#E1E4E8">classDiagram</span></span>
+<span class="line"><span style="color:#E1E4E8">    class Context {</span></span>
+<span class="line"><span style="color:#E1E4E8">        -strategy: Strategy</span></span>
+<span class="line"><span style="color:#E1E4E8">        +setStrategy(Strategy)</span></span>
+<span class="line"><span style="color:#E1E4E8">        +executeStrategy()</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"><span style="color:#E1E4E8">    class Strategy {</span></span>
+<span class="line"><span style="color:#E1E4E8">        &lt;&lt;interface&gt;&gt;</span></span>
+<span class="line"><span style="color:#E1E4E8">        +execute()*</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"><span style="color:#E1E4E8">    class ConcreteStrategyA {</span></span>
+<span class="line"><span style="color:#E1E4E8">        +execute()</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"><span style="color:#E1E4E8">    class ConcreteStrategyB {</span></span>
+<span class="line"><span style="color:#E1E4E8">        +execute()</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"><span style="color:#E1E4E8">    class ConcreteStrategyC {</span></span>
+<span class="line"><span style="color:#E1E4E8">        +execute()</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"><span style="color:#E1E4E8">    </span></span>
+<span class="line"><span style="color:#E1E4E8">    Context o-- Strategy</span></span>
+<span class="line"><span style="color:#E1E4E8">    Strategy &lt;|.. ConcreteStrategyA</span></span>
+<span class="line"><span style="color:#E1E4E8">    Strategy &lt;|.. ConcreteStrategyB</span></span>
+<span class="line"><span style="color:#E1E4E8">    Strategy &lt;|.. ConcreteStrategyC</span></span></code></pre>
+<p><em>The Context holds a reference to a Strategy interface. Concrete strategies implement the interface with different algorithms. The context can switch strategies at runtime.</em></p>
+<h3 id="strategy-pattern-flow">Strategy Pattern Flow</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="mermaid"><code><span class="line"><span style="color:#E1E4E8">sequenceDiagram</span></span>
+<span class="line"><span style="color:#E1E4E8">    participant Client</span></span>
+<span class="line"><span style="color:#E1E4E8">    participant Context</span></span>
+<span class="line"><span style="color:#E1E4E8">    participant Strategy</span></span>
+<span class="line"><span style="color:#E1E4E8">    </span></span>
+<span class="line"><span style="color:#E1E4E8">    Client-&gt;&gt;Context: create with StrategyA</span></span>
+<span class="line"><span style="color:#E1E4E8">    Client-&gt;&gt;Context: executeStrategy()</span></span>
+<span class="line"><span style="color:#E1E4E8">    Context-&gt;&gt;Strategy: execute()</span></span>
+<span class="line"><span style="color:#E1E4E8">    Strategy--&gt;&gt;Context: result</span></span>
+<span class="line"><span style="color:#E1E4E8">    Context--&gt;&gt;Client: result</span></span>
+<span class="line"><span style="color:#E1E4E8">    </span></span>
+<span class="line"><span style="color:#E1E4E8">    Client-&gt;&gt;Context: setStrategy(StrategyB)</span></span>
+<span class="line"><span style="color:#E1E4E8">    Client-&gt;&gt;Context: executeStrategy()</span></span>
+<span class="line"><span style="color:#E1E4E8">    Context-&gt;&gt;Strategy: execute()</span></span>
+<span class="line"><span style="color:#E1E4E8">    Strategy--&gt;&gt;Context: result</span></span>
+<span class="line"><span style="color:#E1E4E8">    Context--&gt;&gt;Client: result</span></span></code></pre>
+<p><em>Client creates context with initial strategy, executes it, then swaps to a different strategy and executes again — all without changing the context’s code.</em></p>
+<h2 id="examples">Examples</h2>
+<h2 id="example-1-payment-processing-system">Example 1: Payment Processing System</h2>
+<p>Let’s build a payment system that supports multiple payment methods. Without Strategy Pattern, you’d have messy conditionals. With it, each payment method is a separate strategy.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="python"><code><span class="line"><span style="color:#F97583">from</span><span style="color:#E1E4E8"> abc </span><span style="color:#F97583">import</span><span style="color:#79B8FF"> ABC</span><span style="color:#E1E4E8">, abstractmethod</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># Strategy Interface</span></span>
+<span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> PaymentStrategy</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">ABC</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#B392F0">    @abstractmethod</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> pay</span><span style="color:#E1E4E8">(self, amount: </span><span style="color:#79B8FF">float</span><span style="color:#E1E4E8">) -&gt; </span><span style="color:#79B8FF">str</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#F97583">        pass</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># Concrete Strategies</span></span>
+<span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> CreditCardPayment</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">PaymentStrategy</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#79B8FF"> __init__</span><span style="color:#E1E4E8">(self, card_number: </span><span style="color:#79B8FF">str</span><span style="color:#E1E4E8">, cvv: </span><span style="color:#79B8FF">str</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#79B8FF">        self</span><span style="color:#E1E4E8">.card_number </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> card_number</span></span>
+<span class="line"><span style="color:#79B8FF">        self</span><span style="color:#E1E4E8">.cvv </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> cvv</span></span>
+<span class="line"><span style="color:#E1E4E8">    </span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> pay</span><span style="color:#E1E4E8">(self, amount: </span><span style="color:#79B8FF">float</span><span style="color:#E1E4E8">) -&gt; </span><span style="color:#79B8FF">str</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#6A737D">        # Simulate payment processing</span></span>
+<span class="line"><span style="color:#F97583">        return</span><span style="color:#F97583"> f</span><span style="color:#9ECBFF">&quot;Paid $</span><span style="color:#79B8FF">{</span><span style="color:#E1E4E8">amount</span><span style="color:#F97583">:.2f</span><span style="color:#79B8FF">}</span><span style="color:#9ECBFF"> using Credit Card ending in </span><span style="color:#79B8FF">{self</span><span style="color:#E1E4E8">.card_number[</span><span style="color:#F97583">-</span><span style="color:#79B8FF">4</span><span style="color:#E1E4E8">:]</span><span style="color:#79B8FF">}</span><span style="color:#9ECBFF">&quot;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> PayPalPayment</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">PaymentStrategy</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#79B8FF"> __init__</span><span style="color:#E1E4E8">(self, email: </span><span style="color:#79B8FF">str</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#79B8FF">        self</span><span style="color:#E1E4E8">.email </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> email</span></span>
+<span class="line"><span style="color:#E1E4E8">    </span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> pay</span><span style="color:#E1E4E8">(self, amount: </span><span style="color:#79B8FF">float</span><span style="color:#E1E4E8">) -&gt; </span><span style="color:#79B8FF">str</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#F97583">        return</span><span style="color:#F97583"> f</span><span style="color:#9ECBFF">&quot;Paid $</span><span style="color:#79B8FF">{</span><span style="color:#E1E4E8">amount</span><span style="color:#F97583">:.2f</span><span style="color:#79B8FF">}</span><span style="color:#9ECBFF"> using PayPal account </span><span style="color:#79B8FF">{self</span><span style="color:#E1E4E8">.email</span><span style="color:#79B8FF">}</span><span style="color:#9ECBFF">&quot;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> CryptoPayment</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">PaymentStrategy</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#79B8FF"> __init__</span><span style="color:#E1E4E8">(self, wallet_address: </span><span style="color:#79B8FF">str</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#79B8FF">        self</span><span style="color:#E1E4E8">.wallet_address </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> wallet_address</span></span>
+<span class="line"><span style="color:#E1E4E8">    </span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> pay</span><span style="color:#E1E4E8">(self, amount: </span><span style="color:#79B8FF">float</span><span style="color:#E1E4E8">) -&gt; </span><span style="color:#79B8FF">str</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#F97583">        return</span><span style="color:#F97583"> f</span><span style="color:#9ECBFF">&quot;Paid $</span><span style="color:#79B8FF">{</span><span style="color:#E1E4E8">amount</span><span style="color:#F97583">:.2f</span><span style="color:#79B8FF">}</span><span style="color:#9ECBFF"> using Crypto wallet </span><span style="color:#79B8FF">{self</span><span style="color:#E1E4E8">.wallet_address[:</span><span style="color:#79B8FF">8</span><span style="color:#E1E4E8">]</span><span style="color:#79B8FF">}</span><span style="color:#9ECBFF">...&quot;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># Context</span></span>
+<span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> ShoppingCart</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#79B8FF"> __init__</span><span style="color:#E1E4E8">(self):</span></span>
+<span class="line"><span style="color:#79B8FF">        self</span><span style="color:#E1E4E8">.items </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> []</span></span>
+<span class="line"><span style="color:#79B8FF">        self</span><span style="color:#E1E4E8">.payment_strategy </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> None</span></span>
+<span class="line"><span style="color:#E1E4E8">    </span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> add_item</span><span style="color:#E1E4E8">(self, item: </span><span style="color:#79B8FF">str</span><span style="color:#E1E4E8">, price: </span><span style="color:#79B8FF">float</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#79B8FF">        self</span><span style="color:#E1E4E8">.items.append((item, price))</span></span>
+<span class="line"><span style="color:#E1E4E8">    </span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> set_payment_strategy</span><span style="color:#E1E4E8">(self, strategy: PaymentStrategy):</span></span>
+<span class="line"><span style="color:#79B8FF">        self</span><span style="color:#E1E4E8">.payment_strategy </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> strategy</span></span>
+<span class="line"><span style="color:#E1E4E8">    </span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> checkout</span><span style="color:#E1E4E8">(self) -&gt; </span><span style="color:#79B8FF">str</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#F97583">        if</span><span style="color:#F97583"> not</span><span style="color:#79B8FF"> self</span><span style="color:#E1E4E8">.payment_strategy:</span></span>
+<span class="line"><span style="color:#F97583">            return</span><span style="color:#9ECBFF"> &quot;Error: No payment method selected&quot;</span></span>
+<span class="line"><span style="color:#E1E4E8">        </span></span>
+<span class="line"><span style="color:#E1E4E8">        total </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> sum</span><span style="color:#E1E4E8">(price </span><span style="color:#F97583">for</span><span style="color:#E1E4E8"> _, price </span><span style="color:#F97583">in</span><span style="color:#79B8FF"> self</span><span style="color:#E1E4E8">.items)</span></span>
+<span class="line"><span style="color:#F97583">        return</span><span style="color:#79B8FF"> self</span><span style="color:#E1E4E8">.payment_strategy.pay(total)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># Client code</span></span>
+<span class="line"><span style="color:#E1E4E8">cart </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> ShoppingCart()</span></span>
+<span class="line"><span style="color:#E1E4E8">cart.add_item(</span><span style="color:#9ECBFF">&quot;Laptop&quot;</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">999.99</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">cart.add_item(</span><span style="color:#9ECBFF">&quot;Mouse&quot;</span><span style="color:#E1E4E8">, </span><span style="color:#79B8FF">29.99</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># Use credit card</span></span>
+<span class="line"><span style="color:#E1E4E8">cart.set_payment_strategy(CreditCardPayment(</span><span style="color:#9ECBFF">&quot;1234-5678-9012-3456&quot;</span><span style="color:#E1E4E8">, </span><span style="color:#9ECBFF">&quot;123&quot;</span><span style="color:#E1E4E8">))</span></span>
+<span class="line"><span style="color:#79B8FF">print</span><span style="color:#E1E4E8">(cart.checkout())</span></span>
+<span class="line"><span style="color:#6A737D"># Output: Paid $1029.98 using Credit Card ending in 3456</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># Switch to PayPal</span></span>
+<span class="line"><span style="color:#E1E4E8">cart.set_payment_strategy(PayPalPayment(</span><span style="color:#9ECBFF">&quot;user@example.com&quot;</span><span style="color:#E1E4E8">))</span></span>
+<span class="line"><span style="color:#79B8FF">print</span><span style="color:#E1E4E8">(cart.checkout())</span></span>
+<span class="line"><span style="color:#6A737D"># Output: Paid $1029.98 using PayPal account user@example.com</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># Switch to Crypto</span></span>
+<span class="line"><span style="color:#E1E4E8">cart.set_payment_strategy(CryptoPayment(</span><span style="color:#9ECBFF">&quot;0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb&quot;</span><span style="color:#E1E4E8">))</span></span>
+<span class="line"><span style="color:#79B8FF">print</span><span style="color:#E1E4E8">(cart.checkout())</span></span>
+<span class="line"><span style="color:#6A737D"># Output: Paid $1029.98 using Crypto wallet 0x742d35...</span></span></code></pre>
+<p><strong>Key Points:</strong></p>
+<ul>
+<li>The <code>ShoppingCart</code> doesn’t know how payment works — it just calls <code>pay()</code></li>
+<li>Adding a new payment method (e.g., Apple Pay) requires creating a new strategy class, not modifying existing code</li>
+<li>Each strategy can have its own state (card number, email, wallet address)</li>
+</ul>
+<p><strong>Try it yourself:</strong> Add a <code>BankTransferPayment</code> strategy that requires account number and routing number.</p>
+<h2 id="example-2-data-compression">Example 2: Data Compression</h2>
+<p>Different compression algorithms for different scenarios — speed vs. compression ratio.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="python"><code><span class="line"><span style="color:#F97583">from</span><span style="color:#E1E4E8"> abc </span><span style="color:#F97583">import</span><span style="color:#79B8FF"> ABC</span><span style="color:#E1E4E8">, abstractmethod</span></span>
+<span class="line"><span style="color:#F97583">import</span><span style="color:#E1E4E8"> time</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># Strategy Interface</span></span>
+<span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> CompressionStrategy</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">ABC</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#B392F0">    @abstractmethod</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> compress</span><span style="color:#E1E4E8">(self, data: </span><span style="color:#79B8FF">str</span><span style="color:#E1E4E8">) -&gt; </span><span style="color:#79B8FF">dict</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#9ECBFF">        &quot;&quot;&quot;Returns dict with compressed data and metadata&quot;&quot;&quot;</span></span>
+<span class="line"><span style="color:#F97583">        pass</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># Concrete Strategies</span></span>
+<span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> ZipCompression</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">CompressionStrategy</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> compress</span><span style="color:#E1E4E8">(self, data: </span><span style="color:#79B8FF">str</span><span style="color:#E1E4E8">) -&gt; </span><span style="color:#79B8FF">dict</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#6A737D">        # Simulate ZIP compression (balanced speed/ratio)</span></span>
+<span class="line"><span style="color:#E1E4E8">        time.sleep(</span><span style="color:#79B8FF">0.1</span><span style="color:#E1E4E8">)  </span><span style="color:#6A737D"># Simulate processing</span></span>
+<span class="line"><span style="color:#E1E4E8">        compressed_size </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> len</span><span style="color:#E1E4E8">(data) </span><span style="color:#F97583">*</span><span style="color:#79B8FF"> 0.6</span><span style="color:#6A737D">  # 40% compression</span></span>
+<span class="line"><span style="color:#F97583">        return</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#9ECBFF">            &quot;algorithm&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">&quot;ZIP&quot;</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#9ECBFF">            &quot;original_size&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">len</span><span style="color:#E1E4E8">(data),</span></span>
+<span class="line"><span style="color:#9ECBFF">            &quot;compressed_size&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">int</span><span style="color:#E1E4E8">(compressed_size),</span></span>
+<span class="line"><span style="color:#9ECBFF">            &quot;ratio&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#F97583">f</span><span style="color:#9ECBFF">&quot;</span><span style="color:#79B8FF">{</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">1</span><span style="color:#F97583"> -</span><span style="color:#79B8FF"> 0.6</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">*</span><span style="color:#79B8FF"> 100</span><span style="color:#F97583">:.0f</span><span style="color:#79B8FF">}</span><span style="color:#9ECBFF">%&quot;</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#9ECBFF">            &quot;time&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">&quot;0.1s&quot;</span></span>
+<span class="line"><span style="color:#E1E4E8">        }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> RarCompression</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">CompressionStrategy</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> compress</span><span style="color:#E1E4E8">(self, data: </span><span style="color:#79B8FF">str</span><span style="color:#E1E4E8">) -&gt; </span><span style="color:#79B8FF">dict</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#6A737D">        # Simulate RAR compression (better ratio, slower)</span></span>
+<span class="line"><span style="color:#E1E4E8">        time.sleep(</span><span style="color:#79B8FF">0.3</span><span style="color:#E1E4E8">)  </span><span style="color:#6A737D"># Simulate processing</span></span>
+<span class="line"><span style="color:#E1E4E8">        compressed_size </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> len</span><span style="color:#E1E4E8">(data) </span><span style="color:#F97583">*</span><span style="color:#79B8FF"> 0.4</span><span style="color:#6A737D">  # 60% compression</span></span>
+<span class="line"><span style="color:#F97583">        return</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#9ECBFF">            &quot;algorithm&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">&quot;RAR&quot;</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#9ECBFF">            &quot;original_size&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">len</span><span style="color:#E1E4E8">(data),</span></span>
+<span class="line"><span style="color:#9ECBFF">            &quot;compressed_size&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">int</span><span style="color:#E1E4E8">(compressed_size),</span></span>
+<span class="line"><span style="color:#9ECBFF">            &quot;ratio&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#F97583">f</span><span style="color:#9ECBFF">&quot;</span><span style="color:#79B8FF">{</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">1</span><span style="color:#F97583"> -</span><span style="color:#79B8FF"> 0.4</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">*</span><span style="color:#79B8FF"> 100</span><span style="color:#F97583">:.0f</span><span style="color:#79B8FF">}</span><span style="color:#9ECBFF">%&quot;</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#9ECBFF">            &quot;time&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">&quot;0.3s&quot;</span></span>
+<span class="line"><span style="color:#E1E4E8">        }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> FastCompression</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">CompressionStrategy</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> compress</span><span style="color:#E1E4E8">(self, data: </span><span style="color:#79B8FF">str</span><span style="color:#E1E4E8">) -&gt; </span><span style="color:#79B8FF">dict</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#6A737D">        # Simulate fast compression (speed priority)</span></span>
+<span class="line"><span style="color:#E1E4E8">        time.sleep(</span><span style="color:#79B8FF">0.05</span><span style="color:#E1E4E8">)  </span><span style="color:#6A737D"># Simulate processing</span></span>
+<span class="line"><span style="color:#E1E4E8">        compressed_size </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> len</span><span style="color:#E1E4E8">(data) </span><span style="color:#F97583">*</span><span style="color:#79B8FF"> 0.8</span><span style="color:#6A737D">  # 20% compression</span></span>
+<span class="line"><span style="color:#F97583">        return</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#9ECBFF">            &quot;algorithm&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">&quot;FAST&quot;</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#9ECBFF">            &quot;original_size&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">len</span><span style="color:#E1E4E8">(data),</span></span>
+<span class="line"><span style="color:#9ECBFF">            &quot;compressed_size&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#79B8FF">int</span><span style="color:#E1E4E8">(compressed_size),</span></span>
+<span class="line"><span style="color:#9ECBFF">            &quot;ratio&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#F97583">f</span><span style="color:#9ECBFF">&quot;</span><span style="color:#79B8FF">{</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">1</span><span style="color:#F97583"> -</span><span style="color:#79B8FF"> 0.8</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">*</span><span style="color:#79B8FF"> 100</span><span style="color:#F97583">:.0f</span><span style="color:#79B8FF">}</span><span style="color:#9ECBFF">%&quot;</span><span style="color:#E1E4E8">,</span></span>
+<span class="line"><span style="color:#9ECBFF">            &quot;time&quot;</span><span style="color:#E1E4E8">: </span><span style="color:#9ECBFF">&quot;0.05s&quot;</span></span>
+<span class="line"><span style="color:#E1E4E8">        }</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># Context</span></span>
+<span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> FileCompressor</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#79B8FF"> __init__</span><span style="color:#E1E4E8">(self, strategy: CompressionStrategy):</span></span>
+<span class="line"><span style="color:#79B8FF">        self</span><span style="color:#E1E4E8">.strategy </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> strategy</span></span>
+<span class="line"><span style="color:#E1E4E8">    </span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> set_strategy</span><span style="color:#E1E4E8">(self, strategy: CompressionStrategy):</span></span>
+<span class="line"><span style="color:#79B8FF">        self</span><span style="color:#E1E4E8">.strategy </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> strategy</span></span>
+<span class="line"><span style="color:#E1E4E8">    </span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> compress_file</span><span style="color:#E1E4E8">(self, filename: </span><span style="color:#79B8FF">str</span><span style="color:#E1E4E8">, data: </span><span style="color:#79B8FF">str</span><span style="color:#E1E4E8">) -&gt; </span><span style="color:#79B8FF">str</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#E1E4E8">        result </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> self</span><span style="color:#E1E4E8">.strategy.compress(data)</span></span>
+<span class="line"><span style="color:#F97583">        return</span><span style="color:#E1E4E8"> (</span></span>
+<span class="line"><span style="color:#F97583">            f</span><span style="color:#9ECBFF">&quot;File: </span><span style="color:#79B8FF">{</span><span style="color:#E1E4E8">filename</span><span style="color:#79B8FF">}\n</span><span style="color:#9ECBFF">&quot;</span></span>
+<span class="line"><span style="color:#F97583">            f</span><span style="color:#9ECBFF">&quot;Algorithm: </span><span style="color:#79B8FF">{</span><span style="color:#E1E4E8">result[</span><span style="color:#9ECBFF">&#39;algorithm&#39;</span><span style="color:#E1E4E8">]</span><span style="color:#79B8FF">}\n</span><span style="color:#9ECBFF">&quot;</span></span>
+<span class="line"><span style="color:#F97583">            f</span><span style="color:#9ECBFF">&quot;Original: </span><span style="color:#79B8FF">{</span><span style="color:#E1E4E8">result[</span><span style="color:#9ECBFF">&#39;original_size&#39;</span><span style="color:#E1E4E8">]</span><span style="color:#79B8FF">}</span><span style="color:#9ECBFF"> bytes</span><span style="color:#79B8FF">\n</span><span style="color:#9ECBFF">&quot;</span></span>
+<span class="line"><span style="color:#F97583">            f</span><span style="color:#9ECBFF">&quot;Compressed: </span><span style="color:#79B8FF">{</span><span style="color:#E1E4E8">result[</span><span style="color:#9ECBFF">&#39;compressed_size&#39;</span><span style="color:#E1E4E8">]</span><span style="color:#79B8FF">}</span><span style="color:#9ECBFF"> bytes</span><span style="color:#79B8FF">\n</span><span style="color:#9ECBFF">&quot;</span></span>
+<span class="line"><span style="color:#F97583">            f</span><span style="color:#9ECBFF">&quot;Compression: </span><span style="color:#79B8FF">{</span><span style="color:#E1E4E8">result[</span><span style="color:#9ECBFF">&#39;ratio&#39;</span><span style="color:#E1E4E8">]</span><span style="color:#79B8FF">}\n</span><span style="color:#9ECBFF">&quot;</span></span>
+<span class="line"><span style="color:#F97583">            f</span><span style="color:#9ECBFF">&quot;Time: </span><span style="color:#79B8FF">{</span><span style="color:#E1E4E8">result[</span><span style="color:#9ECBFF">&#39;time&#39;</span><span style="color:#E1E4E8">]</span><span style="color:#79B8FF">}</span><span style="color:#9ECBFF">&quot;</span></span>
+<span class="line"><span style="color:#E1E4E8">        )</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># Client code</span></span>
+<span class="line"><span style="color:#E1E4E8">data </span><span style="color:#F97583">=</span><span style="color:#9ECBFF"> &quot;A&quot;</span><span style="color:#F97583"> *</span><span style="color:#79B8FF"> 1000</span><span style="color:#6A737D">  # 1000 bytes of data</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># Start with ZIP</span></span>
+<span class="line"><span style="color:#E1E4E8">compressor </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> FileCompressor(ZipCompression())</span></span>
+<span class="line"><span style="color:#79B8FF">print</span><span style="color:#E1E4E8">(compressor.compress_file(</span><span style="color:#9ECBFF">&quot;document.txt&quot;</span><span style="color:#E1E4E8">, data))</span></span>
+<span class="line"><span style="color:#79B8FF">print</span><span style="color:#E1E4E8">()</span></span>
+<span class="line"><span style="color:#6A737D"># Output:</span></span>
+<span class="line"><span style="color:#6A737D"># File: document.txt</span></span>
+<span class="line"><span style="color:#6A737D"># Algorithm: ZIP</span></span>
+<span class="line"><span style="color:#6A737D"># Original: 1000 bytes</span></span>
+<span class="line"><span style="color:#6A737D"># Compressed: 600 bytes</span></span>
+<span class="line"><span style="color:#6A737D"># Compression: 40%</span></span>
+<span class="line"><span style="color:#6A737D"># Time: 0.1s</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># Switch to RAR for better compression</span></span>
+<span class="line"><span style="color:#E1E4E8">compressor.set_strategy(RarCompression())</span></span>
+<span class="line"><span style="color:#79B8FF">print</span><span style="color:#E1E4E8">(compressor.compress_file(</span><span style="color:#9ECBFF">&quot;document.txt&quot;</span><span style="color:#E1E4E8">, data))</span></span>
+<span class="line"><span style="color:#79B8FF">print</span><span style="color:#E1E4E8">()</span></span>
+<span class="line"><span style="color:#6A737D"># Output:</span></span>
+<span class="line"><span style="color:#6A737D"># File: document.txt</span></span>
+<span class="line"><span style="color:#6A737D"># Algorithm: RAR</span></span>
+<span class="line"><span style="color:#6A737D"># Original: 1000 bytes</span></span>
+<span class="line"><span style="color:#6A737D"># Compressed: 400 bytes</span></span>
+<span class="line"><span style="color:#6A737D"># Compression: 60%</span></span>
+<span class="line"><span style="color:#6A737D"># Time: 0.3s</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># Switch to Fast for speed</span></span>
+<span class="line"><span style="color:#E1E4E8">compressor.set_strategy(FastCompression())</span></span>
+<span class="line"><span style="color:#79B8FF">print</span><span style="color:#E1E4E8">(compressor.compress_file(</span><span style="color:#9ECBFF">&quot;document.txt&quot;</span><span style="color:#E1E4E8">, data))</span></span>
+<span class="line"><span style="color:#6A737D"># Output:</span></span>
+<span class="line"><span style="color:#6A737D"># File: document.txt</span></span>
+<span class="line"><span style="color:#6A737D"># Algorithm: FAST</span></span>
+<span class="line"><span style="color:#6A737D"># Original: 1000 bytes</span></span>
+<span class="line"><span style="color:#6A737D"># Compressed: 800 bytes</span></span>
+<span class="line"><span style="color:#6A737D"># Compression: 20%</span></span>
+<span class="line"><span style="color:#6A737D"># Time: 0.05s</span></span></code></pre>
+<p><strong>Key Points:</strong></p>
+<ul>
+<li>Each strategy encapsulates a different compression algorithm</li>
+<li>The context can switch strategies based on user preference or file type</li>
+<li>Strategies can return complex data structures, not just simple values</li>
+</ul>
+<p><strong>Try it yourself:</strong> Add a <code>NoCompression</code> strategy that just returns the original data unchanged.</p>
+<h2 id="javac-notes">Java/C++ Notes</h2>
+<p><strong>Java:</strong></p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="java"><code><span class="line"><span style="color:#6A737D">// Strategy interface</span></span>
+<span class="line"><span style="color:#F97583">interface</span><span style="color:#B392F0"> PaymentStrategy</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#E1E4E8">    String </span><span style="color:#B392F0">pay</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">double</span><span style="color:#FFAB70"> amount</span><span style="color:#E1E4E8">);</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Concrete strategy</span></span>
+<span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> CreditCardPayment</span><span style="color:#F97583"> implements</span><span style="color:#B392F0"> PaymentStrategy</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">    private</span><span style="color:#E1E4E8"> String cardNumber;</span></span>
+<span class="line"><span style="color:#E1E4E8">    </span></span>
+<span class="line"><span style="color:#F97583">    public</span><span style="color:#B392F0"> CreditCardPayment</span><span style="color:#E1E4E8">(String </span><span style="color:#FFAB70">cardNumber</span><span style="color:#E1E4E8">) {</span></span>
+<span class="line"><span style="color:#79B8FF">        this</span><span style="color:#E1E4E8">.cardNumber </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> cardNumber;</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"><span style="color:#E1E4E8">    </span></span>
+<span class="line"><span style="color:#E1E4E8">    @</span><span style="color:#F97583">Override</span></span>
+<span class="line"><span style="color:#F97583">    public</span><span style="color:#E1E4E8"> String </span><span style="color:#B392F0">pay</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">double</span><span style="color:#FFAB70"> amount</span><span style="color:#E1E4E8">) {</span></span>
+<span class="line"><span style="color:#F97583">        return</span><span style="color:#E1E4E8"> String.</span><span style="color:#B392F0">format</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">&quot;Paid $%.2f using Credit Card&quot;</span><span style="color:#E1E4E8">, amount);</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Context</span></span>
+<span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> ShoppingCart</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">    private</span><span style="color:#E1E4E8"> PaymentStrategy paymentStrategy;</span></span>
+<span class="line"><span style="color:#E1E4E8">    </span></span>
+<span class="line"><span style="color:#F97583">    public</span><span style="color:#F97583"> void</span><span style="color:#B392F0"> setPaymentStrategy</span><span style="color:#E1E4E8">(PaymentStrategy </span><span style="color:#FFAB70">strategy</span><span style="color:#E1E4E8">) {</span></span>
+<span class="line"><span style="color:#79B8FF">        this</span><span style="color:#E1E4E8">.paymentStrategy </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> strategy;</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"><span style="color:#E1E4E8">    </span></span>
+<span class="line"><span style="color:#F97583">    public</span><span style="color:#E1E4E8"> String </span><span style="color:#B392F0">checkout</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">double</span><span style="color:#FFAB70"> amount</span><span style="color:#E1E4E8">) {</span></span>
+<span class="line"><span style="color:#F97583">        return</span><span style="color:#E1E4E8"> paymentStrategy.</span><span style="color:#B392F0">pay</span><span style="color:#E1E4E8">(amount);</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"><span style="color:#E1E4E8">}</span></span></code></pre>
+<p><strong>C++:</strong></p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="cpp"><code><span class="line"><span style="color:#6A737D">// Strategy interface</span></span>
+<span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> PaymentStrategy</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">public:</span></span>
+<span class="line"><span style="color:#F97583">    virtual</span><span style="color:#B392F0"> ~PaymentStrategy</span><span style="color:#E1E4E8">() </span><span style="color:#F97583">=</span><span style="color:#F97583"> default</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#F97583">    virtual</span><span style="color:#B392F0"> std</span><span style="color:#E1E4E8">::</span><span style="color:#B392F0">string</span><span style="color:#B392F0"> pay</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">double</span><span style="color:#FFAB70"> amount</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> 0</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#E1E4E8">};</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Concrete strategy</span></span>
+<span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> CreditCardPayment</span><span style="color:#E1E4E8"> : </span><span style="color:#F97583">public</span><span style="color:#B392F0"> PaymentStrategy</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">private:</span></span>
+<span class="line"><span style="color:#B392F0">    std</span><span style="color:#E1E4E8">::string cardNumber;</span></span>
+<span class="line"><span style="color:#F97583">public:</span></span>
+<span class="line"><span style="color:#B392F0">    CreditCardPayment</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">const</span><span style="color:#B392F0"> std</span><span style="color:#E1E4E8">::</span><span style="color:#B392F0">string</span><span style="color:#F97583">&amp;</span><span style="color:#FFAB70"> card</span><span style="color:#E1E4E8">) : </span><span style="color:#B392F0">cardNumber</span><span style="color:#E1E4E8">(card) {}</span></span>
+<span class="line"><span style="color:#E1E4E8">    </span></span>
+<span class="line"><span style="color:#B392F0">    std</span><span style="color:#E1E4E8">::</span><span style="color:#B392F0">string</span><span style="color:#B392F0"> pay</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">double</span><span style="color:#FFAB70"> amount</span><span style="color:#E1E4E8">) </span><span style="color:#F97583">override</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">        return</span><span style="color:#9ECBFF"> &quot;Paid $&quot;</span><span style="color:#F97583"> +</span><span style="color:#B392F0"> std</span><span style="color:#E1E4E8">::</span><span style="color:#B392F0">to_string</span><span style="color:#E1E4E8">(amount) </span><span style="color:#F97583">+</span><span style="color:#9ECBFF"> &quot; using Credit Card&quot;</span><span style="color:#E1E4E8">;</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"><span style="color:#E1E4E8">};</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D">// Context</span></span>
+<span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> ShoppingCart</span><span style="color:#E1E4E8"> {</span></span>
+<span class="line"><span style="color:#F97583">private:</span></span>
+<span class="line"><span style="color:#B392F0">    std</span><span style="color:#E1E4E8">::unique_ptr</span><span style="color:#F97583">&lt;</span><span style="color:#E1E4E8">PaymentStrategy</span><span style="color:#F97583">&gt;</span><span style="color:#E1E4E8"> paymentStrategy;</span></span>
+<span class="line"><span style="color:#F97583">public:</span></span>
+<span class="line"><span style="color:#F97583">    void</span><span style="color:#B392F0"> setPaymentStrategy</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">std</span><span style="color:#E1E4E8">::</span><span style="color:#B392F0">unique_ptr</span><span style="color:#E1E4E8">&lt;</span><span style="color:#B392F0">PaymentStrategy</span><span style="color:#E1E4E8">&gt; </span><span style="color:#FFAB70">strategy</span><span style="color:#E1E4E8">) {</span></span>
+<span class="line"><span style="color:#E1E4E8">        paymentStrategy </span><span style="color:#F97583">=</span><span style="color:#B392F0"> std</span><span style="color:#E1E4E8">::</span><span style="color:#B392F0">move</span><span style="color:#E1E4E8">(strategy);</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"><span style="color:#E1E4E8">    </span></span>
+<span class="line"><span style="color:#B392F0">    std</span><span style="color:#E1E4E8">::</span><span style="color:#B392F0">string</span><span style="color:#B392F0"> checkout</span><span style="color:#E1E4E8">(</span><span style="color:#F97583">double</span><span style="color:#FFAB70"> amount</span><span style="color:#E1E4E8">) {</span></span>
+<span class="line"><span style="color:#F97583">        return</span><span style="color:#E1E4E8"> paymentStrategy-&gt;</span><span style="color:#B392F0">pay</span><span style="color:#E1E4E8">(amount);</span></span>
+<span class="line"><span style="color:#E1E4E8">    }</span></span>
+<span class="line"><span style="color:#E1E4E8">};</span></span></code></pre>
+<p>Key difference: C++ uses smart pointers (<code>unique_ptr</code>) to manage strategy lifetime and prevent memory leaks.</p>
+<h2 id="common-mistakes">Common Mistakes</h2>
+<h2 id="1-creating-too-many-strategies">1. Creating Too Many Strategies</h2>
+<p><strong>Mistake:</strong> Creating a separate strategy class for every tiny variation in behavior.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="python"><code><span class="line"><span style="color:#6A737D"># BAD: Over-engineering</span></span>
+<span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> DiscountStrategy5Percent</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">DiscountStrategy</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> calculate</span><span style="color:#E1E4E8">(self, amount):</span></span>
+<span class="line"><span style="color:#F97583">        return</span><span style="color:#E1E4E8"> amount </span><span style="color:#F97583">*</span><span style="color:#79B8FF"> 0.95</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> DiscountStrategy10Percent</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">DiscountStrategy</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> calculate</span><span style="color:#E1E4E8">(self, amount):</span></span>
+<span class="line"><span style="color:#F97583">        return</span><span style="color:#E1E4E8"> amount </span><span style="color:#F97583">*</span><span style="color:#79B8FF"> 0.90</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> DiscountStrategy15Percent</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">DiscountStrategy</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> calculate</span><span style="color:#E1E4E8">(self, amount):</span></span>
+<span class="line"><span style="color:#F97583">        return</span><span style="color:#E1E4E8"> amount </span><span style="color:#F97583">*</span><span style="color:#79B8FF"> 0.85</span></span></code></pre>
+<p><strong>Better:</strong> Use a parameterized strategy when the algorithm is the same but values differ.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="python"><code><span class="line"><span style="color:#6A737D"># GOOD: Single parameterized strategy</span></span>
+<span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> PercentageDiscount</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">DiscountStrategy</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#79B8FF"> __init__</span><span style="color:#E1E4E8">(self, percentage: </span><span style="color:#79B8FF">float</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#79B8FF">        self</span><span style="color:#E1E4E8">.percentage </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> percentage</span></span>
+<span class="line"><span style="color:#E1E4E8">    </span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> calculate</span><span style="color:#E1E4E8">(self, amount: </span><span style="color:#79B8FF">float</span><span style="color:#E1E4E8">) -&gt; </span><span style="color:#79B8FF">float</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#F97583">        return</span><span style="color:#E1E4E8"> amount </span><span style="color:#F97583">*</span><span style="color:#E1E4E8"> (</span><span style="color:#79B8FF">1</span><span style="color:#F97583"> -</span><span style="color:#79B8FF"> self</span><span style="color:#E1E4E8">.percentage </span><span style="color:#F97583">/</span><span style="color:#79B8FF"> 100</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># Usage</span></span>
+<span class="line"><span style="color:#E1E4E8">discount5 </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> PercentageDiscount(</span><span style="color:#79B8FF">5</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#E1E4E8">discount10 </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> PercentageDiscount(</span><span style="color:#79B8FF">10</span><span style="color:#E1E4E8">)</span></span></code></pre>
+<h2 id="2-exposing-strategy-internals-to-context">2. Exposing Strategy Internals to Context</h2>
+<p><strong>Mistake:</strong> The context knows too much about how strategies work internally.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="python"><code><span class="line"><span style="color:#6A737D"># BAD: Context knows strategy implementation details</span></span>
+<span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> Context</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> execute</span><span style="color:#E1E4E8">(self):</span></span>
+<span class="line"><span style="color:#F97583">        if</span><span style="color:#79B8FF"> isinstance</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">self</span><span style="color:#E1E4E8">.strategy, ComplexStrategy):</span></span>
+<span class="line"><span style="color:#6A737D">            # Special handling for ComplexStrategy</span></span>
+<span class="line"><span style="color:#79B8FF">            self</span><span style="color:#E1E4E8">.strategy.setup()</span></span>
+<span class="line"><span style="color:#E1E4E8">            result </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> self</span><span style="color:#E1E4E8">.strategy.execute()</span></span>
+<span class="line"><span style="color:#79B8FF">            self</span><span style="color:#E1E4E8">.strategy.cleanup()</span></span>
+<span class="line"><span style="color:#F97583">        else</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#E1E4E8">            result </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> self</span><span style="color:#E1E4E8">.strategy.execute()</span></span>
+<span class="line"><span style="color:#F97583">        return</span><span style="color:#E1E4E8"> result</span></span></code></pre>
+<p><strong>Better:</strong> All strategies should have the same interface. Handle setup/cleanup within the strategy.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="python"><code><span class="line"><span style="color:#6A737D"># GOOD: Uniform interface</span></span>
+<span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> ComplexStrategy</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">Strategy</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> execute</span><span style="color:#E1E4E8">(self):</span></span>
+<span class="line"><span style="color:#79B8FF">        self</span><span style="color:#E1E4E8">._setup()</span></span>
+<span class="line"><span style="color:#E1E4E8">        result </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> self</span><span style="color:#E1E4E8">._do_work()</span></span>
+<span class="line"><span style="color:#79B8FF">        self</span><span style="color:#E1E4E8">._cleanup()</span></span>
+<span class="line"><span style="color:#F97583">        return</span><span style="color:#E1E4E8"> result</span></span>
+<span class="line"><span style="color:#E1E4E8">    </span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> _setup</span><span style="color:#E1E4E8">(self):</span></span>
+<span class="line"><span style="color:#6A737D">        # Internal setup</span></span>
+<span class="line"><span style="color:#F97583">        pass</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> Context</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> execute</span><span style="color:#E1E4E8">(self):</span></span>
+<span class="line"><span style="color:#F97583">        return</span><span style="color:#79B8FF"> self</span><span style="color:#E1E4E8">.strategy.execute()  </span><span style="color:#6A737D"># Same for all strategies</span></span></code></pre>
+<h2 id="3-not-using-dependency-injection">3. Not Using Dependency Injection</h2>
+<p><strong>Mistake:</strong> Hardcoding strategy creation inside the context.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="python"><code><span class="line"><span style="color:#6A737D"># BAD: Context creates its own strategy</span></span>
+<span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> Context</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#79B8FF"> __init__</span><span style="color:#E1E4E8">(self, strategy_type: </span><span style="color:#79B8FF">str</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#F97583">        if</span><span style="color:#E1E4E8"> strategy_type </span><span style="color:#F97583">==</span><span style="color:#9ECBFF"> &quot;fast&quot;</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#79B8FF">            self</span><span style="color:#E1E4E8">.strategy </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> FastStrategy()</span></span>
+<span class="line"><span style="color:#F97583">        elif</span><span style="color:#E1E4E8"> strategy_type </span><span style="color:#F97583">==</span><span style="color:#9ECBFF"> &quot;slow&quot;</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#79B8FF">            self</span><span style="color:#E1E4E8">.strategy </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> SlowStrategy()</span></span>
+<span class="line"><span style="color:#6A737D">        # Now you&#39;re back to conditionals!</span></span></code></pre>
+<p><strong>Better:</strong> Inject the strategy from outside.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="python"><code><span class="line"><span style="color:#6A737D"># GOOD: Strategy injected via constructor or setter</span></span>
+<span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> Context</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#79B8FF"> __init__</span><span style="color:#E1E4E8">(self, strategy: Strategy):</span></span>
+<span class="line"><span style="color:#79B8FF">        self</span><span style="color:#E1E4E8">.strategy </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> strategy</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># Client decides which strategy</span></span>
+<span class="line"><span style="color:#E1E4E8">context </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> Context(FastStrategy())</span></span></code></pre>
+<h2 id="4-forgetting-to-handle-missing-strategy">4. Forgetting to Handle Missing Strategy</h2>
+<p><strong>Mistake:</strong> Not checking if a strategy has been set before using it.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="python"><code><span class="line"><span style="color:#6A737D"># BAD: Assumes strategy is always set</span></span>
+<span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> Context</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#79B8FF"> __init__</span><span style="color:#E1E4E8">(self):</span></span>
+<span class="line"><span style="color:#79B8FF">        self</span><span style="color:#E1E4E8">.strategy </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> None</span></span>
+<span class="line"><span style="color:#E1E4E8">    </span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> execute</span><span style="color:#E1E4E8">(self):</span></span>
+<span class="line"><span style="color:#F97583">        return</span><span style="color:#79B8FF"> self</span><span style="color:#E1E4E8">.strategy.execute()  </span><span style="color:#6A737D"># Crashes if None!</span></span></code></pre>
+<p><strong>Better:</strong> Validate strategy existence or provide a default.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="python"><code><span class="line"><span style="color:#6A737D"># GOOD: Validate or use default</span></span>
+<span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> Context</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#79B8FF"> __init__</span><span style="color:#E1E4E8">(self, strategy: Strategy </span><span style="color:#F97583">=</span><span style="color:#79B8FF"> None</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#79B8FF">        self</span><span style="color:#E1E4E8">.strategy </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> strategy </span><span style="color:#F97583">or</span><span style="color:#E1E4E8"> DefaultStrategy()</span></span>
+<span class="line"><span style="color:#E1E4E8">    </span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> execute</span><span style="color:#E1E4E8">(self):</span></span>
+<span class="line"><span style="color:#F97583">        if</span><span style="color:#F97583"> not</span><span style="color:#79B8FF"> self</span><span style="color:#E1E4E8">.strategy:</span></span>
+<span class="line"><span style="color:#F97583">            raise</span><span style="color:#79B8FF"> ValueError</span><span style="color:#E1E4E8">(</span><span style="color:#9ECBFF">&quot;No strategy set&quot;</span><span style="color:#E1E4E8">)</span></span>
+<span class="line"><span style="color:#F97583">        return</span><span style="color:#79B8FF"> self</span><span style="color:#E1E4E8">.strategy.execute()</span></span></code></pre>
+<h2 id="5-confusing-strategy-with-state-pattern">5. Confusing Strategy with State Pattern</h2>
+<p><strong>Mistake:</strong> Using Strategy Pattern when State Pattern is more appropriate.</p>
+<p><strong>Strategy Pattern:</strong> Client chooses which algorithm to use. Strategies don’t know about each other.</p>
+<p><strong>State Pattern:</strong> Object changes its behavior when its internal state changes. States may transition to other states.</p>
+<p>If your “strategies” are transitioning between each other based on internal logic, you probably want State Pattern instead.</p>
+<h2 id="interview-tips">Interview Tips</h2>
+<h2 id="what-interviewers-look-for">What Interviewers Look For</h2>
+<p><strong>1. Recognition of the Pattern</strong></p>
+<p>Interviewers often present a problem with multiple algorithms and ask how you’d design it. They’re testing if you recognize this as a Strategy Pattern opportunity.</p>
+<p><strong>Red flag answer:</strong> “I’d use a big if-else statement to choose the algorithm.”</p>
+<p><strong>Strong answer:</strong> “This is a perfect use case for Strategy Pattern. I’d define a strategy interface, create concrete strategies for each algorithm, and inject the appropriate strategy into the context.”</p>
+<p><strong>2. Articulating Benefits</strong></p>
+<p>Be ready to explain WHY Strategy Pattern is better than conditionals:</p>
+<ul>
+<li><strong>Open/Closed Principle:</strong> Add new strategies without modifying existing code</li>
+<li><strong>Single Responsibility:</strong> Each strategy focuses on one algorithm</li>
+<li><strong>Testability:</strong> Test each strategy independently</li>
+<li><strong>Runtime flexibility:</strong> Swap algorithms dynamically</li>
+</ul>
+<p><strong>3. Coding Under Pressure</strong></p>
+<p>Practice implementing Strategy Pattern quickly. Interviewers may ask you to:</p>
+<ul>
+<li>Design a sorting system with multiple algorithms (bubble, quick, merge)</li>
+<li>Build a validation system with different rules</li>
+<li>Create a pricing calculator with various discount strategies</li>
+</ul>
+<p><strong>Template to memorize:</strong></p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8;overflow-x:auto" tabindex="0" data-language="python"><code><span class="line"><span style="color:#6A737D"># 1. Define interface</span></span>
+<span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> Strategy</span><span style="color:#E1E4E8">(</span><span style="color:#79B8FF">ABC</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#B392F0">    @abstractmethod</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> execute</span><span style="color:#E1E4E8">(self, data):</span></span>
+<span class="line"><span style="color:#F97583">        pass</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># 2. Create concrete strategies</span></span>
+<span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> ConcreteStrategyA</span><span style="color:#E1E4E8">(</span><span style="color:#B392F0">Strategy</span><span style="color:#E1E4E8">):</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> execute</span><span style="color:#E1E4E8">(self, data):</span></span>
+<span class="line"><span style="color:#6A737D">        # Implementation A</span></span>
+<span class="line"><span style="color:#F97583">        pass</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#6A737D"># 3. Build context</span></span>
+<span class="line"><span style="color:#F97583">class</span><span style="color:#B392F0"> Context</span><span style="color:#E1E4E8">:</span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#79B8FF"> __init__</span><span style="color:#E1E4E8">(self, strategy: Strategy):</span></span>
+<span class="line"><span style="color:#79B8FF">        self</span><span style="color:#E1E4E8">.strategy </span><span style="color:#F97583">=</span><span style="color:#E1E4E8"> strategy</span></span>
+<span class="line"><span style="color:#E1E4E8">    </span></span>
+<span class="line"><span style="color:#F97583">    def</span><span style="color:#B392F0"> do_work</span><span style="color:#E1E4E8">(self, data):</span></span>
+<span class="line"><span style="color:#F97583">        return</span><span style="color:#79B8FF"> self</span><span style="color:#E1E4E8">.strategy.execute(data)</span></span></code></pre>
+<p><strong>4. Discussing Trade-offs</strong></p>
+<p>Interviewers want to know you understand when NOT to use Strategy Pattern:</p>
+<p><strong>Don’t use if:</strong></p>
+<ul>
+<li>You only have 1-2 algorithms and they’re unlikely to change</li>
+<li>The algorithms are very simple (e.g., just a formula)</li>
+<li>Performance is critical and the overhead of polymorphism matters</li>
+</ul>
+<p><strong>Do use if:</strong></p>
+<ul>
+<li>You have 3+ algorithms or expect to add more</li>
+<li>Algorithms are complex and deserve their own classes</li>
+<li>You need to swap algorithms at runtime</li>
+<li>You want to test algorithms independently</li>
+</ul>
+<p><strong>5. Real-World Examples</strong></p>
+<p>Have 2-3 real-world examples ready:</p>
+<ul>
+<li><strong>Payment processing:</strong> Credit card, PayPal, crypto, bank transfer</li>
+<li><strong>Sorting:</strong> Different algorithms based on data size/type</li>
+<li><strong>Compression:</strong> ZIP, RAR, GZIP with different speed/ratio trade-offs</li>
+<li><strong>Routing:</strong> Fastest, shortest, scenic, avoid highways</li>
+<li><strong>Validation:</strong> Email, phone, credit card, password strength</li>
+</ul>
+<p><strong>6. Follow-up Questions</strong></p>
+<p>Be prepared for:</p>
+<ul>
+<li>“How is this different from Factory Pattern?” (Factory creates objects; Strategy defines behavior)</li>
+<li>“Could you use lambdas/functions instead?” (Yes, in Python/JavaScript, but classes provide better encapsulation for complex strategies)</li>
+<li>“How would you add a new strategy?” (Create new class implementing interface; no changes to existing code)</li>
+</ul>
+<p><strong>7. Code Review Scenario</strong></p>
+<p>Interviewers may show you code with conditionals and ask you to refactor it using Strategy Pattern. Practice identifying:</p>
+<ul>
+<li>The varying behavior (becomes strategies)</li>
+<li>The stable context (becomes context class)</li>
+<li>The common interface (becomes strategy interface)</li>
+</ul>
+<h2 id="key-takeaways">Key Takeaways</h2>
+<ul>
+<li><strong>Strategy Pattern defines a family of interchangeable algorithms</strong> that can be selected and swapped at runtime without changing client code</li>
+<li><strong>Use Strategy Pattern to eliminate conditional logic</strong> — replace if-else chains with polymorphism by creating separate strategy classes</li>
+<li><strong>Follow the Open/Closed Principle</strong> — add new strategies by creating new classes, not by modifying existing code</li>
+<li><strong>Inject strategies via constructor or setter</strong> — the context should receive strategies from outside, not create them internally</li>
+<li><strong>Each strategy encapsulates one algorithm</strong> — strategies should be independent and not know about each other, making them easy to test in isolation</li>
+</ul>  </div> <nav class="prev-next-nav" aria-label="Previous and next topics" data-astro-cid-fxft7bm5><a href="observer.html" class="prev-next-card group" data-astro-cid-fxft7bm5><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="prev-next-arrow group-hover:text-layrs-primary transition-colors shrink-0" data-astro-cid-fxft7bm5><path d="m15 18-6-6 6-6" data-astro-cid-fxft7bm5></path></svg><div class="flex flex-col items-start gap-0.5 min-w-0" data-astro-cid-fxft7bm5><span class="prev-next-label" data-astro-cid-fxft7bm5>Previous</span><span class="prev-next-title group-hover:text-layrs-primary transition-colors" data-astro-cid-fxft7bm5>Observer Pattern: Event-Driven Design Guide</span></div></a><a href="command.html" class="prev-next-card prev-next-card-right group" data-astro-cid-fxft7bm5><div class="flex flex-col items-end gap-0.5 min-w-0" data-astro-cid-fxft7bm5><span class="prev-next-label" data-astro-cid-fxft7bm5>Next</span><span class="prev-next-title text-right group-hover:text-layrs-primary transition-colors" data-astro-cid-fxft7bm5>Command Pattern: Behavioral Design Guide</span></div><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="prev-next-arrow group-hover:text-layrs-primary transition-colors shrink-0" data-astro-cid-fxft7bm5><path d="m9 18 6-6-6-6" data-astro-cid-fxft7bm5></path></svg></a></nav>  </article> <!-- Right sidebar: CTA + TOC (sticky, always visible) --> <aside class="hidden xl:block w-64 shrink-0" data-astro-cid-xvrfupwn><div class="sticky top-8 max-h-[calc(100vh-4rem)] flex flex-col gap-5" data-astro-cid-xvrfupwn><!-- CTA actions --><div class="rounded-xl border border-layrs-primary/20 bg-gradient-to-b from-layrs-primary/[0.06] to-transparent p-4" data-astro-cid-xvrfupwn><p class="text-[11px] font-semibold uppercase tracking-wider text-[hsl(var(--muted-foreground))] mb-3" data-astro-cid-xvrfupwn>
+Practice
+</p><div class="flex flex-col gap-2" data-astro-cid-xvrfupwn><!-- AI Tutor toggle button --><button type="button" id="ai-tutor-toggle" class="inline-flex items-center gap-2 rounded-lg bg-layrs-primary px-3 py-2.5 text-xs font-medium text-white hover:bg-layrs-secondary transition-all duration-200 shadow-sm shadow-layrs-primary/20 hover:shadow-md hover:shadow-layrs-primary/30 w-full" data-astro-cid-xvrfupwn><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-xvrfupwn><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" data-astro-cid-xvrfupwn></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" data-astro-cid-xvrfupwn></path></svg>
+AI Tutor
+</button><!-- Hidden panel: start/resume (revealed on AI Tutor click) --><div id="ai-tutor-panel" class="hidden flex flex-col gap-2" data-astro-cid-xvrfupwn><!-- Start New Session --><a id="ai-tutor-link" href="https://layrs.me/tutor-lld-concepts?autoStart=1&amp;concept=strategy&amp;conceptTitle=Strategy%20Pattern%3A%20Swap%20Algorithms%20at%20Runtime&amp;language=en" class="inline-flex items-center justify-center gap-1.5 rounded-lg bg-layrs-primary/90 px-3 py-2 text-[11px] font-medium text-white hover:bg-layrs-primary transition-all duration-200 no-underline" data-astro-cid-xvrfupwn><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-xvrfupwn><polygon points="5 3 19 12 5 21 5 3" data-astro-cid-xvrfupwn></polygon></svg>
+Start New Session
+</a><!-- Resume Session (hidden by default, shown via JS if paused session exists) --><a id="ai-tutor-resume-link" href="https://layrs.me/tutor-lld-concepts?autoStart=1&amp;concept=strategy&amp;conceptTitle=Strategy%20Pattern%3A%20Swap%20Algorithms%20at%20Runtime&amp;language=en" class="hidden inline-flex items-center justify-center gap-1.5 rounded-lg border border-layrs-primary/30 px-3 py-2 text-[11px] font-medium text-layrs-primary hover:bg-layrs-primary/10 transition-all duration-200 no-underline" data-astro-cid-xvrfupwn><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-xvrfupwn><path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8" data-astro-cid-xvrfupwn></path><path d="M21 3v5h-5" data-astro-cid-xvrfupwn></path></svg>
+Resume Session
+</a></div><a href="https://layrs.me/interviews" class="inline-flex items-center gap-2 rounded-lg border border-layrs-primary/30 px-3 py-2.5 text-xs font-medium text-layrs-primary hover:bg-layrs-primary/10 transition-all duration-200 no-underline" data-astro-cid-xvrfupwn><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-xvrfupwn><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" data-astro-cid-xvrfupwn></path></svg>
+Mock Interview
+</a></div></div><!-- On this page --><nav id="toc-nav" aria-label="Table of contents" class="overflow-y-auto" data-astro-cid-xvrfupwn><h2 class="text-[11px] font-semibold uppercase tracking-wider text-[hsl(var(--muted-foreground))] mb-3" data-astro-cid-xvrfupwn>
+On this page
+</h2><ul class="space-y-0.5 text-[13px] border-l-2 border-[hsl(var(--border))]" data-astro-cid-xvrfupwn><li class data-astro-cid-xvrfupwn><a href="strategy.html#tldr" class="toc-link block py-1.5 leading-snug transition-all duration-150 no-underline pl-3" style="color: hsl(var(--muted-foreground));" data-toc-slug="tldr" data-astro-cid-xvrfupwn>TL;DR</a></li><li class data-astro-cid-xvrfupwn><a href="strategy.html#core-concept" class="toc-link block py-1.5 leading-snug transition-all duration-150 no-underline pl-3" style="color: hsl(var(--muted-foreground));" data-toc-slug="core-concept" data-astro-cid-xvrfupwn>Core Concept</a></li><li class data-astro-cid-xvrfupwn><a href="strategy.html#what-is-the-strategy-pattern" class="toc-link block py-1.5 leading-snug transition-all duration-150 no-underline pl-3" style="color: hsl(var(--muted-foreground));" data-toc-slug="what-is-the-strategy-pattern" data-astro-cid-xvrfupwn>What is the Strategy Pattern?</a></li><li class data-astro-cid-xvrfupwn><a href="strategy.html#why-use-strategy-pattern" class="toc-link block py-1.5 leading-snug transition-all duration-150 no-underline pl-3" style="color: hsl(var(--muted-foreground));" data-toc-slug="why-use-strategy-pattern" data-astro-cid-xvrfupwn>Why Use Strategy Pattern?</a></li><li class data-astro-cid-xvrfupwn><a href="strategy.html#core-components" class="toc-link block py-1.5 leading-snug transition-all duration-150 no-underline pl-3" style="color: hsl(var(--muted-foreground));" data-toc-slug="core-components" data-astro-cid-xvrfupwn>Core Components</a></li><li class data-astro-cid-xvrfupwn><a href="strategy.html#when-to-use" class="toc-link block py-1.5 leading-snug transition-all duration-150 no-underline pl-3" style="color: hsl(var(--muted-foreground));" data-toc-slug="when-to-use" data-astro-cid-xvrfupwn>When to Use</a></li><li class data-astro-cid-xvrfupwn><a href="strategy.html#real-world-analogy" class="toc-link block py-1.5 leading-snug transition-all duration-150 no-underline pl-3" style="color: hsl(var(--muted-foreground));" data-toc-slug="real-world-analogy" data-astro-cid-xvrfupwn>Real-World Analogy</a></li><li class data-astro-cid-xvrfupwn><a href="strategy.html#visual-guide" class="toc-link block py-1.5 leading-snug transition-all duration-150 no-underline pl-3" style="color: hsl(var(--muted-foreground));" data-toc-slug="visual-guide" data-astro-cid-xvrfupwn>Visual Guide</a></li><li class="ml-0" data-astro-cid-xvrfupwn><a href="strategy.html#strategy-pattern-structure" class="toc-link block py-1.5 leading-snug transition-all duration-150 no-underline pl-5 text-[12px]" style="color: hsl(var(--muted-foreground));" data-toc-slug="strategy-pattern-structure" data-astro-cid-xvrfupwn>Strategy Pattern Structure</a></li><li class="ml-0" data-astro-cid-xvrfupwn><a href="strategy.html#strategy-pattern-flow" class="toc-link block py-1.5 leading-snug transition-all duration-150 no-underline pl-5 text-[12px]" style="color: hsl(var(--muted-foreground));" data-toc-slug="strategy-pattern-flow" data-astro-cid-xvrfupwn>Strategy Pattern Flow</a></li><li class data-astro-cid-xvrfupwn><a href="strategy.html#examples" class="toc-link block py-1.5 leading-snug transition-all duration-150 no-underline pl-3" style="color: hsl(var(--muted-foreground));" data-toc-slug="examples" data-astro-cid-xvrfupwn>Examples</a></li><li class data-astro-cid-xvrfupwn><a href="strategy.html#example-1-payment-processing-system" class="toc-link block py-1.5 leading-snug transition-all duration-150 no-underline pl-3" style="color: hsl(var(--muted-foreground));" data-toc-slug="example-1-payment-processing-system" data-astro-cid-xvrfupwn>Example 1: Payment Processing System</a></li><li class data-astro-cid-xvrfupwn><a href="strategy.html#example-2-data-compression" class="toc-link block py-1.5 leading-snug transition-all duration-150 no-underline pl-3" style="color: hsl(var(--muted-foreground));" data-toc-slug="example-2-data-compression" data-astro-cid-xvrfupwn>Example 2: Data Compression</a></li><li class data-astro-cid-xvrfupwn><a href="strategy.html#javac-notes" class="toc-link block py-1.5 leading-snug transition-all duration-150 no-underline pl-3" style="color: hsl(var(--muted-foreground));" data-toc-slug="javac-notes" data-astro-cid-xvrfupwn>Java/C++ Notes</a></li><li class data-astro-cid-xvrfupwn><a href="strategy.html#common-mistakes" class="toc-link block py-1.5 leading-snug transition-all duration-150 no-underline pl-3" style="color: hsl(var(--muted-foreground));" data-toc-slug="common-mistakes" data-astro-cid-xvrfupwn>Common Mistakes</a></li><li class data-astro-cid-xvrfupwn><a href="strategy.html#1-creating-too-many-strategies" class="toc-link block py-1.5 leading-snug transition-all duration-150 no-underline pl-3" style="color: hsl(var(--muted-foreground));" data-toc-slug="1-creating-too-many-strategies" data-astro-cid-xvrfupwn>1. Creating Too Many Strategies</a></li><li class data-astro-cid-xvrfupwn><a href="strategy.html#2-exposing-strategy-internals-to-context" class="toc-link block py-1.5 leading-snug transition-all duration-150 no-underline pl-3" style="color: hsl(var(--muted-foreground));" data-toc-slug="2-exposing-strategy-internals-to-context" data-astro-cid-xvrfupwn>2. Exposing Strategy Internals to Context</a></li><li class data-astro-cid-xvrfupwn><a href="strategy.html#3-not-using-dependency-injection" class="toc-link block py-1.5 leading-snug transition-all duration-150 no-underline pl-3" style="color: hsl(var(--muted-foreground));" data-toc-slug="3-not-using-dependency-injection" data-astro-cid-xvrfupwn>3. Not Using Dependency Injection</a></li><li class data-astro-cid-xvrfupwn><a href="strategy.html#4-forgetting-to-handle-missing-strategy" class="toc-link block py-1.5 leading-snug transition-all duration-150 no-underline pl-3" style="color: hsl(var(--muted-foreground));" data-toc-slug="4-forgetting-to-handle-missing-strategy" data-astro-cid-xvrfupwn>4. Forgetting to Handle Missing Strategy</a></li><li class data-astro-cid-xvrfupwn><a href="strategy.html#5-confusing-strategy-with-state-pattern" class="toc-link block py-1.5 leading-snug transition-all duration-150 no-underline pl-3" style="color: hsl(var(--muted-foreground));" data-toc-slug="5-confusing-strategy-with-state-pattern" data-astro-cid-xvrfupwn>5. Confusing Strategy with State Pattern</a></li><li class data-astro-cid-xvrfupwn><a href="strategy.html#interview-tips" class="toc-link block py-1.5 leading-snug transition-all duration-150 no-underline pl-3" style="color: hsl(var(--muted-foreground));" data-toc-slug="interview-tips" data-astro-cid-xvrfupwn>Interview Tips</a></li><li class data-astro-cid-xvrfupwn><a href="strategy.html#what-interviewers-look-for" class="toc-link block py-1.5 leading-snug transition-all duration-150 no-underline pl-3" style="color: hsl(var(--muted-foreground));" data-toc-slug="what-interviewers-look-for" data-astro-cid-xvrfupwn>What Interviewers Look For</a></li><li class data-astro-cid-xvrfupwn><a href="strategy.html#key-takeaways" class="toc-link block py-1.5 leading-snug transition-all duration-150 no-underline pl-3" style="color: hsl(var(--muted-foreground));" data-toc-slug="key-takeaways" data-astro-cid-xvrfupwn>Key Takeaways</a></li></ul></nav></div></aside><script>
+  // AI Tutor panel toggle
+  (function initAiTutorPanel() {
+    var tutorToggle = document.getElementById('ai-tutor-toggle');
+    var panel = document.getElementById('ai-tutor-panel');
+    var link = document.getElementById('ai-tutor-link');
+    var resumeLink = document.getElementById('ai-tutor-resume-link');
+    if (!tutorToggle || !panel || !link) return;
+
+    // Toggle panel visibility on AI Tutor button click
+    tutorToggle.addEventListener('click', function() {
+      var isHidden = panel.classList.contains('hidden');
+      panel.classList.toggle('hidden');
+      // Update button style when panel is open
+      if (isHidden) {
+        tutorToggle.classList.add('ring-2', 'ring-layrs-primary/30');
+      } else {
+        tutorToggle.classList.remove('ring-2', 'ring-layrs-primary/30');
+      }
+    });
+
+    // Check for paused session via Supabase (if user is logged in on the main app)
+    (function checkPausedSession() {
+      if (!resumeLink) return;
+
+      var supabaseUrl = 'https://tcdieywqoophloivzszp.supabase.co';
+      var anonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRjZGlleXdxb29waGxvaXZ6c3pwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDY3NDMzMzksImV4cCI6MjA2MjMxOTMzOX0.Ypel9zPDOVJVBiEZFT-__cTZqgQL2-prOxiUXjieihM';
+
+      try {
+        var keys = Object.keys(localStorage);
+        var sbKey = keys.find(function(k) { return k.startsWith('sb-') && k.endsWith('-auth-token'); });
+        if (!sbKey) return;
+
+        var raw = localStorage.getItem(sbKey);
+        if (!raw) return;
+        var stored = JSON.parse(raw);
+
+        var refreshToken = stored.refresh_token || (stored.current_session && stored.current_session.refresh_token);
+        var user = stored.user || (stored.current_session && stored.current_session.user);
+        var userId = user && user.id;
+        if (!refreshToken || !userId) return;
+
+        var conceptMatch = link.getAttribute('href').match(/[?&]concept=([^&]+)/);
+        var conceptSlug = conceptMatch ? decodeURIComponent(conceptMatch[1]) : '';
+        if (!conceptSlug) return;
+
+        // Refresh the token first, then query
+        fetch(supabaseUrl + '/auth/v1/token?grant_type=refresh_token', {
+          method: 'POST',
+          headers: {
+            'apikey': anonKey,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ refresh_token: refreshToken })
+        })
+        .then(function(res) { return res.json(); })
+        .then(function(authData) {
+          if (!authData || !authData.access_token) return;
+
+          // Update localStorage with fresh tokens so future loads are faster
+          stored.access_token = authData.access_token;
+          stored.refresh_token = authData.refresh_token;
+          if (stored.current_session) {
+            stored.current_session.access_token = authData.access_token;
+            stored.current_session.refresh_token = authData.refresh_token;
+          }
+          localStorage.setItem(sbKey, JSON.stringify(stored));
+
+          // Now query for paused sessions with the fresh token
+          return fetch(supabaseUrl + '/rest/v1/interview_sessions?select=id,metadata,paused_at&user_id=eq.' + userId + '&skill_type=eq.concepts_tutor&status=eq.paused&pause_checkpoint=not.is.null&order=paused_at.desc&limit=10', {
+            headers: {
+              'apikey': anonKey,
+              'Authorization': 'Bearer ' + authData.access_token,
+            }
+          });
+        })
+        .then(function(res) { return res && res.json(); })
+        .then(function(data) {
+          if (!Array.isArray(data)) return;
+          console.log('[AI Tutor] Looking for conceptId:', conceptSlug, 'in', data.length, 'paused sessions');
+          console.log('[AI Tutor] Available conceptIds:', data.map(function(s) { return s.metadata && s.metadata.conceptId; }));
+          var match = data.find(function(s) {
+            return s.metadata && s.metadata.conceptId === conceptSlug;
+          });
+          if (match) {
+            var currentHref = resumeLink.getAttribute('href').replace(/&resumeSessionId=[^&]+/, '');
+            resumeLink.setAttribute('href', currentHref + '&resumeSessionId=' + match.id);
+            resumeLink.classList.remove('hidden');
+            console.log('[AI Tutor] Resume link set to:', resumeLink.getAttribute('href'));
+          } else {
+            console.log('[AI Tutor] No match for concept:', conceptSlug);
+          }
+        })
+        .catch(function() { /* silently fail */ });
+      } catch(e) { /* silently fail */ }
+    })();
+  })();
+</script><script>
+  // Active section highlighting via IntersectionObserver
+  (function initTocHighlight() {
+    var tocLinks = document.querySelectorAll('.toc-link[data-toc-slug]');
+    if (tocLinks.length === 0) return;
+
+    var headingElements = [];
+    tocLinks.forEach(function(link) {
+      var slug = link.getAttribute('data-toc-slug');
+      var el = document.getElementById(slug);
+      if (el) headingElements.push({ el: el, link: link });
+    });
+
+    if (headingElements.length === 0) return;
+
+    var currentActive = null;
+
+    function setActive(link) {
+      if (currentActive === link) return;
+      if (currentActive) currentActive.classList.remove('active');
+      link.classList.add('active');
+      currentActive = link;
+    }
+
+    var observer = new IntersectionObserver(function(entries) {
+      // Find the topmost visible heading
+      var visible = [];
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          visible.push(entry);
+        }
+      });
+
+      if (visible.length > 0) {
+        // Sort by position in document
+        visible.sort(function(a, b) {
+          return a.target.getBoundingClientRect().top - b.target.getBoundingClientRect().top;
+        });
+        var slug = visible[0].target.id;
+        tocLinks.forEach(function(link) {
+          if (link.getAttribute('data-toc-slug') === slug) {
+            setActive(link);
+          }
+        });
+      }
+    }, {
+      rootMargin: '-80px 0px -70% 0px',
+      threshold: 0
+    });
+
+    headingElements.forEach(function(item) {
+      observer.observe(item.el);
+    });
+
+    // Also handle scroll to set active on the closest heading above viewport
+    var rafId = null;
+    window.addEventListener('scroll', function() {
+      if (rafId) return;
+      rafId = requestAnimationFrame(function() {
+        rafId = null;
+        var scrollY = window.scrollY || document.documentElement.scrollTop;
+        var best = null;
+        headingElements.forEach(function(item) {
+          var top = item.el.getBoundingClientRect().top + scrollY - 100;
+          if (top <= scrollY + 100) {
+            best = item;
+          }
+        });
+        if (best) setActive(best.link);
+      });
+    });
+  })();
+</script> </div> </div>  </div> </div> </div> <!-- Mobile menu toggle script --> <script>
+      (function() {
+        var toggle = document.getElementById('menu-toggle');
+        var overlay = document.getElementById('mobile-sidebar-overlay');
+        var backdrop = document.getElementById('mobile-sidebar-backdrop');
+
+        if (toggle && overlay) {
+          toggle.addEventListener('click', function() {
+            overlay.classList.remove('hidden');
+            overlay.classList.remove('closing');
+            document.body.style.overflow = 'hidden';
+            // Show close button, hide collapse button on mobile sidebar
+            var mobileSidebar = overlay.querySelector('#course-sidebar');
+            if (mobileSidebar) {
+              var mobileOnlyBtns = mobileSidebar.querySelectorAll('.sidebar-mobile-only');
+              var desktopOnlyBtns = mobileSidebar.querySelectorAll('.sidebar-desktop-only');
+              mobileOnlyBtns.forEach(function(b) { b.style.display = 'flex'; });
+              desktopOnlyBtns.forEach(function(b) { b.style.display = 'none'; });
+            }
+          });
+        }
+        if (backdrop && overlay) {
+          backdrop.addEventListener('click', function() {
+            if (window.__closeMobileDrawer) {
+              window.__closeMobileDrawer();
+            } else {
+              overlay.classList.add('hidden');
+              document.body.style.overflow = '';
+            }
+          });
+        }
+      })();
+    </script> <!-- Mermaid client-side rendering (always light theme for consistent contrast) --> <script>
+      (async function() {
+        const pres = document.querySelectorAll('pre[data-language="mermaid"]');
+        if (pres.length === 0) return;
+
+        var themeVars = {
+          primaryColor: '#DBEAFE',
+          primaryTextColor: '#1e3a5f',
+          primaryBorderColor: '#3B82F6',
+          lineColor: '#6B7280',
+          secondaryColor: '#F3F4F6',
+          tertiaryColor: '#EFF6FF',
+          background: '#FFFFFF',
+          mainBkg: '#DBEAFE',
+          nodeBorder: '#3B82F6',
+          clusterBkg: '#F9FAFB',
+          clusterBorder: '#D1D5DB',
+          titleColor: '#111827',
+          edgeLabelBackground: '#FFFFFF',
+          textColor: '#111827',
+          noteTextColor: '#374151',
+          noteBkgColor: '#FEF3C7',
+          noteBorderColor: '#F59E0B',
+        };
+
+        const { default: mermaid } = await import('https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs');
+        mermaid.initialize({
+          startOnLoad: false,
+          theme: 'default',
+          themeVariables: themeVars,
+          fontFamily: 'Inter, system-ui, sans-serif',
+          fontSize: 14,
+        });
+
+        let id = 0;
+        for (const pre of pres) {
+          const code = pre.textContent || '';
+          const wrapper = document.createElement('div');
+          wrapper.className = 'mermaid-wrapper';
+          try {
+            const { svg } = await mermaid.render('mermaid-' + (id++), code);
+            wrapper.innerHTML = svg;
+            // Add expand hint badge
+            var hint = document.createElement('span');
+            hint.className = 'mermaid-expand-hint';
+            hint.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M9 21H3v-6"/><path d="M21 3l-7 7"/><path d="M3 21l7-7"/></svg>Expand';
+            wrapper.appendChild(hint);
+          } catch (e) {
+            wrapper.innerHTML = '<pre style="color:#EF4444;font-size:0.875rem;">Diagram rendering failed</pre>';
+          }
+          pre.replaceWith(wrapper);
+        }
+
+        // Click-to-expand handler
+        document.addEventListener('click', function(e) {
+          var wrapper = e.target.closest('.mermaid-wrapper');
+          if (!wrapper || wrapper.querySelector('pre')) return; // skip failed renders
+          var svgEl = wrapper.querySelector('svg');
+          if (!svgEl) return;
+
+          var overlay = document.createElement('div');
+          overlay.className = 'mermaid-overlay';
+
+          var content = document.createElement('div');
+          content.className = 'mermaid-overlay-content';
+
+          var closeBtn = document.createElement('button');
+          closeBtn.className = 'mermaid-overlay-close';
+          closeBtn.innerHTML = '&times;';
+          closeBtn.setAttribute('aria-label', 'Close diagram');
+
+          // Clone the SVG at full natural size using viewBox dimensions
+          var svgClone = svgEl.cloneNode(true);
+          var vb = svgEl.getAttribute('viewBox');
+          if (vb) {
+            var vbParts = vb.split(' ');
+            var vbW = parseFloat(vbParts[2]);
+            var vbH = parseFloat(vbParts[3]);
+            svgClone.removeAttribute('width');
+            svgClone.removeAttribute('height');
+            svgClone.style.width = vbW + 'px';
+            svgClone.style.height = vbH + 'px';
+            svgClone.style.maxWidth = 'none';
+          }
+
+          content.appendChild(svgClone);
+          overlay.appendChild(content);
+          overlay.appendChild(closeBtn);
+          document.body.appendChild(overlay);
+          document.body.style.overflow = 'hidden';
+
+          function closeOverlay() {
+            overlay.classList.add('closing');
+            setTimeout(function() {
+              overlay.remove();
+              document.body.style.overflow = '';
+            }, 200);
+          }
+
+          closeBtn.addEventListener('click', function(ev) {
+            ev.stopPropagation();
+            closeOverlay();
+          });
+          overlay.addEventListener('click', function(ev) {
+            if (ev.target === overlay) closeOverlay();
+          });
+          document.addEventListener('keydown', function handler(ev) {
+            if (ev.key === 'Escape') {
+              closeOverlay();
+              document.removeEventListener('keydown', handler);
+            }
+          });
+        });
+      })();
+    </script> </body> </html>
